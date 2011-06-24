@@ -1,0 +1,212 @@
+name: DefaultCommands
+main: com.vildaberper.DefaultCommands.DefaultCommands
+version: 3.5.0
+website: http://www.tfbs.tk/
+author: vildaberper
+database: false
+description: Default commands for bukkit.
+commands:
+  dccreate:
+    description: Create.
+    usage: /<command> <world> <normal/nether> [seed]
+  dcjoin:
+    description: Join.
+    usage: /<command> <world> [player]
+  dcworlds:
+    description: Worlds.
+    usage: /<command> [page]
+  dcspawnmob:
+    description: Spawnmob.
+    usage: /<command> <amount> <mob> [riders]
+  dchelp:
+    description: Help.
+    usage: /<command> [page/command]
+  dcgive:
+    description: Give.
+    usage: /<command> <item>[:data] [amount] [target]
+  dcgod:
+    description: God.
+    usage: /<command> [player]
+  dcfly:
+    description: Fly.
+    usage: /<command> [player]
+  dcname:
+    description: Name.
+    usage: /<command> [name] [player]
+  dcwho:
+    description: Who.
+    usage: /<command> [player]
+  dcspawn:
+    description: Spawn.
+    usage: /<command> [player]
+  dcsetspawn:
+    description: Setspawn.
+    usage: /<command>
+  dcstack:
+    description: Stack.
+    usage: /<command> [amount] [items]
+  dcteleport:
+    description: Teleport.
+    usage: /<command> [player] [target]
+  dcteleporthere:
+    description: Teleporthere.
+    usage: /<command> [player]
+  dchome:
+    description: Home.
+    usage: /<command> [player]
+  dcsethome:
+    description: Sethome.
+    usage: /<command> [player]
+  dcwarp:
+    description: Warp.
+    usage: /<command> <warp> [player]
+  dcsetwarp:
+    description: Setwarp.
+    usage: /<command> <warp>
+  dcdelwarp:
+    description: Delwarp.
+    usage: /<command> <warp>
+  dcwarps:
+    description: Warps.
+    usage: /<command> [page]
+  dccreative:
+    description: Creative.
+    usage: /<command> [player]
+  dchealth:
+    description: Health.
+    usage: /<command> <player> [hp]
+  dckill:
+    description: Kill.
+    usage: /<command> [player]
+  dctime:
+    description: Time.
+    usage: /<command> <time> [world]
+  dcinventory:
+    description: Inventory.
+    usage: /<command> [player]
+  dckillnear:
+    description: Killnear.
+    usage: /<command> <distance>
+  dcclearnear:
+    description: Clearnear.
+    usage: /<command> <distance>
+  dcjump:
+    description: Jump.
+    usage: /<command>
+  dcdisconnect:
+    description: Disconnect.
+    usage: /<command>
+  dc:
+    description: Dc.
+    usage: /<command> [args]
+  dcrepeat:
+    description: Repeat.
+    usage: /<command>
+  dconline:
+    description: Online.
+    usage: /<command>
+  dcweather:
+    description: Weather.
+    usage: /<command> <rain/storm/none> [duration] [world]
+  dcignoremob:
+    description: Ignoremob.
+    usage: /<command> [player]
+  dcnopickup:
+    description: Nopickup.
+    usage: /<command> [player]
+  dcinstakill:
+    description: Instakill.
+    usage: /<command> [player]
+  dcfreeze:
+    description: Freeze.
+    usage: /<command> [player]
+  dchide:
+    description: Hide.
+    usage: /<command> [player]
+  dcreset:
+    description: Reset.
+    usage: /<command> [player]
+  dcmessage:
+    description: Message.
+    usage: /<command> <player> <message>
+  dcrepair:
+    description: Repair.
+    usage: /<command>
+  dcmute:
+    description: Mute.
+    usage: /<command> [player]
+  dcremovefloat:
+    description: Removefloat.
+    usage: /<command> [stop/items]
+  dcreply:
+    description: Reply.
+    usage: /<command> <message>
+  dcfire:
+    description: Fire.
+    usage: /<command> <duration> <player>
+  dcsetportal:
+    description: Setportal.
+    usage: /<command> <portal> <world:world/home:player/warp:warp/player:player>
+  dcdelportal:
+    description: Delportal.
+    usage: /<command> <portal>
+  dccuboid:
+    description: Cuboid.
+    usage: /<command> <item>
+  dcundo:
+    description: Undo.
+    usage: /<command>
+  dcreplace:
+    description: Replace.
+    usage: /<command> <items> <item>
+  dccuboidwireframe:
+    description: Cuboidwireframe.
+    usage: /<command> <item>
+  dccuboidhollow:
+    description: Cuboidhollow.
+    usage: /<command> <item>
+  dcspherehollow:
+    description: Spherehollow.
+    usage: /<command> <item> <radius>
+  dcwalls:
+    description: Walls.
+    usage: /<command> <item>
+  dcping:
+    description: Ping.
+    usage: /<command>
+  dcextinguish:
+    description: Extinguish.
+    usage: /<command> [distance]
+  dcmotd:
+    description: Motd.
+    usage: /<command>
+  dckit:
+    description: Kit.
+    usage: /<command> <kit> [player]
+  dckits:
+    description: Kits.
+    usage: /<command> [page]
+  dcdelworld:
+    description: Delworld.
+    usage: /<command> <world> [delete/remove]
+  dcportals:
+    description: Portals.
+    usage: /<command> [page]
+  dcclearinventory:
+    description: Clearinventory.
+    usage: /<command> [player]
+  dcteleportposition:
+    description: Teleportposition.
+    usage: /<command> <x> <y> <z> [player] [world]
+  dcafk:
+    description: Afk.
+    usage: /<command> [player]
+  dclightning:
+    description: Lightning.
+    usage: /<command>
+  dcwhitelist:
+    description: Whitelist.
+    usage: /<command> <add/remove> <player>
+  dcwhitelists:
+    description: Whitelists.
+    usage: /<command> [page]
