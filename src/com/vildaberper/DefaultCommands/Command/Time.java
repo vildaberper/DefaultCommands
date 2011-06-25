@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import com.vildaberper.DefaultCommands.L;
 import com.vildaberper.DefaultCommands.Misc;
 import com.vildaberper.DefaultCommands.Perm;
+import com.vildaberper.DefaultCommands.Util;
 import com.vildaberper.DefaultCommands.V;
 
 public class Time{
@@ -16,7 +17,7 @@ public class Time{
 			return true;
 		}else if(args.length == 2){
 			if(V.plugin.getServer().getWorld(args[1]) != null){
-				if(Misc.isValidInt(args[0]) && Integer.parseInt(args[0]) >= 0 && Integer.parseInt(args[0]) <= 24000){
+				if(Util.isValidInt(args[0]) && Integer.parseInt(args[0]) >= 0 && Integer.parseInt(args[0]) <= 24000){
 					if(sender instanceof Player && !Perm.hasPermission((Player) sender, "dc.time." + V.plugin.getServer().getWorld(args[1]).getName())){
 						return false;
 					}

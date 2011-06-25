@@ -99,7 +99,7 @@ public class DefaultCommands extends JavaPlugin{
 	public void onDisable(){
 		for(Player player : getServer().getOnlinePlayers()){
 			if(!Misc.isHide(player.getName())){
-				Misc.setPlayer(new DCPlayer(player.getName(), Misc.getIp(player), Misc.getDateTime()));
+				Misc.setPlayer(new DCPlayer(player.getName(), Util.getIp(player), Util.getDateTime()));
 			}
 			Misc.setInventory(player.getName(), player.getInventory().getContents(), player.getWorld().getName());
 		}

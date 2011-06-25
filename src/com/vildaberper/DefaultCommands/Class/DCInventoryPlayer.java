@@ -5,7 +5,7 @@ import net.minecraft.server.IInventory;
 import net.minecraft.server.InventoryPlayer;
 import net.minecraft.server.ItemStack;
 
-import com.vildaberper.DefaultCommands.Misc;
+import com.vildaberper.DefaultCommands.Util;
 
 public class DCInventoryPlayer extends InventoryPlayer implements IInventory{
 	public DCInventoryPlayer(String name, EntityHuman entityhuman){
@@ -35,7 +35,7 @@ public class DCInventoryPlayer extends InventoryPlayer implements IInventory{
 	public DCInventoryPlayer(String name, org.bukkit.inventory.ItemStack[] itemstack){
 		super(null);
 		this.name = name;
-		a = Misc.getItemStack(itemstack);
+		a = Util.convertItemStack(itemstack);
 		b = new ItemStack[4];
 		d = null;
 	}

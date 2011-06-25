@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import com.vildaberper.DefaultCommands.L;
 import com.vildaberper.DefaultCommands.Misc;
 import com.vildaberper.DefaultCommands.Perm;
+import com.vildaberper.DefaultCommands.Util;
 
 public class Home{
 	public static boolean home(CommandSender sender, Command command, String label, String[] args){
@@ -26,7 +27,7 @@ public class Home{
 						}else if(Misc.getPlayers(sender, args[0]).get(0) != (Player) sender && !Perm.hasPermission((Player) sender, "dc.home.other")){
 						}else{
 							if(Misc.getHome(player.getName()) != null){
-								player.teleport(Misc.getSafeLocationAt(Misc.getHome(player.getName()).getLocation()));
+								player.teleport(Util.getSafeLocationAt(Misc.getHome(player.getName()).getLocation()));
 							}else{
 								Misc.sendString(sender, "invalid_home");
 								return false;
@@ -34,7 +35,7 @@ public class Home{
 						}
 					}else{
 						if(Misc.getHome(player.getName()) != null){
-							player.teleport(Misc.getSafeLocationAt(Misc.getHome(player.getName()).getLocation()));
+							player.teleport(Util.getSafeLocationAt(Misc.getHome(player.getName()).getLocation()));
 						}
 					}
 				}

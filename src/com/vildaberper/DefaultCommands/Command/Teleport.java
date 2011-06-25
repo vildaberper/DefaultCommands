@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import com.vildaberper.DefaultCommands.L;
 import com.vildaberper.DefaultCommands.Misc;
 import com.vildaberper.DefaultCommands.Perm;
+import com.vildaberper.DefaultCommands.Util;
 
 public class Teleport{
 	public static boolean teleport(CommandSender sender, Command command, String label, String[] args){
@@ -25,10 +26,10 @@ public class Teleport{
 						if(Misc.getPlayers(sender, args[0]).get(0) == (Player) sender && !Perm.hasPermission((Player) sender, "dc.teleport.self." + Misc.getPlayers(sender, args[1]).get(0).getWorld().getName())){
 						}else if(Misc.getPlayers(sender, args[0]).get(0) != (Player) sender && !Perm.hasPermission((Player) sender, "dc.teleport.other." + Misc.getPlayers(sender, args[1]).get(0).getWorld().getName())){
 						}else{
-							player.teleport(Misc.getSafeLocationAt(Misc.getPlayers(sender, args[1]).get(0)));
+							player.teleport(Util.getSafeLocationAt(Misc.getPlayers(sender, args[1]).get(0)));
 						}
 					}else{
-						player.teleport(Misc.getSafeLocationAt(Misc.getPlayers(sender, args[1]).get(0)));
+						player.teleport(Util.getSafeLocationAt(Misc.getPlayers(sender, args[1]).get(0)));
 					}
 				}
 				L.log(Misc.getColoredString("c_teleport").replace("<player>", Misc.getSenderName(sender)).replace("<target>", Misc.getPlayers(sender, args[1]).get(0).getName()).replace("<players>", Misc.getPlayerNames(Misc.getPlayers(sender, args[0]))));

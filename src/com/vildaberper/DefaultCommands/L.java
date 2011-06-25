@@ -24,7 +24,7 @@ public class L{
 		try{
 			FileWriter fw = new FileWriter(file, true);
 
-			fw.write("[" + Misc.getDateTime() + "] " + Misc.removeColor(string) + System.getProperty("line.separator"));
+			fw.write("[" + Util.getDateTime() + "] " + Util.removeColor(string) + System.getProperty("line.separator"));
 			fw.flush();
 			fw.close();
 		}catch(Exception e){

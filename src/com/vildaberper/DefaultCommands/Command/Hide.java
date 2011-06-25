@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import com.vildaberper.DefaultCommands.L;
 import com.vildaberper.DefaultCommands.Misc;
 import com.vildaberper.DefaultCommands.Perm;
+import com.vildaberper.DefaultCommands.Util;
 import com.vildaberper.DefaultCommands.Class.DCPlayer;
 
 public class Hide {
@@ -36,7 +37,7 @@ public class Hide {
 						Misc.hidePlayerFromAll(player);
 						Misc.broadcastDisconnect((Player) sender, true);
 					}
-					Misc.setPlayer(new DCPlayer(player.getName(), Misc.getIp(player), Misc.getDateTime()));
+					Misc.setPlayer(new DCPlayer(player.getName(), Util.getIp(player), Util.getDateTime()));
 				}
 				if(Misc.getPlayers(sender, args[0]).size() > 1){
 					L.log(Misc.getSenderCmdMsg("c_hide", sender, Misc.getPlayers(sender, args[0])));

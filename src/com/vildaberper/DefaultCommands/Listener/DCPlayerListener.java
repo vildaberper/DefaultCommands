@@ -26,6 +26,7 @@ import org.bukkit.util.Vector;
 import com.vildaberper.DefaultCommands.L;
 import com.vildaberper.DefaultCommands.Misc;
 import com.vildaberper.DefaultCommands.Perm;
+import com.vildaberper.DefaultCommands.Util;
 import com.vildaberper.DefaultCommands.V;
 import com.vildaberper.DefaultCommands.Class.DCAfkPlayer;
 import com.vildaberper.DefaultCommands.Class.DCPortal;
@@ -94,7 +95,7 @@ public class DCPlayerListener extends PlayerListener{
 			event.getPlayer().teleport(event.getFrom());
 			event.setCancelled(true);
 		}
-		if(Misc.isAfk(event.getPlayer().getEntityId()) && (Misc.getDistanceIgnoreY(event.getFrom(), event.getTo()) >= V.afk_move_min || Misc.getAfkPlayer(event.getPlayer().getEntityId()).getLocation().getYaw() != event.getPlayer().getLocation().getYaw() || Misc.getAfkPlayer(event.getPlayer().getEntityId()).getLocation().getPitch() != event.getPlayer().getLocation().getPitch()) && Perm.hasPermissionSilent(event.getPlayer(), "dc.afk.self")){
+		if(Misc.isAfk(event.getPlayer().getEntityId()) && (Util.getDistanceIgnoreY(event.getFrom(), event.getTo()) >= V.afk_move_min || Misc.getAfkPlayer(event.getPlayer().getEntityId()).getLocation().getYaw() != event.getPlayer().getLocation().getYaw() || Misc.getAfkPlayer(event.getPlayer().getEntityId()).getLocation().getPitch() != event.getPlayer().getLocation().getPitch()) && Perm.hasPermissionSilent(event.getPlayer(), "dc.afk.self")){
 			Misc.setAfk(event.getPlayer().getEntityId(), false);
 			Misc.getAfkPlayer(event.getPlayer().getEntityId()).resetTime();
 			L.log(Misc.getSenderCmdMsg("c_afk", event.getPlayer(), Misc.getPlayers(event.getPlayer(), event.getPlayer().getName()), Misc.isAfk(Misc.getPlayers(event.getPlayer(), event.getPlayer().getName()).get(0).getEntityId())));
@@ -140,14 +141,14 @@ public class DCPlayerListener extends PlayerListener{
 	@Override
 	public void onPlayerRespawn(PlayerRespawnEvent event){
 		if(Misc.getConfig(event.getPlayer()).getBoolean("home_on_death") && Misc.getHome(event.getPlayer()) != null){
-			event.setRespawnLocation(Misc.getSafeLocationAt(Misc.getHome(event.getPlayer()).getLocation()));
+			event.setRespawnLocation(Util.getSafeLocationAt(Misc.getHome(event.getPlayer()).getLocation()));
 		}else{
-			event.setRespawnLocation(Misc.getSafeLocationAt(Misc.getConfig(event.getPlayer()).getSpawn()));
+			event.setRespawnLocation(Util.getSafeLocationAt(Misc.getConfig(event.getPlayer()).getSpawn()));
 		}
 		if(!event.getPlayer().getWorld().equals(event.getRespawnLocation().getWorld())){
 			Misc.setInventory(event.getPlayer().getName(), event.getPlayer().getInventory().getContents(), event.getPlayer().getWorld().getName());
 			if(Misc.getInventory(event.getPlayer().getName(), event.getRespawnLocation().getWorld().getName()) != null){
-				event.getPlayer().getInventory().setContents(Misc.getItemStack(Misc.getInventory(event.getPlayer().getName(), event.getRespawnLocation().getWorld().getName()).getContents()));
+				event.getPlayer().getInventory().setContents(Util.convertItemStack(Misc.getInventory(event.getPlayer().getName(), event.getRespawnLocation().getWorld().getName()).getContents()));
 			}else{
 				event.getPlayer().getInventory().clear();
 			}
@@ -181,18 +182,18 @@ public class DCPlayerListener extends PlayerListener{
 		if(event.isCancelled()){
 			return;
 		}*/
-		if(event.getAction().equals(Action.LEFT_CLICK_BLOCK) && Misc.isLeftClickInteractAble(event.getClickedBlock())){
+		if(event.getAction().equals(Action.LEFT_CLICK_BLOCK) && Util.isLeftClickInteractAble(event.getClickedBlock())){
 			if(!Perm.hasPermissionSilent(event.getPlayer(), "dc.do." + event.getPlayer().getWorld().getName())){
 				event.setCancelled(true);
 				return;
 			}
-		}else if(event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && Misc.isRightClickInteractAble(event.getClickedBlock())){
+		}else if(event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && Util.isRightClickInteractAble(event.getClickedBlock())){
 			if(!Perm.hasPermissionSilent(event.getPlayer(), "dc.do." + event.getPlayer().getWorld().getName())){
 				event.setCancelled(true);
 				return;
 			}
 		}
-		if(Misc.isFly(event.getPlayer().getEntityId()) && event.getPlayer().getItemInHand().getType().equals(Material.FEATHER) && !Misc.isLeftClickInteractAble(event.getClickedBlock()) && !Misc.isRightClickInteractAble(event.getClickedBlock())){
+		if(Misc.isFly(event.getPlayer().getEntityId()) && event.getPlayer().getItemInHand().getType().equals(Material.FEATHER) && !Util.isLeftClickInteractAble(event.getClickedBlock()) && !Util.isRightClickInteractAble(event.getClickedBlock())){
 			if(event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)){
 				event.getPlayer().setVelocity(
 						new Vector(
@@ -213,7 +214,7 @@ public class DCPlayerListener extends PlayerListener{
 				return;
 			}
 		}
-		if(event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && event.getPlayer().getItemInHand().getType().equals(Material.FLINT_AND_STEEL) && !Misc.isRightClickInteractAble(event.getClickedBlock()) && !Perm.hasPermissionSilent(event.getPlayer(), "dc.flint_and_steel." + event.getPlayer().getWorld().getName())){
+		if(event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && event.getPlayer().getItemInHand().getType().equals(Material.FLINT_AND_STEEL) && !Util.isRightClickInteractAble(event.getClickedBlock()) && !Perm.hasPermissionSilent(event.getPlayer(), "dc.flint_and_steel." + event.getPlayer().getWorld().getName())){
 			if(Misc.getConfig(event.getPlayer()).getBoolean("block_fire_flint_and_steel")){
 				event.setCancelled(true);
 				return;
@@ -251,7 +252,7 @@ public class DCPlayerListener extends PlayerListener{
 	public void onPlayerJoin(PlayerJoinEvent event){
 		event.setJoinMessage(null);
 		if(Misc.getInventory(event.getPlayer().getName(), event.getPlayer().getWorld().getName()) != null){
-			event.getPlayer().getInventory().setContents(Misc.getItemStack(Misc.getInventory(event.getPlayer().getName(), event.getPlayer().getWorld().getName()).getContents()));
+			event.getPlayer().getInventory().setContents(Util.convertItemStack(Misc.getInventory(event.getPlayer().getName(), event.getPlayer().getWorld().getName()).getContents()));
 		}
 		Misc.setAfkPlayer(event.getPlayer().getEntityId(), new DCAfkPlayer(event.getPlayer().getEntityId(), event.getPlayer().getLocation()));
 		Misc.broadcastConnect(event.getPlayer(), false);
@@ -272,7 +273,7 @@ public class DCPlayerListener extends PlayerListener{
 		if(!event.getFrom().getWorld().equals(event.getTo().getWorld())){
 			Misc.setInventory(event.getPlayer().getName(), event.getPlayer().getInventory().getContents(), event.getFrom().getWorld().getName());
 			if(Misc.getInventory(event.getPlayer().getName(), event.getTo().getWorld().getName()) != null){
-				event.getPlayer().getInventory().setContents(Misc.getItemStack(Misc.getInventory(event.getPlayer().getName(), event.getTo().getWorld().getName()).getContents()));
+				event.getPlayer().getInventory().setContents(Util.convertItemStack(Misc.getInventory(event.getPlayer().getName(), event.getTo().getWorld().getName()).getContents()));
 			}else{
 				event.getPlayer().getInventory().clear();
 			}
@@ -402,10 +403,10 @@ public class DCPlayerListener extends PlayerListener{
 				hp = ChatColor.RED + hp;
 			}
 			hp += ChatColor.WHITE;
-			event.setMessage(Misc.replaceColor(event.getMessage()));
+			event.setMessage(Util.replaceColor(event.getMessage()));
 			if(Perm.PermissionsHandler != null){
 				event.setFormat(
-						Misc.replaceColor(
+						Util.replaceColor(
 								V.chat
 								.replace("<prefix>", Perm.PermissionsHandler.getGroupPrefix(event.getPlayer().getWorld().getName(), Perm.PermissionsHandler.getGroup(event.getPlayer().getWorld().getName(), event.getPlayer().getName())))
 								.replace("<suffix>", Perm.PermissionsHandler.getGroupSuffix(event.getPlayer().getWorld().getName(), Perm.PermissionsHandler.getGroup(event.getPlayer().getWorld().getName(), event.getPlayer().getName())))
@@ -421,7 +422,7 @@ public class DCPlayerListener extends PlayerListener{
 				);
 			}else{
 				event.setFormat(
-						Misc.replaceColor(
+						Util.replaceColor(
 								V.chat
 								.replace("<prefix>", "")
 								.replace("<suffix>", "")

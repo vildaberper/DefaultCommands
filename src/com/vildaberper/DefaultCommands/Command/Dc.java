@@ -8,6 +8,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import com.vildaberper.DefaultCommands.FileManager;
 import com.vildaberper.DefaultCommands.Misc;
 import com.vildaberper.DefaultCommands.Perm;
 import com.vildaberper.DefaultCommands.Reset;
@@ -68,14 +69,14 @@ public class Dc{
 					sender.sendMessage("There is no new update availiable (" + current + ").");
 				}else{
 					V.plugin.getServer().getPluginManager().disablePlugin(V.plugin);
-					Misc.downloadFile("http://dl.dropbox.com/u/19411765/Release/DefaultCommands/Latest/DefaultCommands.jar", new File(new File("plugins"), "DefaultCommands.jar"));
+					FileManager.downloadFile("http://dl.dropbox.com/u/19411765/Release/DefaultCommands/Latest/DefaultCommands.jar", new File(new File("plugins"), "DefaultCommands.jar"));
 					sender.sendMessage("Successfully updated to the latest version (" + latest + "). Reloading server.");
 					V.plugin.getServer().reload();
 				}
 				return true;
 			}else if(args[0].equalsIgnoreCase("updatedev")){
 				V.plugin.getServer().getPluginManager().disablePlugin(V.plugin);
-				Misc.downloadFile("http://dl.dropbox.com/u/19411765/Release/DefaultCommands/Development/DefaultCommands.jar", new File(new File("plugins"), "DefaultCommands.jar"));
+				FileManager.downloadFile("http://dl.dropbox.com/u/19411765/Release/DefaultCommands/Development/DefaultCommands.jar", new File(new File("plugins"), "DefaultCommands.jar"));
 				sender.sendMessage("Successfully updated to the latest development build. Reloading server.");
 				V.plugin.getServer().reload();
 				return true;

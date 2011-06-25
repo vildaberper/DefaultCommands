@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import com.vildaberper.DefaultCommands.L;
 import com.vildaberper.DefaultCommands.Misc;
 import com.vildaberper.DefaultCommands.Perm;
+import com.vildaberper.DefaultCommands.Util;
 
 public class Warp{
 	public static boolean warp(CommandSender sender, Command command, String label, String[] args){
@@ -29,10 +30,10 @@ public class Warp{
 						if(Misc.getPlayers(sender, args[1]).get(0) == (Player) sender && !Perm.hasPermission((Player) sender, "dc.warp.self." + Misc.getWarp(args[0]).getName())){
 						}else if(Misc.getPlayers(sender, args[1]).get(0) != (Player) sender && !Perm.hasPermission((Player) sender, "dc.warp.other." + Misc.getWarp(args[0]).getName())){
 						}else{
-							player.teleport(Misc.getSafeLocationAt(Misc.getWarp(args[0]).getLocation()));
+							player.teleport(Util.getSafeLocationAt(Misc.getWarp(args[0]).getLocation()));
 						}
 					}else{
-						player.teleport(Misc.getSafeLocationAt(Misc.getWarp(args[0]).getLocation()));
+						player.teleport(Util.getSafeLocationAt(Misc.getWarp(args[0]).getLocation()));
 					}
 				}
 				L.log(Misc.getColoredString("c_warp").replace("<player>", Misc.getSenderName(sender)).replace("<warp>", Misc.getWarp(args[0]).getName()).replace("<players>", Misc.getPlayerNames(Misc.getPlayers(sender, args[1]))));

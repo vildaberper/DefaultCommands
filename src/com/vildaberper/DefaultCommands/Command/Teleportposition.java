@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import com.vildaberper.DefaultCommands.L;
 import com.vildaberper.DefaultCommands.Misc;
 import com.vildaberper.DefaultCommands.Perm;
+import com.vildaberper.DefaultCommands.Util;
 import com.vildaberper.DefaultCommands.V;
 
 public class Teleportposition{
@@ -20,7 +21,7 @@ public class Teleportposition{
 			return true;
 		}else if(args.length == 5){
 			if(Misc.getPlayers(sender, args[3]).size() != 0){
-				if(!Misc.isValidDouble(args[0]) || !Misc.isValidDouble(args[1]) || !Misc.isValidDouble(args[2])){
+				if(!Util.isValidDouble(args[0]) || !Util.isValidDouble(args[1]) || !Util.isValidDouble(args[2])){
 					Misc.sendString(sender, "invalid_coordinate");
 					return false;
 				}

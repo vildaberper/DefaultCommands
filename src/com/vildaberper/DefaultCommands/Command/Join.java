@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import com.vildaberper.DefaultCommands.L;
 import com.vildaberper.DefaultCommands.Misc;
 import com.vildaberper.DefaultCommands.Perm;
+import com.vildaberper.DefaultCommands.Util;
 
 public class Join{
 	public static boolean join(CommandSender sender, Command command, String label, String[] args){
@@ -27,10 +28,10 @@ public class Join{
 							if(Misc.getPlayers(sender, args[1]).get(0) == (Player) sender && !Perm.hasPermission((Player) sender, "dc.join.self." + args[0])){
 							}else if(Misc.getPlayers(sender, args[1]).get(0) != (Player) sender && !Perm.hasPermission((Player) sender, "dc.join.other." + args[0])){
 							}else{
-								player.teleport(Misc.getSafeLocationAt(Misc.getConfig(args[0]).getSpawn()));
+								player.teleport(Util.getSafeLocationAt(Misc.getConfig(args[0]).getSpawn()));
 							}
 						}else{
-							player.teleport(Misc.getSafeLocationAt(Misc.getConfig(args[0]).getSpawn()));
+							player.teleport(Util.getSafeLocationAt(Misc.getConfig(args[0]).getSpawn()));
 						}
 					}
 					L.log(Misc.getColoredString("c_join").replace("<player>", Misc.getSenderName(sender)).replace("<world>", args[0]).replace("<players>", Misc.getPlayerNames(Misc.getPlayers(sender, args[1]))));

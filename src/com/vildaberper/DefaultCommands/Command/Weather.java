@@ -7,13 +7,11 @@ import org.bukkit.entity.Player;
 import com.vildaberper.DefaultCommands.L;
 import com.vildaberper.DefaultCommands.Misc;
 import com.vildaberper.DefaultCommands.Perm;
+import com.vildaberper.DefaultCommands.Util;
 import com.vildaberper.DefaultCommands.V;
 
 public class Weather{
 	public static boolean weather(CommandSender sender, Command command, String label, final String[] args){
-		if(sender instanceof Player && !Perm.hasPermission((Player) sender, "dc.dc")){
-			return false;
-		}
 		if(args.length == 1 && sender instanceof Player){
 			((Player) sender).chat("/dcweather " + args[0] + " 120 " + ((Player) sender).getWorld().getName());
 			return true;
@@ -27,7 +25,7 @@ public class Weather{
 				if(sender instanceof Player && !Perm.hasPermission((Player) sender, "dc.weather." + V.plugin.getServer().getWorld(args[2]).getName())){
 					return false;
 				}
-				if(Misc.isValidInt(args[1]) && Integer.parseInt(args[1]) > 0){
+				if(Util.isValidInt(args[1]) && Integer.parseInt(args[1]) > 0){
 					Misc.setConfig(args[2], "weather_change", true);
 					if(args[0].equalsIgnoreCase("rain")){
 						V.plugin.getServer().getWorld(args[2]).setStorm(true);

@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import com.vildaberper.DefaultCommands.L;
 import com.vildaberper.DefaultCommands.Misc;
 import com.vildaberper.DefaultCommands.Perm;
+import com.vildaberper.DefaultCommands.Util;
 import com.vildaberper.DefaultCommands.V;
 
 public class AfkCheck implements Runnable{
@@ -14,7 +15,7 @@ public class AfkCheck implements Runnable{
 			Misc.getAfkPlayer(player.getEntityId()).addTime();
 			if(!Misc.isAfk(player.getEntityId())){
 				if(
-						Misc.getDistanceIgnoreY(player.getLocation(), Misc.getAfkPlayer(player.getEntityId()).getLocation()) <= V.afk_move_min * 4
+						Util.getDistanceIgnoreY(player.getLocation(), Misc.getAfkPlayer(player.getEntityId()).getLocation()) <= V.afk_move_min * 4
 						&& player.getLocation().getYaw() == Misc.getAfkPlayer(player.getEntityId()).getLocation().getYaw()
 						&& player.getLocation().getPitch() == Misc.getAfkPlayer(player.getEntityId()).getLocation().getPitch()
 						&& Perm.hasPermissionSilent(player, "dc.afk.self")

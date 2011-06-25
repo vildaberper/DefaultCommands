@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import com.vildaberper.DefaultCommands.L;
 import com.vildaberper.DefaultCommands.Misc;
 import com.vildaberper.DefaultCommands.Perm;
+import com.vildaberper.DefaultCommands.Util;
 import com.vildaberper.DefaultCommands.V;
 
 public class Spawnmob{
@@ -18,8 +19,8 @@ public class Spawnmob{
 		List<LivingEntity> entities = new LinkedList<LivingEntity>();
 
 		if(sender instanceof Player && args.length > 0){
-			if(!Misc.isValidInt(args[0])){
-				if(Misc.getCreatureType(args[0]) != null){
+			if(!Util.isValidInt(args[0])){
+				if(Util.getCreatureType(args[0]) != null){
 					String c = "";
 
 					for(String arg : args){
@@ -35,7 +36,7 @@ public class Spawnmob{
 					return false;
 				}
 				for(int i = 1; i < args.length; i++){
-					if(Misc.getCreatureType(args[i]) == null){
+					if(Util.getCreatureType(args[i]) == null){
 						return false;
 					}
 					if(!Perm.hasPermission(((Player) sender), "dc.spawnmob." + args[0].toLowerCase())){
@@ -45,14 +46,14 @@ public class Spawnmob{
 				for(int i = 0; i < Integer.parseInt(args[0]); i++){
 					entities.clear();
 					for(int u = 1; u < args.length; u++){
-						boolean blockspawn = Misc.getConfig(((Player) sender)).getBoolean("block_" + Misc.getCreatureType(args[u]).getName().toLowerCase() + "_spawn");
+						boolean blockspawn = Misc.getConfig(((Player) sender)).getBoolean("block_" + Util.getCreatureType(args[u]).getName().toLowerCase() + "_spawn");
 
-						Misc.setConfig(((Player) sender).getWorld().getName(), "block_" + Misc.getCreatureType(args[u]).getName().toLowerCase() + "_spawn", false);
-						entities.add(((Player) sender).getWorld().spawnCreature(Misc.getSafeLocationAt(((Player) sender).getTargetBlock(null, V.targetmax)), Misc.getCreatureType(args[u])));
+						Misc.setConfig(((Player) sender).getWorld().getName(), "block_" + Util.getCreatureType(args[u]).getName().toLowerCase() + "_spawn", false);
+						entities.add(((Player) sender).getWorld().spawnCreature(Util.getSafeLocationAt(((Player) sender).getTargetBlock(null, V.targetmax)), Util.getCreatureType(args[u])));
 						if(entities.size() > 1){
 							entities.get(entities.size() - 2).setPassenger(entities.get(entities.size() - 1));
 						}
-						Misc.setConfig(((Player) sender).getWorld().getName(), "block_" + Misc.getCreatureType(args[u]).getName().toLowerCase() + "_spawn", blockspawn);
+						Misc.setConfig(((Player) sender).getWorld().getName(), "block_" + Util.getCreatureType(args[u]).getName().toLowerCase() + "_spawn", blockspawn);
 					}
 				}
 				if(Integer.parseInt(args[0]) == 1){

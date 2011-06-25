@@ -9,12 +9,13 @@ import org.bukkit.inventory.ItemStack;
 import com.vildaberper.DefaultCommands.L;
 import com.vildaberper.DefaultCommands.Misc;
 import com.vildaberper.DefaultCommands.Perm;
+import com.vildaberper.DefaultCommands.Util;
 
 public class Stack{
 	public static boolean stack(CommandSender sender, Command command, String label, String[] args){
 		if(sender instanceof Player){
 			if(args.length > 0){
-				if(Misc.isValidInt(args[0]) && Integer.parseInt(args[0]) == 0){
+				if(Util.isValidInt(args[0]) && Integer.parseInt(args[0]) == 0){
 					if(!Perm.hasPermission((Player) sender, "dc.remove")){
 						return false;
 					}
@@ -31,7 +32,7 @@ public class Stack{
 				if(((Player) sender).getItemInHand() != null && !((Player) sender).getItemInHand().getType().equals(Material.AIR)){
 					ItemStack itemstack = ((Player) sender).getItemInHand();
 
-					if(!Misc.isValidInt(args[0]) || Misc.isValidInt(args[0]) && Integer.parseInt(args[0]) > 64 || Misc.isValidInt(args[0]) && Integer.parseInt(args[0]) < 0){
+					if(!Util.isValidInt(args[0]) || Util.isValidInt(args[0]) && Integer.parseInt(args[0]) > 64 || Util.isValidInt(args[0]) && Integer.parseInt(args[0]) < 0){
 						Misc.sendMessage(sender, Misc.getColoredString("invalid_amount"));
 					}
 					if(Integer.parseInt(args[0]) == 0){
@@ -40,8 +41,8 @@ public class Stack{
 						itemstack.setAmount(Integer.parseInt(args[0]));
 						((Player) sender).setItemInHand(itemstack);
 					}
-					L.log(Misc.getColoredString("c_stack").replace("<player>", Misc.getSenderName(sender)).replace("<item>", Misc.getItemName(itemstack.getTypeId())).replace("<amount>", String.valueOf(Integer.parseInt(args[0]))));
-					Misc.sendMessage(sender, Misc.getColoredString("c_stack").replace("<player>", Misc.getSenderName(sender)).replace("<item>", Misc.getItemName(itemstack.getTypeId())).replace("<amount>", String.valueOf(Integer.parseInt(args[0]))));
+					L.log(Misc.getColoredString("c_stack").replace("<player>", Misc.getSenderName(sender)).replace("<item>", Util.getItemName(itemstack.getTypeId())).replace("<amount>", String.valueOf(Integer.parseInt(args[0]))));
+					Misc.sendMessage(sender, Misc.getColoredString("c_stack").replace("<player>", Misc.getSenderName(sender)).replace("<item>", Util.getItemName(itemstack.getTypeId())).replace("<amount>", String.valueOf(Integer.parseInt(args[0]))));
 					return true;
 				}
 			}else if(args.length > 1){
@@ -53,7 +54,7 @@ public class Stack{
 					}
 					string += args[i];
 				}
-				if(!Misc.isValidInt(args[0]) || Misc.isValidInt(args[0]) && Integer.parseInt(args[0]) > 64 || Misc.isValidInt(args[0]) && Integer.parseInt(args[0]) < 0){
+				if(!Util.isValidInt(args[0]) || Util.isValidInt(args[0]) && Integer.parseInt(args[0]) > 64 || Util.isValidInt(args[0]) && Integer.parseInt(args[0]) < 0){
 					Misc.sendMessage(sender, Misc.getColoredString("invalid_amount"));
 				}
 				for(Material material : Misc.getItems(string)){

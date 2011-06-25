@@ -8,6 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import com.vildaberper.DefaultCommands.L;
 import com.vildaberper.DefaultCommands.Misc;
 import com.vildaberper.DefaultCommands.Perm;
+import com.vildaberper.DefaultCommands.Util;
 import com.vildaberper.DefaultCommands.V;
 
 public class Give{
@@ -31,7 +32,7 @@ public class Give{
 						}
 					}
 				}
-				if(!Misc.isValidInt(Misc.getGive(args, "amount"))){
+				if(!Util.isValidInt(Misc.getGive(args, "amount"))){
 					Misc.sendString(sender, "invalid_amount");
 					return false;
 				}

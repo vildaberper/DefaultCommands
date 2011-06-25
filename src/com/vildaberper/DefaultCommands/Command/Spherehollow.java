@@ -8,8 +8,10 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import com.vildaberper.DefaultCommands.Edit;
 import com.vildaberper.DefaultCommands.Misc;
 import com.vildaberper.DefaultCommands.Perm;
+import com.vildaberper.DefaultCommands.Util;
 
 public class Spherehollow{
 	public static boolean spherehollow(CommandSender sender, Command command, String label, String[] args){
@@ -19,8 +21,8 @@ public class Spherehollow{
 			}
 			if(args.length == 2){
 				if(Misc.getSelection(((Player) sender).getName()) != null){
-					if(Misc.isValidInt(args[1]) && Integer.parseInt(args[1]) > 0){
-						List<Block> blocks = Misc.getSphere(Misc.getSelection(((Player) sender).getName()).getBlock1(), Integer.parseInt(args[1]));
+					if(Util.isValidInt(args[1]) && Integer.parseInt(args[1]) > 0){
+						List<Block> blocks = Edit.getSpherehollow(Misc.getSelection(((Player) sender).getName()).getBlock1(), Integer.parseInt(args[1]));
 						Material material = Material.matchMaterial(args[0].split(":")[0]);
 						byte data = 0;
 
@@ -39,7 +41,7 @@ public class Spherehollow{
 							block.setType(material);
 							block.setData(data);
 						}
-						Misc.sendMessage(sender, "Filled " + blocks.size() + " blocks with " + Misc.getItemName(material) + ".");
+						Misc.sendMessage(sender, "Filled " + blocks.size() + " blocks with " + Util.getItemName(material) + ".");
 						return true;
 					}else{
 						sender.sendMessage("Invalid radius.");

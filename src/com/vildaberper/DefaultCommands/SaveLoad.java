@@ -228,7 +228,7 @@ public class SaveLoad{
 						BufferedWriter bw = new BufferedWriter(fw);
 
 						bw.flush();
-						bw.write(Misc.getStringFromItemStack(Misc.getItemStack(dcinventory.getContents())));
+						bw.write(Misc.getStringFromItemStack(Util.convertItemStack(dcinventory.getContents())));
 						bw.close();
 					}catch(Exception e){
 						System.out.println("Failed to save inventory: " + file.getAbsolutePath());
@@ -251,7 +251,7 @@ public class SaveLoad{
 				BufferedWriter bw = new BufferedWriter(fw);
 
 				bw.flush();
-				bw.write(Misc.getStringFromItemStack(Misc.getItemStack(dcinventory.getContents())));
+				bw.write(Misc.getStringFromItemStack(Util.convertItemStack(dcinventory.getContents())));
 				bw.close();
 			}catch(Exception e){
 				System.out.println("Failed to save inventory: " + file.getAbsolutePath());
@@ -344,7 +344,7 @@ public class SaveLoad{
 				config = new Configuration(new File(V.plugin.getDataFolder(), "Worlds" + File.separator + files[i].getName() + File.separator + "Config.yml"));
 				config.load();
 
-				Environment e = Misc.getEnvironment(config.getString("enviroment", "NORMAL"));
+				Environment e = Util.getEnvironment(config.getString("enviroment", "NORMAL"));
 				String s = null;
 
 				if(e == null){

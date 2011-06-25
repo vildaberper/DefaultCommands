@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import com.vildaberper.DefaultCommands.L;
 import com.vildaberper.DefaultCommands.Misc;
 import com.vildaberper.DefaultCommands.Perm;
+import com.vildaberper.DefaultCommands.Util;
 
 public class Health{
 	public static boolean health(final CommandSender sender, Command command, String label, String[] args){
@@ -29,7 +30,7 @@ public class Health{
 						return false;
 					}
 				}
-				if(Misc.isValidInt(args[1]) && Integer.parseInt(args[1]) >= 0 && Integer.parseInt(args[1]) <= 20){
+				if(Util.isValidInt(args[1]) && Integer.parseInt(args[1]) >= 0 && Integer.parseInt(args[1]) <= 20){
 					for(Player player : Misc.getPlayers(sender, args[0])){
 						if(Integer.parseInt(args[1]) > 0){
 							player.setHealth(Integer.parseInt(args[1]));

@@ -11,6 +11,7 @@ import org.bukkit.plugin.Plugin;
 
 import com.vildaberper.DefaultCommands.Misc;
 import com.vildaberper.DefaultCommands.Perm;
+import com.vildaberper.DefaultCommands.Util;
 import com.vildaberper.DefaultCommands.V;
 
 public class Help{
@@ -33,7 +34,7 @@ public class Help{
 				}
 			}
 			if(args.length == 1){
-				if(Misc.isValidInt(args[0]) && Integer.parseInt(args[0]) > 0){
+				if(Util.isValidInt(args[0]) && Integer.parseInt(args[0]) > 0){
 					page = Integer.parseInt(args[0]);
 				}else{
 					if(V.plugin.getServer().getPluginCommand(args[0]) != null){

@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import com.vildaberper.DefaultCommands.L;
 import com.vildaberper.DefaultCommands.Misc;
 import com.vildaberper.DefaultCommands.Perm;
+import com.vildaberper.DefaultCommands.Util;
 
 public class Spawn{
 	public static boolean spawn(CommandSender sender, Command command, String label, String[] args){
@@ -26,10 +27,10 @@ public class Spawn{
 							if(Misc.getPlayers(sender, args[0]).get(0) == (Player) sender && !Perm.hasPermission((Player) sender, "dc.spawn.self." + player.getWorld().getName())){
 							}else if(Misc.getPlayers(sender, args[0]).get(0) != (Player) sender && !Perm.hasPermission((Player) sender, "dc.spawn.other." + player.getWorld().getName())){
 							}else{
-								player.teleport(Misc.getSafeLocationAt(Misc.getConfig(player).getSpawn()));
+								player.teleport(Util.getSafeLocationAt(Misc.getConfig(player).getSpawn()));
 							}
 						}else{
-							player.teleport(Misc.getSafeLocationAt(Misc.getConfig(player).getSpawn()));
+							player.teleport(Util.getSafeLocationAt(Misc.getConfig(player).getSpawn()));
 						}
 					}
 					L.log(Misc.getSenderCmdMsg("c_spawn", sender, Misc.getPlayers(sender, args[0])));

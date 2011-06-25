@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 
 import com.vildaberper.DefaultCommands.Misc;
 import com.vildaberper.DefaultCommands.Perm;
+import com.vildaberper.DefaultCommands.Util;
 import com.vildaberper.DefaultCommands.V;
 
 public class Jump{
@@ -20,7 +21,7 @@ public class Jump{
 					Misc.sendString(sender, "frozen");
 					return false;
 				}
-				Location location = Misc.getSafeLocationAt(((Player) sender).getTargetBlock(null, V.targetmax));
+				Location location = Util.getSafeLocationAt(((Player) sender).getTargetBlock(null, V.targetmax));
 				location.setYaw(((Player) sender).getLocation().getYaw());
 				location.setPitch(((Player) sender).getLocation().getPitch());
 				((Player) sender).teleport(location);

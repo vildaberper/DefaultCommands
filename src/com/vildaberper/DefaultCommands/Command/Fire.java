@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import com.vildaberper.DefaultCommands.L;
 import com.vildaberper.DefaultCommands.Misc;
 import com.vildaberper.DefaultCommands.Perm;
+import com.vildaberper.DefaultCommands.Util;
 
 public class Fire{
 	public static boolean fire(CommandSender sender, Command command, String label, String[] args){
@@ -22,7 +23,7 @@ public class Fire{
 						return false;
 					}
 				}
-				if(Misc.isValidInt(args[0]) && Integer.parseInt(args[0]) >= 0){
+				if(Util.isValidInt(args[0]) && Integer.parseInt(args[0]) >= 0){
 					for(Player player : Misc.getPlayers(sender, args[1])){
 						player.setFireTicks(Integer.parseInt(args[0]));
 					}

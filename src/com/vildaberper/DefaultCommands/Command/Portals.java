@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 
 import com.vildaberper.DefaultCommands.Misc;
 import com.vildaberper.DefaultCommands.Perm;
+import com.vildaberper.DefaultCommands.Util;
 import com.vildaberper.DefaultCommands.V;
 
 public class Portals{
@@ -17,7 +18,7 @@ public class Portals{
 		}
 		if(args.length < 2){
 			if(args.length == 1){
-				if(Misc.isValidInt(args[0]) && Integer.parseInt(args[0]) > 0){
+				if(Util.isValidInt(args[0]) && Integer.parseInt(args[0]) > 0){
 					page = Integer.parseInt(args[0]);
 				}else{
 					return false;

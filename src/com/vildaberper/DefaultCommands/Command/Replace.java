@@ -9,8 +9,10 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import com.vildaberper.DefaultCommands.Edit;
 import com.vildaberper.DefaultCommands.Misc;
 import com.vildaberper.DefaultCommands.Perm;
+import com.vildaberper.DefaultCommands.Util;
 import com.vildaberper.DefaultCommands.Class.DCIdData;
 
 public class Replace{
@@ -40,7 +42,7 @@ public class Replace{
 						dcid.add(new DCIdData(material.getId(), data));
 					}
 
-					List<Block> blocks = Misc.getReplace(Misc.getSelection(((Player) sender).getName()).getBlock1(), Misc.getSelection(((Player) sender).getName()).getBlock2(), dcid);
+					List<Block> blocks = Edit.getReplace(Misc.getSelection(((Player) sender).getName()).getBlock1(), Misc.getSelection(((Player) sender).getName()).getBlock2(), dcid);
 					Material material = Material.matchMaterial(args[args.length - 1].split(":")[0]);
 					byte data = 0;
 
@@ -60,7 +62,7 @@ public class Replace{
 						block.setType(material);
 						block.setData(data);
 					}
-					Misc.sendMessage(sender, "Replaced " + blocks.size() + " blocks with " + Misc.getItemName(material) + ".");
+					Misc.sendMessage(sender, "Replaced " + blocks.size() + " blocks with " + Util.getItemName(material) + ".");
 					return true;
 				}else{
 					Misc.sendString(sender, "invalid_selection");

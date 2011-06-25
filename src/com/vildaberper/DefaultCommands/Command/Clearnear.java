@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import com.vildaberper.DefaultCommands.L;
 import com.vildaberper.DefaultCommands.Misc;
 import com.vildaberper.DefaultCommands.Perm;
+import com.vildaberper.DefaultCommands.Util;
 
 public class Clearnear{
 	public static boolean clearnear(CommandSender sender, Command command, String label, String[] args){
@@ -15,10 +16,10 @@ public class Clearnear{
 			if(!Perm.hasPermission((Player) sender, "dc.clearnear." + ((Player) sender).getWorld().getName())){
 				return false;
 			}
-			if(Misc.isValidInt(args[0]) && Integer.parseInt(args[0]) > 0){
+			if(Util.isValidInt(args[0]) && Integer.parseInt(args[0]) > 0){
 				int amount = 0;
 
-				for(Entity entity : Misc.getNearbyItems(((Player) sender).getLocation(), Integer.parseInt(args[0]))){
+				for(Entity entity : Util.getNearbyItems(((Player) sender).getLocation(), Integer.parseInt(args[0]))){
 					entity.remove();
 					amount++;
 				}
