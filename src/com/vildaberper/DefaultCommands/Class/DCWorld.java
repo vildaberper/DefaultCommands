@@ -47,7 +47,7 @@ public class DCWorld{
 		return name;
 	}
 	public void setEnviroment(World.Environment enviroment){
-		this.environment = enviroment;
+		environment = enviroment;
 	}
 	public  World.Environment getEnviroment(){
 		return environment;

@@ -163,7 +163,7 @@ public class Misc{
 			V.bans.remove(getBan(player));
 		}
 		if(message != null){
-			V.bans.add(new DCBan(player, message));	
+			V.bans.add(new DCBan(player, message));
 		}
 	}
 

@@ -33,24 +33,65 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public class Util{
+	public static boolean isSameDifferentData(int id){
+		return ":6:17:18:31:35:43:44:263:351:".indexOf(":" + id + ":") == -1;
+	}
+
+	public static boolean isRightClickInteractAble(Block block){
+		if(block == null){
+			return false;
+		}
+		return !(":23:25:26:54:58:61:62:64:69:77:84:92:93:94:95:96:".indexOf(":" + block.getTypeId() + ":") == -1);
+	}
+
+	public static boolean isLeftClickInteractAble(Block block){
+		if(block == null){
+			return false;
+		}
+		return !(":51:64:69:77:96:".indexOf(":" + block.getTypeId() + ":") == -1);
+	}
+
+	public static List<Entity> getNearbyMobs(Location location, double distance){
+		List<Entity> entities = getNearbyEntities(location, distance);
+
+		for(int i = 0; i < entities.size(); i++){
+			if(!(
+					entities.get(i) instanceof CraftChicken
+					|| entities.get(i) instanceof CraftCow
+					|| entities.get(i) instanceof CraftCreeper
+					|| entities.get(i) instanceof CraftGhast
+					|| entities.get(i) instanceof CraftMonster
+					|| entities.get(i) instanceof CraftPig
+					|| entities.get(i) instanceof CraftPigZombie
+					|| entities.get(i) instanceof CraftSheep
+					|| entities.get(i) instanceof CraftSkeleton
+					|| entities.get(i) instanceof CraftSlime
+					|| entities.get(i) instanceof CraftSpider
+					|| entities.get(i) instanceof CraftSquid
+					|| entities.get(i) instanceof CraftWolf
+					|| entities.get(i) instanceof CraftZombie
+			)){
+				entities.remove(i);
+				i--;
+			}
+		}
+		return entities;
+	}
+
 	public static boolean addIfNotInInventory(Player player, ItemStack itemstack){
-		if(!Util.containsIgnoreAmount(player.getInventory().getContents(), itemstack)){
+		if(!containsIgnoreAmount(player.getInventory().getContents(), itemstack)){
 			player.getInventory().addItem(itemstack);
 		}
-		return !Util.containsIgnoreAmount(player.getInventory().getContents(), itemstack);
+		return !containsIgnoreAmount(player.getInventory().getContents(), itemstack);
 	}
-	
+
 	public static boolean containsIgnoreAmount(ItemStack[] inventory, ItemStack itemstack){
 		for(ItemStack is : inventory){
-			if(is != null && itemstack != null && is.getType().equals(itemstack.getType()) && ((isSameDifferentData(is.getTypeId())) || (is.getData() == null && itemstack.getData() == null) || (is.getData() != null && itemstack.getData() != null && is.getData().equals(itemstack.getData())))){
+			if(is != null && itemstack != null && is.getType().equals(itemstack.getType()) && (isSameDifferentData(is.getTypeId()) || is.getData() == null && itemstack.getData() == null || is.getData() != null && itemstack.getData() != null && is.getData().equals(itemstack.getData()))){
 				return true;
 			}
 		}
 		return false;
-	}
-	
-	public static boolean isSameDifferentData(int id){
-		return ":6:17:18:31:35:43:44:263:351:".indexOf(":" + id + ":") == -1;
 	}
 
 	public static void sleep(int duration){
@@ -90,49 +131,6 @@ public class Util{
 		return getItemName(material.getId());
 	}
 
-	public static boolean isRightClickInteractAble(Block block){
-		if(block == null){
-			return false;
-		}
-		if(
-				block.getTypeId() == 23 ||
-				block.getTypeId() == 25 ||
-				block.getTypeId() == 26 ||
-				block.getTypeId() == 54 ||
-				block.getTypeId() == 58 ||
-				block.getTypeId() == 61 ||
-				block.getTypeId() == 62 ||
-				block.getTypeId() == 64 ||
-				block.getTypeId() == 69 ||
-				block.getTypeId() == 77 ||
-				block.getTypeId() == 84 ||
-				block.getTypeId() == 92 ||
-				block.getTypeId() == 93 ||
-				block.getTypeId() == 94 ||
-				block.getTypeId() == 96
-		){
-			return true;
-		}
-		return false;
-	}
-
-	public static boolean isLeftClickInteractAble(Block block){
-		if(block == null){
-			return false;
-		}
-		if(
-				block.getTypeId() == 46 ||
-				block.getTypeId() == 51 ||
-				block.getTypeId() == 64 ||
-				block.getTypeId() == 69 ||
-				block.getTypeId() == 77 ||
-				block.getTypeId() == 96
-		){
-			return true;
-		}
-		return false;
-	}
-
 	public static boolean isValidInt(String string){
 		if(string == null){
 			return false;
@@ -166,33 +164,6 @@ public class Util{
 		}else{
 			return isValidInt(string);
 		}
-	}
-
-	public static List<Entity> getNearbyMobs(Location location, double distance){
-		List<Entity> entities = getNearbyEntities(location, distance);
-
-		for(int i = 0; i < entities.size(); i++){
-			if(!(
-					entities.get(i) instanceof CraftChicken
-					|| entities.get(i) instanceof CraftCow
-					|| entities.get(i) instanceof CraftCreeper
-					|| entities.get(i) instanceof CraftGhast
-					|| entities.get(i) instanceof CraftMonster
-					|| entities.get(i) instanceof CraftPig
-					|| entities.get(i) instanceof CraftPigZombie
-					|| entities.get(i) instanceof CraftSheep
-					|| entities.get(i) instanceof CraftSkeleton
-					|| entities.get(i) instanceof CraftSlime
-					|| entities.get(i) instanceof CraftSpider
-					|| entities.get(i) instanceof CraftSquid
-					|| entities.get(i) instanceof CraftWolf
-					|| entities.get(i) instanceof CraftZombie
-			)){
-				entities.remove(i);
-				i--;
-			}
-		}
-		return entities;
 	}
 
 	public static List<Entity> getNearbyItems(Location location, double distance){

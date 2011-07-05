@@ -5,8 +5,8 @@ public class DCBan{
 	private String message;
 
 	public DCBan(String player, String message){
-		this.setPlayer(player);
-		this.setMessage(message);
+		setPlayer(player);
+		setMessage(message);
 	}
 
 	public void setPlayer(String player){

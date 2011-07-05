@@ -16,12 +16,12 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.player.PlayerLoginEvent.Result;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
-import org.bukkit.event.player.PlayerLoginEvent.Result;
 import org.bukkit.util.Vector;
 
 import com.vildaberper.DefaultCommands.L;
@@ -194,7 +194,7 @@ public class DCPlayerListener extends PlayerListener{
 
 	@Override
 	public void onPlayerInteract(PlayerInteractEvent event){
-		if((event.getAction().equals(Action.LEFT_CLICK_BLOCK) && Util.isLeftClickInteractAble(event.getClickedBlock())) || (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && Util.isRightClickInteractAble(event.getClickedBlock()))){
+		if(event.getAction().equals(Action.LEFT_CLICK_BLOCK) && Util.isLeftClickInteractAble(event.getClickedBlock()) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && Util.isRightClickInteractAble(event.getClickedBlock())){
 			if(!Perm.hasPermissionSilent(event.getPlayer(), "dc.do." + event.getPlayer().getWorld().getName())){
 				event.setCancelled(true);
 				return;
@@ -366,7 +366,7 @@ public class DCPlayerListener extends PlayerListener{
 			if(V.unknown_command && V.plugin.getServer().getPluginCommand(event.getMessage().split(" ")[0].substring(1)) == null){
 				if(
 						":reload:plugins:help:?:kick:ban:pardon:ban-ip:pardon-ip:op:deop:tp:give:tell:stop:save-all:save-off:save-on:list:say:time:".indexOf(":" + event.getMessage().split(" ")[0].substring(1) + ":") == -1
-						&& (V.plugin.getServer().getPluginManager().getPlugin("Towny") == null || (V.plugin.getServer().getPluginManager().getPlugin("Towny").isEnabled() && ":tc:nc:resident:town:plot:nation:towny:townyadmin:".indexOf(":" + event.getMessage().split(" ")[0].substring(1) + ":") == -1))
+						&& (V.plugin.getServer().getPluginManager().getPlugin("Towny") == null || V.plugin.getServer().getPluginManager().getPlugin("Towny").isEnabled() && ":tc:nc:resident:town:plot:nation:towny:townyadmin:".indexOf(":" + event.getMessage().split(" ")[0].substring(1) + ":") == -1)
 				){
 					Misc.sendMessage(event.getPlayer(), Misc.getColoredString("unknown_command"));
 					event.setCancelled(true);
