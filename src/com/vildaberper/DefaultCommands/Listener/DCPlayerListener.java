@@ -10,6 +10,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -174,20 +175,26 @@ public class DCPlayerListener extends PlayerListener{
 			event.setCancelled(true);
 			return;
 		}
+		if(Misc.getConfig(event.getPlayer()).getBoolean("creative") || Misc.isCreative(event.getPlayer().getEntityId())){
+			event.setCancelled(true);
+			Util.addIfNotInInventory(event.getPlayer(), event.getItem().getItemStack());
+			event.getItem().remove();
+		}
+	}
+
+	@Override
+	public void onPlayerDropItem(PlayerDropItemEvent event){
+		if(event.isCancelled()){
+			return;
+		}
+		if(Misc.getConfig(event.getPlayer()).getBoolean("creative") || Misc.isCreative(event.getPlayer().getEntityId())){
+			event.getItemDrop().remove();
+		}
 	}
 
 	@Override
 	public void onPlayerInteract(PlayerInteractEvent event){
-		/*event.getPlayer().sendMessage(event.isCancelled() + " " + event.getAction().toString());
-		if(event.isCancelled()){
-			return;
-		}*/
-		if(event.getAction().equals(Action.LEFT_CLICK_BLOCK) && Util.isLeftClickInteractAble(event.getClickedBlock())){
-			if(!Perm.hasPermissionSilent(event.getPlayer(), "dc.do." + event.getPlayer().getWorld().getName())){
-				event.setCancelled(true);
-				return;
-			}
-		}else if(event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && Util.isRightClickInteractAble(event.getClickedBlock())){
+		if((event.getAction().equals(Action.LEFT_CLICK_BLOCK) && Util.isLeftClickInteractAble(event.getClickedBlock())) || (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && Util.isRightClickInteractAble(event.getClickedBlock()))){
 			if(!Perm.hasPermissionSilent(event.getPlayer(), "dc.do." + event.getPlayer().getWorld().getName())){
 				event.setCancelled(true);
 				return;
@@ -245,6 +252,9 @@ public class DCPlayerListener extends PlayerListener{
 	public void onPlayerLogin(PlayerLoginEvent event){
 		if(V.whitelist && V.whitelist_kick && !Misc.isWhitelist(event.getPlayer().getName())){
 			event.disallow(Result.KICK_WHITELIST, Misc.getColoredString("whitelist"));
+		}
+		if(Misc.getBan(event.getPlayer().getName()) != null){
+			event.disallow(Result.KICK_BANNED, Util.replaceColor(Misc.getBan(event.getPlayer().getName()).getMessage()));
 		}
 	}
 

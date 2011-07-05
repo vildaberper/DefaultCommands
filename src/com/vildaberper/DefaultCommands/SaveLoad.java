@@ -14,6 +14,7 @@ import org.bukkit.World.Environment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.config.Configuration;
 
+import com.vildaberper.DefaultCommands.Class.DCBan;
 import com.vildaberper.DefaultCommands.Class.DCCommand;
 import com.vildaberper.DefaultCommands.Class.DCConfiguration;
 import com.vildaberper.DefaultCommands.Class.DCHome;
@@ -42,6 +43,7 @@ public class SaveLoad{
 		savePortals();
 		saveKits();
 		saveWhitelist();
+		saveBans();
 	}
 
 	public static void loadAll(){
@@ -58,16 +60,39 @@ public class SaveLoad{
 		loadPortals();
 		loadKits();
 		loadWhitelist();
+		loadBans();
+	}
+
+	public static void loadBans(){
+		Configuration b = new Configuration(new File(V.plugin.getDataFolder(), "Bans.yml"));
+
+		V.bans.clear();
+		b.load();
+		if(b.getKeys(null) != null){
+			for(String s : b.getKeys(null)){
+				Misc.setBan(s, b.getString(s, ""));
+			}
+		}
+	}
+
+	public static void saveBans(){
+		Configuration b = new Configuration(new File(V.plugin.getDataFolder(), "Bans.yml"));
+
+		b.save();
+		for(DCBan dcban : V.bans){
+			b.load();
+			b.setProperty(dcban.getPlayer(), dcban.getMessage());
+			b.save();
+		}
 	}
 
 	public static void loadWhitelist(){
 		Configuration w = new Configuration(new File(V.plugin.getDataFolder(), "Whitelist.yml"));
 
+		V.whitelist_.clear();
 		w.load();
 		for(String s : w.getStringList("Whitelist", new LinkedList<String>())){
-			if(!V.whitelist_.contains(s)){
-				V.whitelist_.add(s);
-			}
+			Misc.setWhitelist(s, true);
 		}
 	}
 

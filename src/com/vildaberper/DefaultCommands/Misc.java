@@ -35,6 +35,7 @@ import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.ItemStack;
 
 import com.vildaberper.DefaultCommands.Class.DCAfkPlayer;
+import com.vildaberper.DefaultCommands.Class.DCBan;
 import com.vildaberper.DefaultCommands.Class.DCBlock;
 import com.vildaberper.DefaultCommands.Class.DCCommand;
 import com.vildaberper.DefaultCommands.Class.DCConfiguration;
@@ -65,6 +66,60 @@ public class Misc{
 		setSelection(player.getName(), null, null);
 		setReply(player.getName(), null);
 		setAfk(player.getEntityId(), false);
+	}
+
+	public static void leafDestroyCreative(Player player, Block block){
+		if(block.getType().equals(Material.LEAVES)){
+			if(getConfig(block).getBoolean("leaf_drop_apple") && Math.random() <= getConfig(block).getDouble("leaf_drop_apple_rate")){
+				Util.addIfNotInInventory(player, new ItemStack(Material.APPLE, 1));
+			}
+			if(getConfig(block).getBoolean("leaf_drop_sapling") && Math.random() <= getConfig(block).getDouble("leaf_drop_sapling_rate")){
+				if(block.getData() == (byte) 1 || block.getData() == (byte) 9){
+					Util.addIfNotInInventory(player, new ItemStack(Material.SAPLING, 1, (short) 1, Byte.parseByte("1")));
+				}else if(block.getData() == (byte) 2 || block.getData() == (byte) 10){
+					Util.addIfNotInInventory(player, new ItemStack(Material.SAPLING, 1, (short) 1, Byte.parseByte("2")));
+				}else{
+					Util.addIfNotInInventory(player, new ItemStack(Material.SAPLING, 1, (short) 1, Byte.parseByte("0")));
+				}
+			}
+			if(getConfig(block).getBoolean("leaf_drop_leaf") && Math.random() <= getConfig(block).getDouble("leaf_drop_leaf_rate")){
+				if(block.getData() == (byte) 1 || block.getData() == (byte) 9){
+					Util.addIfNotInInventory(player, new ItemStack(Material.LEAVES, 1, (short) 1, Byte.parseByte("1")));
+				}else if(block.getData() == (byte) 2 || block.getData() == (byte) 10){
+					Util.addIfNotInInventory(player, new ItemStack(Material.LEAVES, 1, (short) 1, Byte.parseByte("2")));
+				}else{
+					Util.addIfNotInInventory(player, new ItemStack(Material.LEAVES, 1, (short) 1, Byte.parseByte("0")));
+				}
+			}
+			block.setType(Material.AIR);
+		}
+	}
+
+	public static void leafDestroy(Block block, boolean shears){
+		if(block.getType().equals(Material.LEAVES)){
+			if(getConfig(block).getBoolean("leaf_drop_apple") && Math.random() <= getConfig(block).getDouble("leaf_drop_apple_rate")){
+				block.getWorld().dropItem(block.getLocation(), new ItemStack(Material.APPLE, 1));
+			}
+			if(getConfig(block).getBoolean("leaf_drop_sapling") && Math.random() <= getConfig(block).getDouble("leaf_drop_sapling_rate")){
+				if(block.getData() == (byte) 1 || block.getData() == (byte) 9){
+					block.getWorld().dropItem(block.getLocation(), new ItemStack(Material.SAPLING, 1, (short) 1, Byte.parseByte("1")));
+				}else if(block.getData() == (byte) 2 || block.getData() == (byte) 10){
+					block.getWorld().dropItem(block.getLocation(), new ItemStack(Material.SAPLING, 1, (short) 1, Byte.parseByte("2")));
+				}else{
+					block.getWorld().dropItem(block.getLocation(), new ItemStack(Material.SAPLING, 1, (short) 1, Byte.parseByte("0")));
+				}
+			}
+			if(shears && getConfig(block).getBoolean("leaf_drop_leaf") && Math.random() <= getConfig(block).getDouble("leaf_drop_leaf_rate")){
+				if(block.getData() == (byte) 1 || block.getData() == (byte) 9){
+					block.getWorld().dropItem(block.getLocation(), new ItemStack(Material.LEAVES, 1, (short) 1, Byte.parseByte("1")));
+				}else if(block.getData() == (byte) 2 || block.getData() == (byte) 10){
+					block.getWorld().dropItem(block.getLocation(), new ItemStack(Material.LEAVES, 1, (short) 1, Byte.parseByte("2")));
+				}else{
+					block.getWorld().dropItem(block.getLocation(), new ItemStack(Material.LEAVES, 1, (short) 1, Byte.parseByte("0")));
+				}
+			}
+			block.setType(Material.AIR);
+		}
 	}
 
 	public static String getMotd(String player){
@@ -101,6 +156,24 @@ public class Misc{
 			}
 		}
 		return false;
+	}
+
+	public static void setBan(String player, String message){
+		while(getBan(player) != null){
+			V.bans.remove(getBan(player));
+		}
+		if(message != null){
+			V.bans.add(new DCBan(player, message));	
+		}
+	}
+
+	public static DCBan getBan(String player){
+		for(DCBan dcban : V.bans){
+			if(dcban.getPlayer().equals(player)){
+				return dcban;
+			}
+		}
+		return null;
 	}
 
 	public static DCAfkPlayer getAfkPlayer(int id){

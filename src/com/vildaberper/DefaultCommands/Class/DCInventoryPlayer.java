@@ -8,6 +8,13 @@ import net.minecraft.server.ItemStack;
 import com.vildaberper.DefaultCommands.Util;
 
 public class DCInventoryPlayer extends InventoryPlayer implements IInventory{
+	public ItemStack[] a = new ItemStack[36];
+	public ItemStack[] b = new ItemStack[4];
+	public int c = 0;
+	public EntityHuman d;
+	public boolean e = false, update = true;
+	public String name = "";
+
 	public DCInventoryPlayer(String name, EntityHuman entityhuman){
 		super(entityhuman);
 		this.name = name;
@@ -38,40 +45,6 @@ public class DCInventoryPlayer extends InventoryPlayer implements IInventory{
 		a = Util.convertItemStack(itemstack);
 		b = new ItemStack[4];
 		d = null;
-	}
-
-	public ItemStack[] a = new ItemStack[36];
-	public ItemStack[] b = new ItemStack[4];
-	public int c = 0;
-	public EntityHuman d;
-	public boolean e = false, update = true;
-	public String name = "";
-
-	@Override
-	public ItemStack a(int i, int j){
-		ItemStack[] aitemstack = a;
-
-		if(i >= a.length){
-			aitemstack = b;
-			i -= a.length;
-		}
-		if(aitemstack[i] != null){
-			ItemStack itemstack;
-
-			if(aitemstack[i].count <= j){
-				itemstack = aitemstack[i];
-				aitemstack[i] = null;
-				return itemstack;
-			}else{
-				itemstack = aitemstack[i].a(j);
-				if(aitemstack[i].count == 0){
-					aitemstack[i] = null;
-				}
-				return itemstack;
-			}
-		}else{
-			return null;
-		}
 	}
 
 	@Override

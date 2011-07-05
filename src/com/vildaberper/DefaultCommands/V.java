@@ -7,6 +7,7 @@ import org.bukkit.entity.Item;
 import org.bukkit.plugin.Plugin;
 
 import com.vildaberper.DefaultCommands.Class.DCAfkPlayer;
+import com.vildaberper.DefaultCommands.Class.DCBan;
 import com.vildaberper.DefaultCommands.Class.DCCommand;
 import com.vildaberper.DefaultCommands.Class.DCHome;
 import com.vildaberper.DefaultCommands.Class.DCInventoryPlayer;
@@ -43,6 +44,7 @@ public class V{
 	public static List<DCInventoryPlayer> inventories = new LinkedList<DCInventoryPlayer>();
 	public static List<DCKit> kits = new LinkedList<DCKit>();
 	public static List<DCAfkPlayer> afkplayers = new LinkedList<DCAfkPlayer>();
+	public static List<DCBan> bans = new LinkedList<DCBan>();
 
 	public static List<Integer>
 	god = new LinkedList<Integer>(),

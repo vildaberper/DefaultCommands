@@ -1,5 +1,7 @@
 package com.vildaberper.DefaultCommands.Listener;
 
+import java.util.Random;
+
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
@@ -16,6 +18,7 @@ import org.bukkit.inventory.ItemStack;
 
 import com.vildaberper.DefaultCommands.Misc;
 import com.vildaberper.DefaultCommands.Perm;
+import com.vildaberper.DefaultCommands.Util;
 import com.vildaberper.DefaultCommands.V;
 
 public class DCBlockListener extends BlockListener{
@@ -49,21 +52,7 @@ public class DCBlockListener extends BlockListener{
 		if(Misc.isRemoveFloat(event.getBlock().getWorld())){
 			return;
 		}
-		if(Misc.getConfig(event.getBlock()).getBoolean("leaf_decay")){
-			if(Misc.getConfig(event.getBlock()).getBoolean("leaf_drop_apple") && Math.random() <= Misc.getConfig(event.getBlock()).getDouble("leaf_drop_apple_rate")){
-				event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), new ItemStack(Material.APPLE, 1));
-			}
-			if(Misc.getConfig(event.getBlock()).getBoolean("leaf_drop_sapling") && Math.random() <= Misc.getConfig(event.getBlock()).getDouble("leaf_drop_sapling_rate")){
-				if(event.getBlock().getData() == (byte) 1 || event.getBlock().getData() == (byte) 9){
-					event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), new ItemStack(Material.SAPLING, 1, (short) 1, Byte.parseByte("1")));
-				}else if(event.getBlock().getData() == (byte) 2 || event.getBlock().getData() == (byte) 10){
-					event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), new ItemStack(Material.SAPLING, 1, (short) 1, Byte.parseByte("2")));
-				}else{
-					event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), new ItemStack(Material.SAPLING, 1, (short) 1, Byte.parseByte("0")));
-				}
-			}
-			event.getBlock().setType(Material.AIR);
-		}
+		Misc.leafDestroy(event.getBlock(), false);
 	}
 
 	@Override
@@ -75,37 +64,22 @@ public class DCBlockListener extends BlockListener{
 			event.setCancelled(true);
 			return;
 		}
-		if(event.getBlock().getType().equals(Material.LEAVES)){
-			event.setCancelled(true);
-			if(Misc.getConfig(event.getBlock()).getBoolean("leaf_drop_apple") && Math.random() <= Misc.getConfig(event.getBlock()).getDouble("leaf_drop_apple_rate")){
-				event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), new ItemStack(Material.APPLE, 1));
-			}
-			if(Misc.getConfig(event.getBlock()).getBoolean("leaf_drop_sapling") && Math.random() <= Misc.getConfig(event.getBlock()).getDouble("leaf_drop_sapling_rate")){
-				if(event.getBlock().getData() == (byte) 1 || event.getBlock().getData() == (byte) 9){
-					event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), new ItemStack(Material.SAPLING, 1, (short) 1, Byte.parseByte("1")));
-				}else if(event.getBlock().getData() == (byte) 2 || event.getBlock().getData() == (byte) 10){
-					event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), new ItemStack(Material.SAPLING, 1, (short) 1, Byte.parseByte("2")));
-				}else{
-					event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), new ItemStack(Material.SAPLING, 1, (short) 1, Byte.parseByte("0")));
-				}
-			}
-			event.getBlock().setType(Material.AIR);
-		}
 		if(Misc.getConfig(event.getBlock()).getBoolean("creative") || Misc.isCreative(event.getPlayer().getEntityId())){
-			boolean add = true;
-
-			if(event.getBlock().getTypeId() != 18){
-				for(ItemStack is : event.getPlayer().getInventory().getContents()){
-					if(is != null && is.getType().equals(event.getBlock().getType()) && (":6:17:35:43:44:".indexOf(":" + event.getBlock().getTypeId() + ":") == -1 || (":6:17:35:43:44:".indexOf(":" + event.getBlock().getTypeId() + ":") != -1 && is.getData().equals(event.getBlock().getData())))){
-						add = false;
-						break;
-					}
-				}
-				if(add){
-					event.getPlayer().getInventory().addItem(new ItemStack(event.getBlock().getType(), 1, (short) 0, event.getBlock().getData()));
-				}
+			if(event.getBlock().getType().equals(Material.LEAVES)){
+				event.setCancelled(true);
+				Misc.leafDestroyCreative(event.getPlayer(), event.getBlock());
+				return;
 			}
+			ItemStack is = new ItemStack (net.minecraft.server.Block.byId[event.getBlock().getTypeId()].a(0, new Random()) , net.minecraft.server.Block.byId[event.getBlock().getTypeId()].a (new Random()), event.getBlock().getData());
+
+			Util.addIfNotInInventory(event.getPlayer(), is);
 			event.getBlock().setType(Material.AIR);
+			event.setCancelled(true);
+		}else{
+			if(event.getBlock().getType().equals(Material.LEAVES)){
+				event.setCancelled(true);
+				Misc.leafDestroy(event.getBlock(), event.getPlayer().getItemInHand().getType().equals(Material.SHEARS));
+			}
 		}
 	}
 

@@ -123,6 +123,12 @@ public class Reset{
 		Misc.addAlias("dclightning", "thunder");
 		Misc.addAlias("dcwhitelist", "whitelist");
 		Misc.addAlias("dcwhitelists", "whitelists");
+		Misc.addAlias("dcban", "ban");
+		Misc.addAlias("dcunban", "unban");
+		Misc.addAlias("dcbans", "bans");
+		Misc.addAlias("dcbans", "banned");
+		Misc.addAlias("dckick", "kick");
+		Misc.addAlias("dctop", "top");
 	}
 
 	public static List<DCConfiguration> resetDCConfiguration(String world){
@@ -160,6 +166,8 @@ public class Reset{
 		config.add(new DCConfiguration("leaf_drop_apple_rate", 0.01));
 		config.add(new DCConfiguration("leaf_drop_sapling", true));
 		config.add(new DCConfiguration("leaf_drop_sapling_rate", 0.03));
+		config.add(new DCConfiguration("leaf_drop_leaf", true));
+		config.add(new DCConfiguration("leaf_drop_leaf_rate", 1));
 		/*
 		 * Friendly mobs
 		 */
@@ -344,6 +352,15 @@ public class Reset{
 		permissions.add("dc.whitelist.add");
 		permissions.add("dc.whitelist.remove");
 		permissions.add("dc.whitelists");
+		permissions.add("dc.ban");
+		permissions.add("dc.unban");
+		permissions.add("dc.bans");
+		permissions.add("dc.kick.self");
+		permissions.add("dc.kick.other");
+		permissions.add("dc.kick.all");
+		permissions.add("dc.top.self");
+		permissions.add("dc.top.other");
+		permissions.add("dc.top.all");
 		config.add(new DCConfiguration("permissions", permissions));
 		return config;
 	}
@@ -423,6 +440,7 @@ public class Reset{
 		V.strings.add(new DCString("c_clearinventory", "&7<player>&2 cleared the inventory of &7<players>&2."));
 		V.strings.add(new DCString("c_teleportposition", "&7<player>&2 teleported &7<players>&2 to (&7<position>&2)."));
 		V.strings.add(new DCString("c_afk", "&7<player>&2 <status>d afk for &7<players>&2."));
+		V.strings.add(new DCString("c_kick", "&7<player>&2 kicked &7<players>&2, reason: &7<reason>&2."));
 	}
 
 	public static void resetItems(){

@@ -33,6 +33,26 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public class Util{
+	public static boolean addIfNotInInventory(Player player, ItemStack itemstack){
+		if(!Util.containsIgnoreAmount(player.getInventory().getContents(), itemstack)){
+			player.getInventory().addItem(itemstack);
+		}
+		return !Util.containsIgnoreAmount(player.getInventory().getContents(), itemstack);
+	}
+	
+	public static boolean containsIgnoreAmount(ItemStack[] inventory, ItemStack itemstack){
+		for(ItemStack is : inventory){
+			if(is != null && itemstack != null && is.getType().equals(itemstack.getType()) && ((isSameDifferentData(is.getTypeId())) || (is.getData() == null && itemstack.getData() == null) || (is.getData() != null && itemstack.getData() != null && is.getData().equals(itemstack.getData())))){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public static boolean isSameDifferentData(int id){
+		return ":6:17:18:31:35:43:44:263:351:".indexOf(":" + id + ":") == -1;
+	}
+
 	public static void sleep(int duration){
 		try{
 			Thread.sleep(duration);

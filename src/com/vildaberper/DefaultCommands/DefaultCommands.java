@@ -11,6 +11,8 @@ import com.vildaberper.DefaultCommands.Class.DCAfkPlayer;
 import com.vildaberper.DefaultCommands.Class.DCPlayer;
 import com.vildaberper.DefaultCommands.Class.DCWorld;
 import com.vildaberper.DefaultCommands.Command.Afk;
+import com.vildaberper.DefaultCommands.Command.Ban;
+import com.vildaberper.DefaultCommands.Command.Bans;
 import com.vildaberper.DefaultCommands.Command.Clearinventory;
 import com.vildaberper.DefaultCommands.Command.Clearnear;
 import com.vildaberper.DefaultCommands.Command.Create;
@@ -38,6 +40,7 @@ import com.vildaberper.DefaultCommands.Command.Instakill;
 import com.vildaberper.DefaultCommands.Command.Inventory;
 import com.vildaberper.DefaultCommands.Command.Join;
 import com.vildaberper.DefaultCommands.Command.Jump;
+import com.vildaberper.DefaultCommands.Command.Kick;
 import com.vildaberper.DefaultCommands.Command.Kill;
 import com.vildaberper.DefaultCommands.Command.Killnear;
 import com.vildaberper.DefaultCommands.Command.Kit;
@@ -68,6 +71,8 @@ import com.vildaberper.DefaultCommands.Command.Teleport;
 import com.vildaberper.DefaultCommands.Command.Teleporthere;
 import com.vildaberper.DefaultCommands.Command.Teleportposition;
 import com.vildaberper.DefaultCommands.Command.Time;
+import com.vildaberper.DefaultCommands.Command.Top;
+import com.vildaberper.DefaultCommands.Command.Unban;
 import com.vildaberper.DefaultCommands.Command.Undo;
 import com.vildaberper.DefaultCommands.Command.Walls;
 import com.vildaberper.DefaultCommands.Command.Warp;
@@ -160,6 +165,7 @@ public class DefaultCommands extends JavaPlugin{
 		getServer().getPluginManager().registerEvent(Type.PLAYER_LOGIN, playerListener, Priority.High, this);
 		getServer().getPluginManager().registerEvent(Type.PLAYER_BED_ENTER, playerListener, Priority.Low, this);
 		getServer().getPluginManager().registerEvent(Type.PLAYER_INTERACT, playerListener, Priority.High, this);
+		getServer().getPluginManager().registerEvent(Type.PLAYER_DROP_ITEM, playerListener, Priority.Low, this);
 		getServer().getPluginManager().registerEvent(Type.PLAYER_RESPAWN, playerListener, Priority.Normal, this);
 		getServer().getPluginManager().registerEvent(Type.PLAYER_TELEPORT, playerListener, Priority.Normal, this);
 		getServer().getPluginManager().registerEvent(Type.PLAYER_PICKUP_ITEM, playerListener, Priority.Normal, this);
@@ -318,6 +324,16 @@ public class DefaultCommands extends JavaPlugin{
 			return Whitelist.whitelist(sender, command, label, args);
 		}else if(command.getName().equalsIgnoreCase("dcwhitelists")){
 			return Whitelists.whitelists(sender, command, label, args);
+		}else if(command.getName().equalsIgnoreCase("dcban")){
+			return Ban.ban(sender, command, label, args);
+		}else if(command.getName().equalsIgnoreCase("dcunban")){
+			return Unban.unban(sender, command, label, args);
+		}else if(command.getName().equalsIgnoreCase("dcbans")){
+			return Bans.bans(sender, command, label, args);
+		}else if(command.getName().equalsIgnoreCase("dckick")){
+			return Kick.kick(sender, command, label, args);
+		}else if(command.getName().equalsIgnoreCase("dctop")){
+			return Top.top(sender, command, label, args);
 		}
 		return false;
 	}

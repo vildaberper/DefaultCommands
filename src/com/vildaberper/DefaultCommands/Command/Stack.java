@@ -34,6 +34,7 @@ public class Stack{
 
 					if(!Util.isValidInt(args[0]) || Util.isValidInt(args[0]) && Integer.parseInt(args[0]) > 64 || Util.isValidInt(args[0]) && Integer.parseInt(args[0]) < 0){
 						Misc.sendMessage(sender, Misc.getColoredString("invalid_amount"));
+						return false;
 					}
 					if(Integer.parseInt(args[0]) == 0){
 						((Player) sender).setItemInHand(null);
@@ -56,6 +57,7 @@ public class Stack{
 				}
 				if(!Util.isValidInt(args[0]) || Util.isValidInt(args[0]) && Integer.parseInt(args[0]) > 64 || Util.isValidInt(args[0]) && Integer.parseInt(args[0]) < 0){
 					Misc.sendMessage(sender, Misc.getColoredString("invalid_amount"));
+					return false;
 				}
 				for(Material material : Misc.getItems(string)){
 					if(Integer.parseInt(args[0]) == 0){

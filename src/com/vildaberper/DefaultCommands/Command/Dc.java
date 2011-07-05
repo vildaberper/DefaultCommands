@@ -16,7 +16,6 @@ import com.vildaberper.DefaultCommands.SaveLoad;
 import com.vildaberper.DefaultCommands.V;
 import com.vildaberper.DefaultCommands.Class.DCHome;
 import com.vildaberper.DefaultCommands.Class.DCPlayer;
-import com.vildaberper.DefaultCommands.Class.DCPortal;
 import com.vildaberper.DefaultCommands.Class.DCString;
 import com.vildaberper.DefaultCommands.Class.DCWarp;
 import com.vildaberper.DefaultCommands.Class.DCWorld;
@@ -54,7 +53,7 @@ public class Dc{
 				sender.sendMessage("Found " + count + " worlds.");
 				return true;
 			}else if(args[0].equalsIgnoreCase("reset")){
-				sender.sendMessage("homes/warps/names/players/config/commands/strings/items/kits/portals/whitelist");
+				sender.sendMessage("homes/warps/names/players/config/commands/strings/items/kits/portals/whitelist/bans");
 			}else if(args[0].equalsIgnoreCase("check")){
 				String latest = Misc.getLatestVersion(), current = V.plugin.getDescription().getVersion();
 				if(current.equals(latest)){
@@ -128,15 +127,19 @@ public class Dc{
 					sender.sendMessage("Resetted kits.");
 					return true;
 				}else if(args[1].equalsIgnoreCase("portals")){
-					V.portals = new LinkedList<DCPortal>();
+					V.portals.clear();
 					sender.sendMessage("Resetted portals.");
 					return true;
 				}else if(args[1].equalsIgnoreCase("whitelist")){
-					V.whitelist_ = new LinkedList<String>();
+					V.whitelist_.clear();
 					sender.sendMessage("Resetted whitelist.");
 					return true;
+				}else if(args[1].equalsIgnoreCase("bans")){
+					V.bans.clear();
+					sender.sendMessage("Resetted bans.");
+					return true;
 				}else{
-					sender.sendMessage("homes/warps/names/players/config/commands/strings/items/kits/portals/whitelist");
+					sender.sendMessage("homes/warps/names/players/config/commands/strings/items/kits/portals/whitelist/bans");
 				}
 			}
 		}

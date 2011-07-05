@@ -210,3 +210,18 @@ commands:
   dcwhitelists:
     description: Whitelists.
     usage: /<command> [page]
+  dcban:
+    description: Ban.
+    usage: /<command> <player> [reason]
+  dcunban:
+    description: Unban.
+    usage: /<command> <player>
+  dcbans:
+    description: Bans.
+    usage: /<command> [page]
+  dckick:
+    description: Kick.
+    usage: /<command> <player> [reason]
+  dctop:
+    description: Top.
+    usage: /<command> <player>
