@@ -1,8 +1,11 @@
 package com.vildaberper.DefaultCommands.Command;
 
 import java.io.File;
+import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.LinkedList;
 
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -21,12 +24,13 @@ import com.vildaberper.DefaultCommands.Class.DCWarp;
 import com.vildaberper.DefaultCommands.Class.DCWorld;
 
 public class Dc{
+	@SuppressWarnings("unchecked")
 	public static boolean dc(CommandSender sender, Command command, String label, String[] args){
 		if(sender instanceof Player && !Perm.hasPermission((Player) sender, "dc.dc")){
 			return false;
 		}
 		if(args.length == 0){
-			sender.sendMessage("load/save/reload/reset/get/check/update/updatedev");
+			sender.sendMessage("load/save/reload/reset/get/check/convert/update/updatedev");
 		}else if(args.length == 1){
 			if(args[0].equalsIgnoreCase("load")){
 				SaveLoad.loadAll();
@@ -79,8 +83,10 @@ public class Dc{
 				sender.sendMessage("Successfully updated to the latest development build. Reloading server.");
 				V.plugin.getServer().reload();
 				return true;
+			}else if(args[0].equalsIgnoreCase("convert")){
+				sender.sendMessage("MyWarp");
 			}else{
-				sender.sendMessage("load/save/reload/reset/get/check/update/updatedev");
+				sender.sendMessage("load/save/reload/reset/get/check/convert/update/updatedev");
 			}
 		}else if(args.length == 2){
 			if(args[0].equalsIgnoreCase("reset")){
@@ -140,6 +146,45 @@ public class Dc{
 					return true;
 				}else{
 					sender.sendMessage("homes/warps/names/players/config/commands/strings/items/kits/portals/whitelist/bans");
+				}
+			}else if(args[0].equalsIgnoreCase("convert")){
+				if(args[1].equalsIgnoreCase("MyWarp")){
+					if(V.plugin.getServer().getPluginManager().getPlugin("MyWarp") == null){
+						sender.sendMessage("Could not find plugin MyWarp!");
+					}else{
+						try{
+							HashMap<String, me.taylorkelly.mywarp.Warp> warps = new HashMap<String, me.taylorkelly.mywarp.Warp>();
+							Method m;
+							int count = 0;
+							String s = "s";
+
+							m = me.taylorkelly.mywarp.WarpDataSource.class.getDeclaredMethod("getMap");
+							m.setAccessible(true);
+							warps = (HashMap<String, me.taylorkelly.mywarp.Warp>) m.invoke(warps);
+							for(String name : warps.keySet()){
+								count++;
+								Misc.setWarp(name,
+										new Location(
+												V.plugin.getServer().getWorld(warps.get(name).world),
+												warps.get(name).x,
+												warps.get(name).y,
+												warps.get(name).z,
+												warps.get(name).yaw,
+												warps.get(name).pitch
+										)
+								);
+							}
+							if(count == 1){
+								s = "";
+							}
+							sender.sendMessage("Converted " + count + " warp" + s + ".");
+							return true;
+						}catch(Exception e){
+							sender.sendMessage("Failed to convert warps from MyWarp!");
+						}
+					}
+				}else{
+					sender.sendMessage("MyWarp");
 				}
 			}
 		}
