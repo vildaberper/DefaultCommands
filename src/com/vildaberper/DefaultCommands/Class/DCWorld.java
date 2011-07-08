@@ -26,6 +26,7 @@ public class DCWorld{
 	private long seed;
 	private List<DCConfiguration> configuration = new LinkedList<DCConfiguration>();
 	private List<DCInventoryPlayer> inventory = new LinkedList<DCInventoryPlayer>();
+	private List<DCArmor> armor = new LinkedList<DCArmor>();
 	private int runnablesheep = 0, runnablepoop = 0, runnableheal = 0;
 
 	public DCWorld(String world, Environment environment, long seed){
@@ -64,6 +65,12 @@ public class DCWorld{
 	public List<DCInventoryPlayer> getInventory(){
 		return inventory;
 	}
+	public void setArmor(List<DCArmor> armor){
+		this.armor = armor;
+	}
+	public List<DCArmor> getArmor(){
+		return armor;
+	}
 	public void setRunnablesheep(int i){
 		runnablesheep = i;
 	}
@@ -92,10 +99,8 @@ public class DCWorld{
 	}
 
 	public void setInventory(String name, ItemStack[] itemstack){
-		for(int i = 0; i < inventory.size(); i++){
-			if(inventory.get(i).getName().equals(name)){
-				inventory.remove(i);
-			}
+		while(getInventory(name) != null){
+			inventory.remove(getInventory(name));
 		}
 		if(itemstack != null){
 			inventory.add(new DCInventoryPlayer(name, itemstack));
@@ -105,6 +110,23 @@ public class DCWorld{
 		for(DCInventoryPlayer dcinventory : inventory){
 			if(dcinventory.getName().equals(name)){
 				return dcinventory;
+			}
+		}
+		return null;
+	}
+
+	public void setArmor(String name, ItemStack[] itemstack){
+		while(getArmor(name) != null){
+			armor.remove(getArmor(name));
+		}
+		if(itemstack != null){
+			armor.add(new DCArmor(name, itemstack));
+		}
+	}
+	public DCArmor getArmor(String name){
+		for(DCArmor dcarmor : armor){
+			if(dcarmor.getName().equals(name)){
+				return dcarmor;
 			}
 		}
 		return null;

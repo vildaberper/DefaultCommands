@@ -7,6 +7,7 @@ import org.bukkit.entity.Item;
 import org.bukkit.plugin.Plugin;
 
 import com.vildaberper.DefaultCommands.Class.DCAfkPlayer;
+import com.vildaberper.DefaultCommands.Class.DCArmor;
 import com.vildaberper.DefaultCommands.Class.DCBan;
 import com.vildaberper.DefaultCommands.Class.DCCommand;
 import com.vildaberper.DefaultCommands.Class.DCHome;
@@ -42,6 +43,7 @@ public class V{
 	public static List<DCSelection> selections = new LinkedList<DCSelection>();
 	public static List<DCUndo> undos = new LinkedList<DCUndo>();
 	public static List<DCInventoryPlayer> inventories = new LinkedList<DCInventoryPlayer>();
+	public static List<DCArmor> armors = new LinkedList<DCArmor>();
 	public static List<DCKit> kits = new LinkedList<DCKit>();
 	public static List<DCAfkPlayer> afkplayers = new LinkedList<DCAfkPlayer>();
 	public static List<DCBan> bans = new LinkedList<DCBan>();
@@ -74,6 +76,7 @@ public class V{
 	per_page = 9,
 	sync_time = 30,
 	sync_inventory = 30,
+	sync_armor = 30,
 	selection_tool = 280,
 	afk_time = 5,
 	afk_kick_time = 10,

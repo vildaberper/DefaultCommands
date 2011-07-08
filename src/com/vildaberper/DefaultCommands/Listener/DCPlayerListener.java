@@ -22,6 +22,7 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 import com.vildaberper.DefaultCommands.L;
@@ -153,6 +154,12 @@ public class DCPlayerListener extends PlayerListener{
 			}else{
 				event.getPlayer().getInventory().clear();
 			}
+			Misc.setArmor(event.getPlayer().getName(), event.getPlayer().getInventory().getArmorContents(), event.getPlayer().getWorld().getName());
+			if(Misc.getArmor(event.getPlayer().getName(), event.getRespawnLocation().getWorld().getName()) != null){
+				event.getPlayer().getInventory().setArmorContents(Misc.getArmor(event.getPlayer().getName(), event.getRespawnLocation().getWorld().getName()).getArmor());
+			}else{
+				event.getPlayer().getInventory().setArmorContents(new ItemStack[4]);
+			}
 			Misc.broadcastJoin(event.getPlayer(), event.getRespawnLocation().getWorld().getName(), false);
 		}
 		Misc.updateHide();
@@ -264,6 +271,9 @@ public class DCPlayerListener extends PlayerListener{
 		if(Misc.getInventory(event.getPlayer().getName(), event.getPlayer().getWorld().getName()) != null){
 			event.getPlayer().getInventory().setContents(Util.convertItemStack(Misc.getInventory(event.getPlayer().getName(), event.getPlayer().getWorld().getName()).getContents()));
 		}
+		if(Misc.getArmor(event.getPlayer().getName(), event.getPlayer().getWorld().getName()) != null){
+			event.getPlayer().getInventory().setArmorContents(Misc.getArmor(event.getPlayer().getName(), event.getPlayer().getWorld().getName()).getArmor());
+		}
 		Misc.setAfkPlayer(event.getPlayer().getEntityId(), new DCAfkPlayer(event.getPlayer().getEntityId(), event.getPlayer().getLocation()));
 		Misc.broadcastConnect(event.getPlayer(), false);
 		Misc.updateHide();
@@ -286,6 +296,12 @@ public class DCPlayerListener extends PlayerListener{
 				event.getPlayer().getInventory().setContents(Util.convertItemStack(Misc.getInventory(event.getPlayer().getName(), event.getTo().getWorld().getName()).getContents()));
 			}else{
 				event.getPlayer().getInventory().clear();
+			}
+			Misc.setArmor(event.getPlayer().getName(), event.getPlayer().getInventory().getArmorContents(), event.getFrom().getWorld().getName());
+			if(Misc.getArmor(event.getPlayer().getName(), event.getTo().getWorld().getName()) != null){
+				event.getPlayer().getInventory().setArmorContents(Misc.getArmor(event.getPlayer().getName(), event.getTo().getWorld().getName()).getArmor());
+			}else{
+				event.getPlayer().getInventory().setArmorContents(new ItemStack[4]);
 			}
 			Misc.broadcastJoin(event.getPlayer(), event.getTo().getWorld().getName(), false);
 		}

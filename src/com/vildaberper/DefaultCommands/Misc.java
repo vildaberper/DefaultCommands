@@ -35,6 +35,7 @@ import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.ItemStack;
 
 import com.vildaberper.DefaultCommands.Class.DCAfkPlayer;
+import com.vildaberper.DefaultCommands.Class.DCArmor;
 import com.vildaberper.DefaultCommands.Class.DCBan;
 import com.vildaberper.DefaultCommands.Class.DCBlock;
 import com.vildaberper.DefaultCommands.Class.DCCommand;
@@ -211,10 +212,8 @@ public class Misc{
 
 	public static void setInventory(String name, ItemStack[] itemstack, String world){
 		if(!getConfig(world).getBoolean("separate_inventory")){
-			for(int i = 0; i < V.inventories.size(); i++){
-				if(V.inventories.get(i).getName().equals(name)){
-					V.inventories.remove(i);
-				}
+			while(getInventory(name, world) != null){
+				V.inventories.remove(getInventory(name, world));
 			}
 			if(itemstack != null){
 				V.inventories.add(new DCInventoryPlayer(name, itemstack));
@@ -233,6 +232,32 @@ public class Misc{
 			}
 		}else{
 			return getConfig(world).getInventory(name);
+		}
+		return null;
+	}
+
+	public static void setArmor(String name, ItemStack[] itemstack, String world){
+		if(!getConfig(world).getBoolean("separate_armor")){
+			while(getArmor(name, world) != null){
+				V.armors.remove(getArmor(name, world));
+			}
+			if(itemstack != null){
+				V.armors.add(new DCArmor(name, itemstack));
+			}
+		}else{
+			getConfig(world).setArmor(name, itemstack);
+		}
+	}
+
+	public static DCArmor getArmor(String name, String world){
+		if(!getConfig(world).getBoolean("separate_armor")){
+			for(DCArmor dcarmor : V.armors){
+				if(dcarmor.getName().equals(name)){
+					return dcarmor;
+				}
+			}
+		}else{
+			return getConfig(world).getArmor(name);
 		}
 		return null;
 	}
@@ -493,7 +518,7 @@ public class Misc{
 	}
 
 	public static ItemStack[] getItemStackFromString(String string){
-		ItemStack[] itemstack = new ItemStack[36];
+		ItemStack[] itemstack = new ItemStack[string.split(";").length];
 
 		for(int i = 0; i < string.split(";").length; i++){
 			if(Integer.parseInt(string.split(";")[i].split(":")[0]) != 0){

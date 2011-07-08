@@ -81,7 +81,7 @@ public class DCInventoryPlayer extends InventoryPlayer implements IInventory{
 	@Override
 	public void setItem(int arg0, ItemStack arg1){
 		a[arg0] = arg1;
-		if(d != null && update){
+		if(d != null && update && d.inventory.items.length > arg0 && arg0 >= 0){
 			d.inventory.items[arg0] = arg1;
 		}
 	}

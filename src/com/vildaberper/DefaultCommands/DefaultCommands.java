@@ -89,6 +89,7 @@ import com.vildaberper.DefaultCommands.Listener.DCVehicleListener;
 import com.vildaberper.DefaultCommands.Listener.DCWeatherListener;
 import com.vildaberper.DefaultCommands.Listener.DCWorldListener;
 import com.vildaberper.DefaultCommands.Runnable.AfkCheck;
+import com.vildaberper.DefaultCommands.Runnable.ArmorSave;
 import com.vildaberper.DefaultCommands.Runnable.ConfigSave;
 import com.vildaberper.DefaultCommands.Runnable.InventorySave;
 
@@ -107,6 +108,7 @@ public class DefaultCommands extends JavaPlugin{
 				Misc.setPlayer(new DCPlayer(player.getName(), Util.getIp(player), Util.getDateTime()));
 			}
 			Misc.setInventory(player.getName(), player.getInventory().getContents(), player.getWorld().getName());
+			Misc.setArmor(player.getName(), player.getInventory().getArmorContents(), player.getWorld().getName());
 		}
 		SaveLoad.saveAll();
 
@@ -174,6 +176,7 @@ public class DefaultCommands extends JavaPlugin{
 
 		// Task
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, new InventorySave(), 0, 20 * V.sync_inventory);
+		getServer().getScheduler().scheduleSyncRepeatingTask(this, new ArmorSave(), 0, 20 * V.sync_armor);
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, new AfkCheck(), 20 * 60, 20 * 60);
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, new ConfigSave(), 0, 20 * 60 * V.save_config);
 

@@ -14,6 +14,7 @@ import org.bukkit.World.Environment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.config.Configuration;
 
+import com.vildaberper.DefaultCommands.Class.DCArmor;
 import com.vildaberper.DefaultCommands.Class.DCBan;
 import com.vildaberper.DefaultCommands.Class.DCCommand;
 import com.vildaberper.DefaultCommands.Class.DCConfiguration;
@@ -44,6 +45,7 @@ public class SaveLoad{
 		saveKits();
 		saveWhitelist();
 		saveBans();
+		saveArmor();
 	}
 
 	public static void loadAll(){
@@ -61,6 +63,106 @@ public class SaveLoad{
 		loadKits();
 		loadWhitelist();
 		loadBans();
+		loadArmor();
+	}
+
+	public static void loadArmor(){
+		for(DCWorld dcworld : V.worlds){
+			if(dcworld.getBoolean("separate_armor")){
+				File dir = new File(V.plugin.getDataFolder(), "Worlds" + File.separator + dcworld.getName() + File.separator + "Armor");
+				List<DCArmor> dcarmor = new LinkedList<DCArmor>();
+
+				dcworld.setArmor(new LinkedList<DCArmor>());
+				if(dir.listFiles() != null){
+					for(File file : dir.listFiles()){
+						try{
+							if(file.exists()){
+								FileReader fr = new FileReader(file);
+								BufferedReader br = new BufferedReader(fr);
+
+								dcarmor.add(new DCArmor(file.getName().replace(".data", ""), Misc.getItemStackFromString(br.readLine())));
+								br.close();
+							}
+						}catch(Exception e){
+							System.out.println("Failed to load armor: " + file.getAbsolutePath());
+						}
+					}
+				}
+				dcworld.setArmor(dcarmor);
+			}
+		}
+		File dir = new File(V.plugin.getDataFolder(), "Armor");
+		List<DCArmor> armor = new LinkedList<DCArmor>();
+		V.armors.clear();
+		if(dir.listFiles() != null){
+			for(File file : dir.listFiles()){
+				try{
+					if(file.exists()){
+						FileReader fr = new FileReader(file);
+						BufferedReader br = new BufferedReader(fr);
+
+						armor.add(new DCArmor(file.getName().replace(".data", ""), Misc.getItemStackFromString(br.readLine())));
+						br.close();
+					}
+				}catch(Exception e){
+					System.out.println("Failed to load armor: " + file.getAbsolutePath());
+				}
+			}
+		}
+		V.armors = armor;
+
+	}
+
+	public static void saveArmor(){
+		if(!new File(V.plugin.getDataFolder(), "Worlds").exists()){
+			new File(V.plugin.getDataFolder(), "Worlds").mkdir();
+		}
+		for(DCWorld dcworld : V.worlds){
+			if(dcworld.getBoolean("separate_armor")){
+				File dir = new File(V.plugin.getDataFolder(), "Worlds" + File.separator + dcworld.getName() + File.separator + "Armor");
+
+				dir.mkdir();
+				for(DCArmor dcarmor : dcworld.getArmor()){
+					File file = new File(dir, dcarmor.getName() + ".data");
+
+					try{
+						if(!file.exists()){
+							file.createNewFile();
+						}
+						FileWriter fw = new FileWriter(file);
+						BufferedWriter bw = new BufferedWriter(fw);
+
+						bw.flush();
+						bw.write(Misc.getStringFromItemStack(dcarmor.getArmor()));
+						bw.close();
+					}catch(Exception e){
+						System.out.println("Failed to save armor: " + file.getAbsolutePath());
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+		File dir = new File(V.plugin.getDataFolder(), "Armor");
+
+		dir.mkdir();
+		for(DCArmor dcarmor : V.armors){
+			File file = new File(dir, dcarmor.getName() + ".data");
+
+			try{
+				if(!file.exists()){
+					file.createNewFile();
+				}
+				FileWriter fw = new FileWriter(file);
+				BufferedWriter bw = new BufferedWriter(fw);
+
+				bw.flush();
+				bw.write(Misc.getStringFromItemStack(dcarmor.getArmor()));
+				bw.close();
+			}catch(Exception e){
+				System.out.println("Failed to save armor: " + file.getAbsolutePath());
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public static void loadBans(){
@@ -301,6 +403,7 @@ public class SaveLoad{
 		V.afk_time = dc.getInt("afk_time", V.afk_time);
 		V.afk_kick_time = dc.getInt("afk_kick_time", V.afk_kick_time);
 		V.sync_inventory = dc.getInt("sync_inventory", V.sync_inventory);
+		V.sync_armor = dc.getInt("sync_armor", V.sync_armor);
 		V.save_config = dc.getInt("save_config", V.save_config);
 		V.unknown_command = dc.getBoolean("unknown_command", V.unknown_command);
 		V.better_fence = dc.getBoolean("better_fence", V.better_fence);
@@ -327,6 +430,7 @@ public class SaveLoad{
 		dcc.add(new DCConfiguration("afk_time", V.afk_time));
 		dcc.add(new DCConfiguration("afk_kick_time", V.afk_kick_time));
 		dcc.add(new DCConfiguration("sync_inventory", V.sync_inventory));
+		dcc.add(new DCConfiguration("sync_armor", V.sync_armor));
 		dcc.add(new DCConfiguration("save_config", V.save_config));
 		dcc.add(new DCConfiguration("unknown_command", V.unknown_command));
 		dcc.add(new DCConfiguration("better_chat", V.better_chat));
