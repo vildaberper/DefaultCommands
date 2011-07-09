@@ -170,15 +170,11 @@ public class DCPlayerListener extends PlayerListener{
 		if(event.isCancelled()){
 			return;
 		}
-		if(!Perm.hasPermissionSilent(event.getPlayer(), "dc.do." + event.getPlayer().getWorld().getName())){
-			event.setCancelled(true);
-			return;
-		}
-		if(V.nopickups.contains(event.getItem())){
-			event.setCancelled(true);
-			return;
-		}
-		if(Misc.isNopickup(event.getPlayer().getEntityId())){
+		if(
+				!Perm.hasPermissionSilent(event.getPlayer(), "dc.do." + event.getPlayer().getWorld().getName())
+				|| V.nopickups.contains(event.getItem())
+				|| Misc.isNopickup(event.getPlayer().getEntityId())
+		){
 			event.setCancelled(true);
 			return;
 		}

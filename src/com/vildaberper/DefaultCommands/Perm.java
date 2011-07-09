@@ -66,7 +66,7 @@ public class Perm{
 				return true;
 			}
 			for(int i = 0; i < getSize(player.getWorld().getName()); i++){
-				if(getPermission(player.getWorld().getName(), i).equalsIgnoreCase(node)){
+				if(getPermission(player.getWorld().getName(), i).equalsIgnoreCase(node) || getPermission(player.getWorld().getName(), i).equalsIgnoreCase(node.substring(0, node.lastIndexOf(".")) + ".*")){
 					return true;
 				}
 			}
