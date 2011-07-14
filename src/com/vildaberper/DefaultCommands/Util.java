@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import java.util.TimeZone;
 
 import org.bukkit.ChatColor;
@@ -51,6 +52,10 @@ public class Util{
 		return !(":51:64:69:77:96:".indexOf(":" + block.getTypeId() + ":") == -1);
 	}
 
+	public static ItemStack getDrop(Block block){
+		return new ItemStack (net.minecraft.server.Block.byId[block.getTypeId()].a(0, new Random()) , net.minecraft.server.Block.byId[block.getTypeId()].a (new Random()), block.getData());
+	}
+
 	public static List<Entity> getNearbyMobs(Location location, double distance){
 		List<Entity> entities = getNearbyEntities(location, distance);
 
@@ -79,6 +84,9 @@ public class Util{
 	}
 
 	public static boolean addIfNotInInventory(Player player, ItemStack itemstack){
+		if(itemstack == null || itemstack.getAmount() < 1){
+			return false;
+		}
 		if(!containsIgnoreAmount(player.getInventory().getContents(), itemstack)){
 			player.getInventory().addItem(itemstack);
 		}

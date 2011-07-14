@@ -1,7 +1,5 @@
 package com.vildaberper.DefaultCommands.Listener;
 
-import java.util.Random;
-
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
@@ -69,16 +67,27 @@ public class DCBlockListener extends BlockListener{
 				event.setCancelled(true);
 				Misc.leafDestroyCreative(event.getPlayer(), event.getBlock());
 				return;
+			}else if(event.getBlock().getType().equals(Material.LONG_GRASS)){
+				event.setCancelled(true);
+				Misc.longGrassDestroyCreative(event.getPlayer(), event.getBlock());
+				return;
 			}
-			ItemStack is = new ItemStack (net.minecraft.server.Block.byId[event.getBlock().getTypeId()].a(0, new Random()) , net.minecraft.server.Block.byId[event.getBlock().getTypeId()].a (new Random()), event.getBlock().getData());
+			if(!event.getBlock().getType().equals(Material.DEAD_BUSH)){
+				ItemStack drop = Util.getDrop(event.getBlock());
 
-			Util.addIfNotInInventory(event.getPlayer(), is);
+				if(drop != null){
+					Util.addIfNotInInventory(event.getPlayer(), drop);
+				}
+			}
 			event.getBlock().setType(Material.AIR);
 			event.setCancelled(true);
 		}else{
 			if(event.getBlock().getType().equals(Material.LEAVES)){
 				event.setCancelled(true);
 				Misc.leafDestroy(event.getBlock(), event.getPlayer().getItemInHand().getType().equals(Material.SHEARS));
+			}else if(event.getBlock().getType().equals(Material.LONG_GRASS)){
+				event.setCancelled(true);
+				Misc.longGrassDestroy(event.getBlock());
 			}
 		}
 	}

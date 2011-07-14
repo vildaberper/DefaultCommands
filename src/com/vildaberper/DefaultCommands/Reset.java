@@ -169,6 +169,7 @@ public class Reset{
 		config.add(new DCConfiguration("leaf_drop_sapling_rate", 0.03));
 		config.add(new DCConfiguration("leaf_drop_leaf", true));
 		config.add(new DCConfiguration("leaf_drop_leaf_rate", 1));
+		config.add(new DCConfiguration("long_grass_drop_seed_rate", 0.2));
 		/*
 		 * Friendly mobs
 		 */

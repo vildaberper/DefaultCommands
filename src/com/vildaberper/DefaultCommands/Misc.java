@@ -69,6 +69,24 @@ public class Misc{
 		setAfk(player.getEntityId(), false);
 	}
 
+	public static void longGrassDestroyCreative(Player player, Block block){
+		if(block.getType().equals(Material.LONG_GRASS)){
+			if((block.getData() == (byte) 1 || block.getData() == (byte) 2) && Math.random() <= getConfig(block).getDouble("long_grass_drop_seed_rate")){
+				Util.addIfNotInInventory(player, new ItemStack(Material.SEEDS, 1));
+			}
+			block.setType(Material.AIR);
+		}
+	}
+
+	public static void longGrassDestroy(Block block){
+		if(block.getType().equals(Material.LONG_GRASS)){
+			if((block.getData() == (byte) 1 || block.getData() == (byte) 2) && Math.random() <= getConfig(block).getDouble("long_grass_drop_seed_rate")){
+				block.getWorld().dropItem(block.getLocation(), new ItemStack(Material.SEEDS, 1));
+			}
+			block.setType(Material.AIR);
+		}
+	}
+
 	public static void leafDestroyCreative(Player player, Block block){
 		if(block.getType().equals(Material.LEAVES)){
 			if(getConfig(block).getBoolean("leaf_drop_apple") && Math.random() <= getConfig(block).getDouble("leaf_drop_apple_rate")){
