@@ -1,8 +1,5 @@
 package com.vildaberper.DefaultCommands.Listener;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -100,9 +97,9 @@ public class DCBlockListener extends BlockListener{
 		if(log && Misc.getConfig(event.getBlock()).getBoolean("wood_gravity")){
 			final Block block = event.getBlock();
 			final DCInteger i = new DCInteger(0);
-			final List<Integer> list = new LinkedList<Integer>();
+			final DCInteger id = new DCInteger(0);
 
-			list.add(
+			id.setInteger(
 					V.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(
 							V.plugin,
 							new Runnable(){
@@ -116,7 +113,7 @@ public class DCBlockListener extends BlockListener{
 										block.getWorld().getBlockAt(block.getX(), block.getY() + i.getInteger() - 1, block.getZ()).setType(Material.LOG);
 										block.getWorld().getBlockAt(block.getX(), block.getY() + i.getInteger() - 1, block.getZ()).setData(data);
 									}else{
-										V.plugin.getServer().getScheduler().cancelTask(list.get(0));
+										V.plugin.getServer().getScheduler().cancelTask(id.getInteger());
 									}
 								}
 							},
