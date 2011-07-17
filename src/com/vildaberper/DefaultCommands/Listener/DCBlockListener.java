@@ -1,6 +1,10 @@
 package com.vildaberper.DefaultCommands.Listener;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -18,6 +22,7 @@ import com.vildaberper.DefaultCommands.Misc;
 import com.vildaberper.DefaultCommands.Perm;
 import com.vildaberper.DefaultCommands.Util;
 import com.vildaberper.DefaultCommands.V;
+import com.vildaberper.DefaultCommands.Class.DCInteger;
 
 public class DCBlockListener extends BlockListener{
 	@Override
@@ -55,6 +60,8 @@ public class DCBlockListener extends BlockListener{
 
 	@Override
 	public void onBlockBreak(BlockBreakEvent event){
+		boolean log = event.getBlock().getType().equals(Material.LOG);
+
 		if(event.isCancelled()){
 			return;
 		}
@@ -89,6 +96,34 @@ public class DCBlockListener extends BlockListener{
 				event.setCancelled(true);
 				Misc.longGrassDestroy(event.getBlock());
 			}
+		}
+		if(log && Misc.getConfig(event.getBlock()).getBoolean("wood_gravity")){
+			final Block block = event.getBlock();
+			final DCInteger i = new DCInteger(0);
+			final List<Integer> list = new LinkedList<Integer>();
+
+			list.add(
+					V.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(
+							V.plugin,
+							new Runnable(){
+								@Override
+								public void run(){
+									i.add(1);
+									if(block.getWorld().getBlockAt(block.getX(), block.getY() + i.getInteger(), block.getZ()).getType().equals(Material.LOG)){
+										byte data = block.getWorld().getBlockAt(block.getX(), block.getY() + i.getInteger(), block.getZ()).getData();
+
+										block.getWorld().getBlockAt(block.getX(), block.getY() + i.getInteger(), block.getZ()).setType(Material.AIR);
+										block.getWorld().getBlockAt(block.getX(), block.getY() + i.getInteger() - 1, block.getZ()).setType(Material.LOG);
+										block.getWorld().getBlockAt(block.getX(), block.getY() + i.getInteger() - 1, block.getZ()).setData(data);
+									}else{
+										V.plugin.getServer().getScheduler().cancelTask(list.get(0));
+									}
+								}
+							},
+							3,
+							3
+					)
+			);
 		}
 	}
 

@@ -160,10 +160,10 @@ public class DefaultCommands extends JavaPlugin{
 		getServer().getPluginManager().registerEvent(Type.ENTITY_EXPLODE, entityListener, Priority.High, this);
 
 		// PlayerListener
-		getServer().getPluginManager().registerEvent(Type.PLAYER_MOVE, playerListener, Priority.Low, this);
-		getServer().getPluginManager().registerEvent(Type.PLAYER_CHAT, playerListener, Priority.Low, this);
-		getServer().getPluginManager().registerEvent(Type.PLAYER_JOIN, playerListener, Priority.Low, this);
-		getServer().getPluginManager().registerEvent(Type.PLAYER_QUIT, playerListener, Priority.Low, this);
+		getServer().getPluginManager().registerEvent(Type.PLAYER_MOVE, playerListener, Priority.Normal, this);
+		getServer().getPluginManager().registerEvent(Type.PLAYER_CHAT, playerListener, Priority.Normal, this);
+		getServer().getPluginManager().registerEvent(Type.PLAYER_JOIN, playerListener, Priority.Normal, this);
+		getServer().getPluginManager().registerEvent(Type.PLAYER_QUIT, playerListener, Priority.Normal, this);
 		getServer().getPluginManager().registerEvent(Type.PLAYER_LOGIN, playerListener, Priority.High, this);
 		getServer().getPluginManager().registerEvent(Type.PLAYER_BED_ENTER, playerListener, Priority.Low, this);
 		getServer().getPluginManager().registerEvent(Type.PLAYER_INTERACT, playerListener, Priority.High, this);

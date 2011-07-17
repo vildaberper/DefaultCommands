@@ -13,7 +13,7 @@ public class BedCheck implements Runnable{
 			boolean change = true;
 
 			for(Player player : world.getPlayers()){
-				if(!player.isSleeping() && !player.isSleepingIgnored()){
+				if(!(player.isSleeping() || player.isSleepingIgnored())){
 					change = false;
 				}
 			}
