@@ -205,11 +205,11 @@ public class DCWorld{
 		@Override
 		public void run(){
 			for(Entity entity : V.plugin.getServer().getWorld(name).getEntities()){
-				if(entity instanceof Cow && entity.getLocation().getBlock().getFace(BlockFace.DOWN).getType().equals(Material.GRASS) && Math.random() <= Misc.getConfig(name).getDouble("hungry_cows_rate")){
+				if(entity instanceof Cow && entity.getLocation().getBlock().getRelative(BlockFace.DOWN).getType().equals(Material.GRASS) && Math.random() <= Misc.getConfig(name).getDouble("hungry_cows_rate")){
 					Location location = entity.getLocation();
 
 					location.setY(location.getY() + 0.5);
-					entity.getWorld().getBlockAt(location.getBlock().getFace(BlockFace.DOWN).getLocation()).setType(Material.DIRT);
+					entity.getWorld().getBlockAt(location.getBlock().getRelative(BlockFace.DOWN).getLocation()).setType(Material.DIRT);
 
 					final Item item = entity.getWorld().dropItem(location, new ItemStack(Material.DIRT, 0));
 					V.nopickups.add(item);

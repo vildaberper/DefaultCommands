@@ -296,7 +296,7 @@ public class Misc{
 	}
 
 	public static void playNote(final Player player, final Instrument instrument, final int note){
-		final Block block = player.getLocation().getBlock().getFace(BlockFace.DOWN).getFace(BlockFace.DOWN);
+		final Block block = player.getLocation().getBlock().getRelative(BlockFace.DOWN).getRelative(BlockFace.DOWN);
 		final Byte data = block.getData();
 		final Material material = block.getType();
 
@@ -1112,17 +1112,15 @@ public class Misc{
 		if(displayname != null && !name.equals(displayname)){
 			V.names.add(new DCString(name, displayname));
 		}
-		if(displayname != null){
-			if(V.plugin.getServer().getPlayer(name) != null){
-				V.plugin.getServer().getPlayer(name).setDisplayName(Util.replaceColor(name));
-			}
+		if(V.plugin.getServer().getPlayer(name) != null){
+			V.plugin.getServer().getPlayer(name).setDisplayName(getName(name));
 		}
 	}
 
 	public static String getName(String name){
 		for(int i = 0; i < V.names.size(); i++){
 			if(V.names.get(i).getId().equals(name)){
-				return V.names.get(i).getValue();
+				return Util.replaceColor(V.names.get(i).getValue());
 			}
 		}
 		return name;

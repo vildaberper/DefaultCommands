@@ -264,6 +264,7 @@ public class DCPlayerListener extends PlayerListener{
 	@Override
 	public void onPlayerJoin(PlayerJoinEvent event){
 		event.setJoinMessage(null);
+		event.getPlayer().setDisplayName(Misc.getName(event.getPlayer().getName()));
 		if(Misc.getInventory(event.getPlayer().getName(), event.getPlayer().getWorld().getName()) != null){
 			event.getPlayer().getInventory().setContents(Util.convertItemStack(Misc.getInventory(event.getPlayer().getName(), event.getPlayer().getWorld().getName()).getContents()));
 		}
@@ -379,6 +380,7 @@ public class DCPlayerListener extends PlayerListener{
 				if(
 						":reload:plugins:help:?:kick:ban:pardon:ban-ip:pardon-ip:op:deop:tp:give:tell:stop:save-all:save-off:save-on:list:say:time:".indexOf(":" + event.getMessage().split(" ")[0].substring(1) + ":") == -1
 						&& (V.plugin.getServer().getPluginManager().getPlugin("Towny") == null || V.plugin.getServer().getPluginManager().getPlugin("Towny").isEnabled() && ":tc:nc:resident:town:plot:nation:towny:townyadmin:".indexOf(":" + event.getMessage().split(" ")[0].substring(1) + ":") == -1)
+						&& (V.plugin.getServer().getPluginManager().getPlugin("HeroChat") == null || V.plugin.getServer().getPluginManager().getPlugin("HeroChat").isEnabled() && ":".indexOf(":ch:qm:" + event.getMessage().split(" ")[0].substring(1) + ":") == -1)
 				){
 					Misc.sendMessage(event.getPlayer(), Misc.getColoredString("unknown_command"));
 					event.setCancelled(true);

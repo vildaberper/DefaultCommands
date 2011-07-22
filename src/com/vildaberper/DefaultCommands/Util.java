@@ -123,7 +123,7 @@ public class Util{
 	public static Location getSafeLocationAt(Location location){
 		for(int y = location.getBlockY(); y < 125; y++){
 			location.setY(y);
-			if(location.getBlock().getType().equals(Material.AIR) && location.getBlock().getFace(BlockFace.UP).getType().equals(Material.AIR)){
+			if(location.getBlock().getType().equals(Material.AIR) && location.getBlock().getRelative(BlockFace.UP).getType().equals(Material.AIR)){
 				return location;
 			}
 		}

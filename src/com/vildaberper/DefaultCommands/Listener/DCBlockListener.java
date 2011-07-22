@@ -128,14 +128,14 @@ public class DCBlockListener extends BlockListener{
 	public void onBlockCanBuild(BlockCanBuildEvent event){
 		if(event.getMaterial().equals(Material.FENCE) && V.better_fence){
 			for(Entity entity : event.getBlock().getWorld().getEntities()){
-				if(event.getBlock().equals(entity.getLocation().getBlock()) || event.getBlock().equals(entity.getLocation().getBlock().getFace(BlockFace.UP))){
+				if(event.getBlock().equals(entity.getLocation().getBlock()) || event.getBlock().equals(entity.getLocation().getBlock().getRelative(BlockFace.UP))){
 					return;
 				}
 			}
 			event.setBuildable(true);
 		}else if(event.getMaterial().equals(Material.PUMPKIN) && V.better_pumpkin){
 			for(Entity entity : event.getBlock().getWorld().getEntities()){
-				if(event.getBlock().equals(entity.getLocation().getBlock()) || event.getBlock().equals(entity.getLocation().getBlock().getFace(BlockFace.UP))){
+				if(event.getBlock().equals(entity.getLocation().getBlock()) || event.getBlock().equals(entity.getLocation().getBlock().getRelative(BlockFace.UP))){
 					return;
 				}
 			}
@@ -175,8 +175,8 @@ public class DCBlockListener extends BlockListener{
 		}else if(event.getCause().equals(IgniteCause.SPREAD)){
 			if(Misc.getConfig(event.getBlock()).getBoolean("block_fire_spread")){
 				for(BlockFace bf : BlockFace.values()){
-					if(event.getBlock().getFace(bf).getType().equals(Material.FIRE)){
-						event.getBlock().getFace(bf).setType(Material.AIR);
+					if(event.getBlock().getRelative(bf).getType().equals(Material.FIRE)){
+						event.getBlock().getRelative(bf).setType(Material.AIR);
 					}
 				}
 				event.setCancelled(true);

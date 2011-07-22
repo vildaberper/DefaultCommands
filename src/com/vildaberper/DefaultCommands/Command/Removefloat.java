@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import com.vildaberper.DefaultCommands.Misc;
 import com.vildaberper.DefaultCommands.Perm;
 import com.vildaberper.DefaultCommands.V;
+import com.vildaberper.DefaultCommands.Reset;
 import com.vildaberper.DefaultCommands.Class.DCTask;
 
 public class Removefloat{
@@ -26,7 +27,7 @@ public class Removefloat{
 				return false;
 			}
 			if(args.length == 1 && args[0].equalsIgnoreCase("stop")){
-				com.vildaberper.DefaultCommands.Reset.resetRemovefloat();
+				Reset.resetRemovefloat();
 				sender.sendMessage("Canceled all removefloats.");
 				return true;
 			}
@@ -64,23 +65,23 @@ public class Removefloat{
 										public void run(){
 											if(unchecked.size() > 0){
 												if(!unchecked.get(0).getType().equals(Material.AIR) && !unchecked.get(0).getType().equals(Material.BEDROCK)){
-													if(replace.size() == 0 || replace.contains(unchecked.get(0).getFace(BlockFace.DOWN).getType()) && !unchecked.get(0).getFace(BlockFace.DOWN).getType().equals(Material.AIR) && !unchecked.contains(unchecked.get(0).getFace(BlockFace.DOWN))){
-														unchecked.add(unchecked.get(0).getFace(BlockFace.DOWN));
+													if(replace.size() == 0 || replace.contains(unchecked.get(0).getRelative(BlockFace.DOWN).getType()) && !unchecked.get(0).getRelative(BlockFace.DOWN).getType().equals(Material.AIR) && !unchecked.contains(unchecked.get(0).getRelative(BlockFace.DOWN))){
+														unchecked.add(unchecked.get(0).getRelative(BlockFace.DOWN));
 													}
-													if(replace.size() == 0 || replace.contains(unchecked.get(0).getFace(BlockFace.EAST).getType()) && !unchecked.get(0).getFace(BlockFace.EAST).getType().equals(Material.AIR) && !unchecked.contains(unchecked.get(0).getFace(BlockFace.EAST))){
-														unchecked.add(unchecked.get(0).getFace(BlockFace.EAST));
+													if(replace.size() == 0 || replace.contains(unchecked.get(0).getRelative(BlockFace.EAST).getType()) && !unchecked.get(0).getRelative(BlockFace.EAST).getType().equals(Material.AIR) && !unchecked.contains(unchecked.get(0).getRelative(BlockFace.EAST))){
+														unchecked.add(unchecked.get(0).getRelative(BlockFace.EAST));
 													}
-													if(replace.size() == 0 || replace.contains(unchecked.get(0).getFace(BlockFace.NORTH).getType()) && !unchecked.get(0).getFace(BlockFace.NORTH).getType().equals(Material.AIR) && !unchecked.contains(unchecked.get(0).getFace(BlockFace.NORTH))){
-														unchecked.add(unchecked.get(0).getFace(BlockFace.NORTH));
+													if(replace.size() == 0 || replace.contains(unchecked.get(0).getRelative(BlockFace.NORTH).getType()) && !unchecked.get(0).getRelative(BlockFace.NORTH).getType().equals(Material.AIR) && !unchecked.contains(unchecked.get(0).getRelative(BlockFace.NORTH))){
+														unchecked.add(unchecked.get(0).getRelative(BlockFace.NORTH));
 													}
-													if(replace.size() == 0 || replace.contains(unchecked.get(0).getFace(BlockFace.SOUTH).getType()) && !unchecked.get(0).getFace(BlockFace.SOUTH).getType().equals(Material.AIR) && !unchecked.contains(unchecked.get(0).getFace(BlockFace.SOUTH))){
-														unchecked.add(unchecked.get(0).getFace(BlockFace.SOUTH));
+													if(replace.size() == 0 || replace.contains(unchecked.get(0).getRelative(BlockFace.SOUTH).getType()) && !unchecked.get(0).getRelative(BlockFace.SOUTH).getType().equals(Material.AIR) && !unchecked.contains(unchecked.get(0).getRelative(BlockFace.SOUTH))){
+														unchecked.add(unchecked.get(0).getRelative(BlockFace.SOUTH));
 													}
-													if(replace.size() == 0 || replace.contains(unchecked.get(0).getFace(BlockFace.UP).getType()) && !unchecked.get(0).getFace(BlockFace.UP).getType().equals(Material.AIR) && !unchecked.contains(unchecked.get(0).getFace(BlockFace.UP))){
-														unchecked.add(unchecked.get(0).getFace(BlockFace.UP));
+													if(replace.size() == 0 || replace.contains(unchecked.get(0).getRelative(BlockFace.UP).getType()) && !unchecked.get(0).getRelative(BlockFace.UP).getType().equals(Material.AIR) && !unchecked.contains(unchecked.get(0).getRelative(BlockFace.UP))){
+														unchecked.add(unchecked.get(0).getRelative(BlockFace.UP));
 													}
-													if(replace.size() == 0 || replace.contains(unchecked.get(0).getFace(BlockFace.WEST).getType()) && !unchecked.get(0).getFace(BlockFace.WEST).getType().equals(Material.AIR) && !unchecked.contains(unchecked.get(0).getFace(BlockFace.WEST))){
-														unchecked.add(unchecked.get(0).getFace(BlockFace.WEST));
+													if(replace.size() == 0 || replace.contains(unchecked.get(0).getRelative(BlockFace.WEST).getType()) && !unchecked.get(0).getRelative(BlockFace.WEST).getType().equals(Material.AIR) && !unchecked.contains(unchecked.get(0).getRelative(BlockFace.WEST))){
+														unchecked.add(unchecked.get(0).getRelative(BlockFace.WEST));
 													}
 													if((replace.size() == 0 || replace.contains(unchecked.get(0).getType())) && !exclude.contains(unchecked.get(0).getType())){
 														unchecked.get(0).setType(Material.AIR);

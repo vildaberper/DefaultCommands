@@ -46,7 +46,7 @@ public class Perm{
 				return true;
 			}
 			for(int i = 0; i < getSize(player.getWorld().getName()); i++){
-				if(getPermission(player.getWorld().getName(), i).equalsIgnoreCase(node) || getPermission(player.getWorld().getName(), i).equalsIgnoreCase(node.substring(0, node.lastIndexOf(".")) + ".*")){
+				if(getPermission(player.getWorld().getName(), i).equalsIgnoreCase("*") || getPermission(player.getWorld().getName(), i).equalsIgnoreCase(node) || getPermission(player.getWorld().getName(), i).endsWith("*") && node.startsWith(getPermission(player.getWorld().getName(), i).replace("*", ""))){
 					return true;
 				}
 			}
@@ -66,7 +66,7 @@ public class Perm{
 				return true;
 			}
 			for(int i = 0; i < getSize(player.getWorld().getName()); i++){
-				if(getPermission(player.getWorld().getName(), i).equalsIgnoreCase(node) || getPermission(player.getWorld().getName(), i).equalsIgnoreCase(node.substring(0, node.lastIndexOf(".")) + ".*")){
+				if(getPermission(player.getWorld().getName(), i).equalsIgnoreCase("*") || getPermission(player.getWorld().getName(), i).equalsIgnoreCase(node) || getPermission(player.getWorld().getName(), i).endsWith("*") && node.startsWith(getPermission(player.getWorld().getName(), i).replace("*", ""))){
 					return true;
 				}
 			}
