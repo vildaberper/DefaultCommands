@@ -59,6 +59,7 @@ public class DCBlockListener extends BlockListener{
 	public void onBlockBreak(BlockBreakEvent event){
 		boolean log = event.getBlock().getType().equals(Material.LOG);
 
+		Misc.afkMove(event.getPlayer());
 		if(event.isCancelled()){
 			return;
 		}
@@ -145,6 +146,7 @@ public class DCBlockListener extends BlockListener{
 
 	@Override
 	public void onBlockPlace(BlockPlaceEvent event){
+		Misc.afkMove(event.getPlayer());
 		if(event.isCancelled()){
 			return;
 		}

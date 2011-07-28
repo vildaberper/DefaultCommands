@@ -7,6 +7,7 @@ import java.util.List;
 import net.minecraft.server.Packet20NamedEntitySpawn;
 import net.minecraft.server.Packet29DestroyEntity;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -67,6 +68,76 @@ public class Misc{
 		setSelection(player.getName(), null, null);
 		setReply(player.getName(), null);
 		setAfk(player.getEntityId(), false);
+	}
+
+	@SuppressWarnings("deprecation")
+	public static void chat(Player player, String message){
+		String send = "";
+		String hp = "";
+		List<Player> players = new LinkedList<Player>();
+
+		for(int i = 0; i < player.getHealth(); i++){
+			hp += "|";
+		}
+		hp += ChatColor.DARK_GRAY;
+		for(int i = 0; i < 20 - player.getHealth(); i++){
+			hp += "|";
+		}
+		if(player.getHealth() > 10){
+			hp = ChatColor.GREEN + hp;
+		}else if(player.getHealth() <= 10 && player.getHealth() > 5){
+			hp = ChatColor.GOLD + hp;
+		}else if(player.getHealth() <= 5){
+			hp = ChatColor.RED + hp;
+		}
+		hp += ChatColor.WHITE;
+		send = V.chat
+		.replace("<player>", getName(player.getName()))
+		.replace("<message>", message)
+		.replace("<hp>", hp)
+		.replace("<world>", player.getWorld().getName())
+		.replace("<x>", Double.toString(Math.round(player.getLocation().getX())))
+		.replace("<y>", Double.toString(Math.round(player.getLocation().getY())))
+		.replace("<z>", Double.toString(Math.round(player.getLocation().getZ())));
+		if(Perm.PermissionsHandler != null){
+			send = send
+			.replace("<prefix>", Perm.PermissionsHandler.getGroupPrefix(player.getWorld().getName(), Perm.PermissionsHandler.getGroup(player.getWorld().getName(), player.getName())))
+			.replace("<suffix>", Perm.PermissionsHandler.getGroupSuffix(player.getWorld().getName(), Perm.PermissionsHandler.getGroup(player.getWorld().getName(), player.getName())))
+			.replace("<group>", Perm.PermissionsHandler.getGroup(player.getWorld().getName(), player.getName()));
+		}else{
+			send = send
+			.replace("<prefix>", "")
+			.replace("<suffix>", "")
+			.replace("<group>", "");
+		}
+		send = Util.replaceColor(send);
+		if(getConfig(player).getBoolean("separate_chat")){
+			for(Player p : player.getWorld().getPlayers()){
+				if(getConfig(player).getBoolean("local_chat")){
+					if(Util.getDistance(player.getLocation(), p.getLocation()) <= getConfig(player).getDouble("local_chat_distance")){
+						players.add(p);
+					}
+				}else{
+					players.add(p);
+				}
+			}
+		}else{
+			for(Player p : V.plugin.getServer().getOnlinePlayers()){
+				players.add(p);
+			}
+		}
+		for(Player p : players){
+			sendMessage(p, send);
+		}
+	}
+
+	public static void afkMove(Player player){
+		if(Misc.isAfk(player.getEntityId()) && Perm.hasPermissionSilent(player, "dc.afk.self")){
+			Misc.setAfk(player.getEntityId(), false);
+			Misc.getAfkPlayer(player.getEntityId()).resetTime();
+			L.log(Misc.getSenderCmdMsg("c_afk", player, Misc.getPlayers(player, player.getName()), Misc.isAfk(Misc.getPlayers(player, player.getName()).get(0).getEntityId())));
+			Misc.sendMessage(player, Misc.getSenderCmdMsg("c_afk", player, Misc.getPlayers(player, player.getName()), Misc.isAfk(Misc.getPlayers(player, player.getName()).get(0).getEntityId())));
+		}
 	}
 
 	public static void longGrassDestroyCreative(Player player, Block block){

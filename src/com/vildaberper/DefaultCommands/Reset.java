@@ -145,6 +145,9 @@ public class Reset{
 		config.add(new DCConfiguration("creative", false));
 		config.add(new DCConfiguration("separate_inventory", false));
 		config.add(new DCConfiguration("separate_armor", false));
+		config.add(new DCConfiguration("separate_chat", false));
+		config.add(new DCConfiguration("local_chat", false));
+		config.add(new DCConfiguration("local_chat_distance", 100));
 		config.add(new DCConfiguration("hungry_cows", false));
 		config.add(new DCConfiguration("hungry_cows_rate", 0.2));
 		config.add(new DCConfiguration("hungry_cows_interval", 10));

@@ -1,6 +1,5 @@
 package com.vildaberper.DefaultCommands.Listener;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
@@ -37,6 +36,7 @@ import com.vildaberper.DefaultCommands.Runnable.BedCheck;
 public class DCPlayerListener extends PlayerListener{
 	@Override
 	public void onPlayerInteractEntity(PlayerInteractEntityEvent event){
+		Misc.afkMove(event.getPlayer());
 		if(event.isCancelled()){
 			return;
 		}
@@ -78,6 +78,7 @@ public class DCPlayerListener extends PlayerListener{
 
 	@Override
 	public void onPlayerBedEnter(PlayerBedEnterEvent event){
+		Misc.afkMove(event.getPlayer());
 		if(event.isCancelled()){
 			return;
 		}
@@ -97,11 +98,8 @@ public class DCPlayerListener extends PlayerListener{
 			event.getPlayer().teleport(event.getFrom());
 			event.setCancelled(true);
 		}
-		if(Misc.isAfk(event.getPlayer().getEntityId()) && (Util.getDistanceIgnoreY(event.getFrom(), event.getTo()) >= V.afk_move_min || Misc.getAfkPlayer(event.getPlayer().getEntityId()).getLocation().getYaw() != event.getPlayer().getLocation().getYaw() || Misc.getAfkPlayer(event.getPlayer().getEntityId()).getLocation().getPitch() != event.getPlayer().getLocation().getPitch()) && Perm.hasPermissionSilent(event.getPlayer(), "dc.afk.self")){
-			Misc.setAfk(event.getPlayer().getEntityId(), false);
-			Misc.getAfkPlayer(event.getPlayer().getEntityId()).resetTime();
-			L.log(Misc.getSenderCmdMsg("c_afk", event.getPlayer(), Misc.getPlayers(event.getPlayer(), event.getPlayer().getName()), Misc.isAfk(Misc.getPlayers(event.getPlayer(), event.getPlayer().getName()).get(0).getEntityId())));
-			Misc.sendMessage(event.getPlayer(), Misc.getSenderCmdMsg("c_afk", event.getPlayer(), Misc.getPlayers(event.getPlayer(), event.getPlayer().getName()), Misc.isAfk(Misc.getPlayers(event.getPlayer(), event.getPlayer().getName()).get(0).getEntityId())));
+		if(Misc.isAfk(event.getPlayer().getEntityId()) && (Util.getDistanceIgnoreY(event.getFrom(), event.getTo()) >= V.afk_move_min || Misc.getAfkPlayer(event.getPlayer().getEntityId()).getLocation().getYaw() != event.getPlayer().getLocation().getYaw() || Misc.getAfkPlayer(event.getPlayer().getEntityId()).getLocation().getPitch() != event.getPlayer().getLocation().getPitch())){
+			Misc.afkMove(event.getPlayer());
 		}
 		if(!event.getPlayer().isInsideVehicle() && event.getFrom().getBlock() != event.getTo().getBlock()){
 			final DCPortal dcportal = Misc.getPortal(event.getTo().getBlock().getLocation());
@@ -187,6 +185,7 @@ public class DCPlayerListener extends PlayerListener{
 
 	@Override
 	public void onPlayerDropItem(PlayerDropItemEvent event){
+		Misc.afkMove(event.getPlayer());
 		if(event.isCancelled()){
 			return;
 		}
@@ -197,6 +196,7 @@ public class DCPlayerListener extends PlayerListener{
 
 	@Override
 	public void onPlayerInteract(PlayerInteractEvent event){
+		Misc.afkMove(event.getPlayer());
 		if(event.getAction().equals(Action.LEFT_CLICK_BLOCK) && Util.isLeftClickInteractAble(event.getClickedBlock()) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && Util.isRightClickInteractAble(event.getClickedBlock())){
 			if(!Perm.hasPermissionSilent(event.getPlayer(), "dc.do." + event.getPlayer().getWorld().getName())){
 				event.setCancelled(true);
@@ -329,14 +329,9 @@ public class DCPlayerListener extends PlayerListener{
 
 	@Override
 	public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event){
+		Misc.afkMove(event.getPlayer());
 		if(event.isCancelled()){
 			return;
-		}
-		if(Misc.isAfk(event.getPlayer().getEntityId()) && Perm.hasPermissionSilent(event.getPlayer(), "dc.afk.self")){
-			Misc.setAfk(event.getPlayer().getEntityId(), false);
-			Misc.getAfkPlayer(event.getPlayer().getEntityId()).resetTime();
-			L.log(Misc.getSenderCmdMsg("c_afk", event.getPlayer(), Misc.getPlayers(event.getPlayer(), event.getPlayer().getName()), Misc.isAfk(Misc.getPlayers(event.getPlayer(), event.getPlayer().getName()).get(0).getEntityId())));
-			Misc.sendMessage(event.getPlayer(), Misc.getSenderCmdMsg("c_afk", event.getPlayer(), Misc.getPlayers(event.getPlayer(), event.getPlayer().getName()), Misc.isAfk(Misc.getPlayers(event.getPlayer(), event.getPlayer().getName()).get(0).getEntityId())));
 		}
 		if(!event.isCancelled()){
 			String command = "", newm = "";
@@ -389,17 +384,11 @@ public class DCPlayerListener extends PlayerListener{
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void onPlayerChat(PlayerChatEvent event){
+		Misc.afkMove(event.getPlayer());
 		if(event.isCancelled()){
 			return;
-		}
-		if(Misc.isAfk(event.getPlayer().getEntityId()) && Perm.hasPermissionSilent(event.getPlayer(), "dc.afk.self")){
-			Misc.setAfk(event.getPlayer().getEntityId(), false);
-			Misc.getAfkPlayer(event.getPlayer().getEntityId()).resetTime();
-			L.log(Misc.getSenderCmdMsg("c_afk", event.getPlayer(), Misc.getPlayers(event.getPlayer(), event.getPlayer().getName()), Misc.isAfk(Misc.getPlayers(event.getPlayer(), event.getPlayer().getName()).get(0).getEntityId())));
-			Misc.sendMessage(event.getPlayer(), Misc.getSenderCmdMsg("c_afk", event.getPlayer(), Misc.getPlayers(event.getPlayer(), event.getPlayer().getName()), Misc.isAfk(Misc.getPlayers(event.getPlayer(), event.getPlayer().getName()).get(0).getEntityId())));
 		}
 		if(event.isCancelled()){
 			return;
@@ -410,57 +399,8 @@ public class DCPlayerListener extends PlayerListener{
 			return;
 		}
 		if(V.better_chat){
-			String hp = "";
-
-			for(int i = 0; i < event.getPlayer().getHealth(); i++){
-				hp += "|";
-			}
-			hp += ChatColor.DARK_GRAY;
-			for(int i = 0; i < 20 - event.getPlayer().getHealth(); i++){
-				hp += "|";
-			}
-			if(event.getPlayer().getHealth() > 10){
-				hp = ChatColor.GREEN + hp;
-			}else if(event.getPlayer().getHealth() <= 10 && event.getPlayer().getHealth() > 5){
-				hp = ChatColor.GOLD + hp;
-			}else if(event.getPlayer().getHealth() <= 5){
-				hp = ChatColor.RED + hp;
-			}
-			hp += ChatColor.WHITE;
-			event.setMessage(Util.replaceColor(event.getMessage()));
-			if(Perm.PermissionsHandler != null){
-				event.setFormat(
-						Util.replaceColor(
-								V.chat
-								.replace("<prefix>", Perm.PermissionsHandler.getGroupPrefix(event.getPlayer().getWorld().getName(), Perm.PermissionsHandler.getGroup(event.getPlayer().getWorld().getName(), event.getPlayer().getName())))
-								.replace("<suffix>", Perm.PermissionsHandler.getGroupSuffix(event.getPlayer().getWorld().getName(), Perm.PermissionsHandler.getGroup(event.getPlayer().getWorld().getName(), event.getPlayer().getName())))
-								.replace("<player>", event.getPlayer().getDisplayName())
-								.replace("<message>", event.getMessage())
-								.replace("<hp>", hp)
-								.replace("<world>", event.getPlayer().getWorld().getName())
-								.replace("<group>", Perm.PermissionsHandler.getGroup(event.getPlayer().getWorld().getName(), event.getPlayer().getName()))
-								.replace("<x>", Double.toString(Math.round(event.getPlayer().getLocation().getX())))
-								.replace("<y>", Double.toString(Math.round(event.getPlayer().getLocation().getY())))
-								.replace("<z>", Double.toString(Math.round(event.getPlayer().getLocation().getZ())))
-						)
-				);
-			}else{
-				event.setFormat(
-						Util.replaceColor(
-								V.chat
-								.replace("<prefix>", "")
-								.replace("<suffix>", "")
-								.replace("<player>", event.getPlayer().getDisplayName())
-								.replace("<message>", event.getMessage())
-								.replace("<hp>", hp)
-								.replace("<world>", event.getPlayer().getWorld().getName())
-								.replace("<group>", "")
-								.replace("<x>", Double.toString(Math.round(event.getPlayer().getLocation().getX())))
-								.replace("<y>", Double.toString(Math.round(event.getPlayer().getLocation().getY())))
-								.replace("<z>", Double.toString(Math.round(event.getPlayer().getLocation().getZ())))
-						)
-				);
-			}
+			event.setCancelled(true);
+			Misc.chat(event.getPlayer(), event.getMessage());
 		}
 		L.log(event.getPlayer().getName() + ": " + event.getMessage());
 	}
