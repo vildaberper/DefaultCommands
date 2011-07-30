@@ -42,6 +42,7 @@ import com.vildaberper.DefaultCommands.Class.DCBlock;
 import com.vildaberper.DefaultCommands.Class.DCCommand;
 import com.vildaberper.DefaultCommands.Class.DCConfiguration;
 import com.vildaberper.DefaultCommands.Class.DCHome;
+import com.vildaberper.DefaultCommands.Class.DCHover;
 import com.vildaberper.DefaultCommands.Class.DCInventoryPlayer;
 import com.vildaberper.DefaultCommands.Class.DCItem;
 import com.vildaberper.DefaultCommands.Class.DCKit;
@@ -1301,8 +1302,10 @@ public class Misc{
 
 	public static void setFly(int id, boolean enabled){
 		V.fly.remove((Object) id);
+		V.hovers.remove(getHover(id));
 		if(enabled){
 			V.fly.add(id);
+			V.hovers.add(new DCHover(id));
 		}
 	}
 
@@ -1414,5 +1417,20 @@ public class Misc{
 
 	public static boolean isWhitelist(String name){
 		return V.whitelist_.contains(name);
+	}
+
+	public static void setHover(int id, Block block){
+		if(getHover(id) != null){
+			getHover(id).setBlock(block);
+		}
+	}
+
+	public static DCHover getHover(int id){
+		for(DCHover dchover : V.hovers){
+			if(dchover.getId() == id){
+				return dchover;
+			}
+		}
+		return null;
 	}
 }

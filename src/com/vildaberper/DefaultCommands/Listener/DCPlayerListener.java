@@ -1,7 +1,9 @@
 package com.vildaberper.DefaultCommands.Listener;
 
 import org.bukkit.Effect;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.BlockFace;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
@@ -21,6 +23,7 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
@@ -30,10 +33,43 @@ import com.vildaberper.DefaultCommands.Perm;
 import com.vildaberper.DefaultCommands.Util;
 import com.vildaberper.DefaultCommands.V;
 import com.vildaberper.DefaultCommands.Class.DCAfkPlayer;
+import com.vildaberper.DefaultCommands.Class.DCHover;
 import com.vildaberper.DefaultCommands.Class.DCPortal;
 import com.vildaberper.DefaultCommands.Runnable.BedCheck;
 
 public class DCPlayerListener extends PlayerListener{
+	@Override
+	public void onPlayerToggleSneak(PlayerToggleSneakEvent event){
+		if(event.isCancelled()){
+			return;
+		}
+		if(Misc.isFly(event.getPlayer().getEntityId())){
+			if(event.getPlayer().isSneaking()){
+				DCHover hover = Misc.getHover(event.getPlayer().getEntityId());
+
+				if(hover.getBlock() == null){
+					if(event.getPlayer().getLocation().getBlock().getRelative(BlockFace.DOWN).getType().equals(Material.AIR)){
+						Location location = event.getPlayer().getLocation().getBlock().getLocation();
+
+						location.setX(location.getX() + 0.5);
+						location.setZ(location.getZ() + 0.5);
+						location.setYaw(event.getPlayer().getLocation().getYaw());
+						location.setPitch(event.getPlayer().getLocation().getPitch());
+						event.getPlayer().setVelocity(new Vector(0, 0, 0));
+						event.getPlayer().teleport(location);
+						event.getPlayer().getLocation().getBlock().getRelative(BlockFace.DOWN).setType(Material.GLASS);
+						hover.setBlock(event.getPlayer().getLocation().getBlock().getRelative(BlockFace.DOWN));
+					}
+				}else{
+					if(hover.getBlock().getType().equals(Material.GLASS)){
+						hover.getBlock().setType(Material.AIR);
+						hover.setBlock(null);
+					}
+				}
+			}
+		}
+	}
+
 	@Override
 	public void onPlayerInteractEntity(PlayerInteractEntityEvent event){
 		Misc.afkMove(event.getPlayer());
@@ -134,6 +170,18 @@ public class DCPlayerListener extends PlayerListener{
 							}
 						}
 				);
+			}
+		}
+		if(Misc.isFly(event.getPlayer().getEntityId())){
+			DCHover hover = Misc.getHover(event.getPlayer().getEntityId());
+
+			if(hover.getBlock() != null){
+				if(!event.getPlayer().getLocation().getBlock().getRelative(BlockFace.DOWN).equals(hover.getBlock())){
+					if(hover.getBlock().getType().equals(Material.GLASS)){
+						hover.getBlock().setType(Material.AIR);
+						hover.setBlock(null);
+					}
+				}
 			}
 		}
 	}

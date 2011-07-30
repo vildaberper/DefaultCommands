@@ -11,6 +11,7 @@ import com.vildaberper.DefaultCommands.Class.DCArmor;
 import com.vildaberper.DefaultCommands.Class.DCBan;
 import com.vildaberper.DefaultCommands.Class.DCCommand;
 import com.vildaberper.DefaultCommands.Class.DCHome;
+import com.vildaberper.DefaultCommands.Class.DCHover;
 import com.vildaberper.DefaultCommands.Class.DCInventoryPlayer;
 import com.vildaberper.DefaultCommands.Class.DCItem;
 import com.vildaberper.DefaultCommands.Class.DCKit;
@@ -47,6 +48,7 @@ public class V{
 	public static List<DCKit> kits = new LinkedList<DCKit>();
 	public static List<DCAfkPlayer> afkplayers = new LinkedList<DCAfkPlayer>();
 	public static List<DCBan> bans = new LinkedList<DCBan>();
+	public static List<DCHover> hovers = new LinkedList<DCHover>();
 
 	public static List<Integer>
 	god = new LinkedList<Integer>(),
