@@ -1,7 +1,11 @@
 package com.vildaberper.DefaultCommands.Listener;
 
+import net.minecraft.server.World;
+
 import org.bukkit.Effect;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
@@ -21,6 +25,7 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
@@ -191,6 +196,21 @@ public class DCPlayerListener extends PlayerListener{
 		}
 		if(Misc.getConfig(event.getPlayer()).getBoolean("creative") || Misc.isCreative(event.getPlayer().getEntityId())){
 			event.getItemDrop().remove();
+		}
+		if( Misc.isFly( event.getPlayer().getEntityId() ) )
+		{
+			Location pos = event.getPlayer().getLocation();
+			Block ledge = event.getPlayer().getWorld().getBlockAt( pos.getBlockX(), pos.getBlockY()-1, pos.getBlockZ() );
+			Block jumpProtection = event.getPlayer().getWorld().getBlockAt( pos.getBlockX(), pos.getBlockY()-2, pos.getBlockZ() );
+			
+			if( ledge.getType() == Material.AIR && jumpProtection.getType() == Material.AIR )
+			{
+				ledge.setType(Material.GLASS);
+				event.getPlayer().setVelocity( new Vector(0,0,0) );
+				event.getPlayer().teleport(pos);
+				event.getPlayer().getInventory().addItem( event.getItemDrop().getItemStack() );
+				event.getItemDrop().remove();
+			}
 		}
 	}
 
