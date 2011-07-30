@@ -14,24 +14,30 @@ public class Create{
 		if(sender instanceof Player && !Perm.hasPermission((Player) sender, "dc.create")){
 			return false;
 		}
-		if(args.length >= 2){
-			args[1] = args[1].toUpperCase();
-		}
-		if(Util.getEnvironment(args[1]) == null){
-			Misc.sendString(sender, "invalid_environment");
-			return false;
-		}
-		if(args.length == 2){
-			Misc.addWorld(args[0], Util.getEnvironment(args[1]));
+		if(args.length >= 1){
+			String environment = "NORMAL";
+
+			if(args.length >= 2){
+				environment = args[1].toUpperCase();
+			}
+			if(Util.getEnvironment(environment) == null){
+				Misc.sendString(sender, "invalid_environment");
+				return false;
+			}
+			if(args.length >= 3){
+				String seed = "";
+
+				seed = args[2];
+				for(int i = 3; i < args.length; i++){
+					seed += " " + args[i];
+				}
+				Misc.addWorld(args[0], Util.getEnvironment(environment), seed.hashCode());
+			}else{
+				Misc.addWorld(args[0], Util.getEnvironment(environment));
+			}
 			Perm.setupPermissions(args[0]);
-			Misc.sendMessage(sender, Misc.getColoredString("c_create").replace("<player>", Misc.getSenderName(sender)).replace("<world>", args[0]).replace("<enviroment>", args[1]));
-			L.log(Misc.getColoredString("c_create").replace("<player>", Misc.getSenderName(sender)).replace("<world>", args[0]).replace("<enviroment>", args[1]));
-			return true;
-		}else if(args.length == 3){
-			Misc.addWorld(args[0], Util.getEnvironment(args[1]), args[2].hashCode());
-			Perm.setupPermissions(args[0]);
-			Misc.sendMessage(sender, Misc.getColoredString("c_create").replace("<player>", Misc.getSenderName(sender)).replace("<world>", args[0]).replace("<enviroment>", args[1]));
-			L.log(Misc.getColoredString("c_create").replace("<player>", Misc.getSenderName(sender)).replace("<world>", args[0]).replace("<enviroment>", args[1]));
+			Misc.sendMessage(sender, Misc.getColoredString("c_create").replace("<player>", Misc.getSenderName(sender)).replace("<world>", args[0]).replace("<enviroment>", environment));
+			L.log(Misc.getColoredString("c_create").replace("<player>", Misc.getSenderName(sender)).replace("<world>", args[0]).replace("<enviroment>", environment));
 			return true;
 		}
 		return false;
