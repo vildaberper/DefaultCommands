@@ -384,12 +384,13 @@ public class Reset{
 		V.strings.add(new DCString("not_console", "&4You cannot do that as console."));
 		V.strings.add(new DCString("frozen", "&4You cannot do that while you are frozen."));
 		V.strings.add(new DCString("online", "&2Connected players (&7<online>&2/&7<max>&2):<br><players>&2."));
-		V.strings.add(new DCString("who_online", "&7<prefix><player><suffix>&2:<br>&2Online now from &7<ip>&2.<br>&2Location: &7<world> <x> <y> <z><br>&2Hp: &7[<hp>&7]<br>&2Group: &7<group>"));
+		V.strings.add(new DCString("who_online", "&7<player>&2:<br>&2Online now from &7<ip>&2.<br>&2Location: &7<world> <x> <y> <z><br>&2Hp: &7[<hp>&7]<br>&2Group: &7<group>"));
 		V.strings.add(new DCString("who_offline", "&7<player>&2:<br>&2Last seen &7<date> <time>&2 from &7<ip>&2."));
 		V.strings.add(new DCString("message_sent", "&2To &7<players>&2: &7<message>"));
 		V.strings.add(new DCString("message_recieved", "&2From &7<player>&2: &7<message>"));
 		V.strings.add(new DCString("whitelist", "&4You are not on the whitelist!"));
 		V.strings.add(new DCString("motd", "&2Welcome to the server, &7<player>&2. Connected players (&7<online>&2/&7<max>&2):<br>&7<players>&2.<br>&2Enjoy your stay!"));
+		V.strings.add(new DCString("item_in_hand", "&4You must hold an item in your hand!"));
 		V.strings.add(new DCString("invalid_player", "&4Invalid player(s)."));
 		V.strings.add(new DCString("invalid_world", "&4Invalid world."));
 		V.strings.add(new DCString("invalid_page", "&4Invalid page."));
@@ -438,7 +439,6 @@ public class Reset{
 		V.strings.add(new DCString("c_reset", "&7<player>&2 resetted &7<players>&2."));
 		V.strings.add(new DCString("c_message", "&7<player>&2 -> &7<players>&2: &7<message>"));
 		V.strings.add(new DCString("c_repair", "&7<player>&2 repaired one &7<item>&2."));
-		V.strings.add(new DCString("item_in_hand", "&4You must hold an item in your hand!"));
 		V.strings.add(new DCString("c_mute", "&7<player>&2 <status>d mute for &7<players>&2."));
 		V.strings.add(new DCString("c_fire", "&7<player>&2 set &7<players>&2 on fire for &7<duration>&2 seconds."));
 		V.strings.add(new DCString("c_kit", "&7<player>&2 gave &7<players>&2 the kit &7<kit>&2."));

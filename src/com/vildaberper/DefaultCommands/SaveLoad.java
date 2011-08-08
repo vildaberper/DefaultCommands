@@ -492,7 +492,6 @@ public class SaveLoad{
 						Misc.setConfig(files[i].getName(), configuration, config.getProperty(configuration));
 					}
 				}
-				Perm.setupPermissions(files[i].getName());
 			}
 		}
 		for(DCWorld dcworld : V.worlds){

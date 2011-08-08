@@ -112,7 +112,6 @@ public class Dc{
 				}else if(args[1].equalsIgnoreCase("config")){
 					for(DCWorld dcworld : V.worlds){
 						dcworld.setConfiguration(Reset.resetDCConfiguration(dcworld.getName()));
-						Perm.setupPermissions(dcworld.getName());
 					}
 					sender.sendMessage("Resetted config.");
 					return true;

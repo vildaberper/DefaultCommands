@@ -35,7 +35,6 @@ public class Create{
 			}else{
 				Misc.addWorld(args[0], Util.getEnvironment(environment));
 			}
-			Perm.setupPermissions(args[0]);
 			Misc.sendMessage(sender, Misc.getColoredString("c_create").replace("<player>", Misc.getSenderName(sender)).replace("<world>", args[0]).replace("<enviroment>", environment));
 			L.log(Misc.getColoredString("c_create").replace("<player>", Misc.getSenderName(sender)).replace("<world>", args[0]).replace("<enviroment>", environment));
 			return true;

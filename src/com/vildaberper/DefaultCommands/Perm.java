@@ -1,23 +1,33 @@
 package com.vildaberper.DefaultCommands;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.bukkit.entity.Player;
 
-import com.nijiko.permissions.PermissionHandler;
-import com.nijikokun.bukkit.Permissions.Permissions;
+import com.platymuus.bukkit.permissions.Group;
+import com.platymuus.bukkit.permissions.PermissionsPlugin;
 
 public class Perm{
-	public static PermissionHandler PermissionsHandler = null;
-
-	public static void setupPermissions(String world){
-		if(Perm.PermissionsHandler == null){
-			if(V.plugin.getServer().getPluginManager().getPlugin("Permissions") != null && ((Permissions) V.plugin.getServer().getPluginManager().getPlugin("Permissions")).getHandler() != null){
-				Perm.PermissionsHandler = ((Permissions)V.plugin.getServer().getPluginManager().getPlugin("Permissions")).getHandler();
-			}else{
-				Misc.setConfig(world, "op_permissions", true);
-			}
+	public static List<Group> getGroups(String player){
+		if(V.plugin.getServer().getPluginManager().getPlugin("PermissionsBukkit") != null && ((PermissionsPlugin) V.plugin.getServer().getPluginManager().getPlugin("PermissionsBukkit")).getPlayerInfo(player) != null){
+			return ((PermissionsPlugin) V.plugin.getServer().getPluginManager().getPlugin("PermissionsBukkit")).getPlayerInfo(player).getGroups();
 		}
+		return null;
+	}
+
+	public static List<String> getGroupsString(String player){
+		List<Group> groups = getGroups(player);
+
+		if(groups != null){
+			List<String> groupsstring = new LinkedList<String>();
+
+			for(Group group : groups){
+				groupsstring.add(group.getName());
+			}
+			return groupsstring;
+		}
+		return null;
 	}
 
 	public static void clearPermissions(String world){
@@ -41,23 +51,12 @@ public class Perm{
 	}
 
 	public static boolean hasPermission(Player player, String node){
-		if(Misc.getConfig(player.getWorld().getName()).getBoolean("op_permissions")){
-			if(player.isOp()){
-				return true;
-			}
-			for(int i = 0; i < getSize(player.getWorld().getName()); i++){
-				if(getPermission(player.getWorld().getName(), i).equalsIgnoreCase("*") || getPermission(player.getWorld().getName(), i).equalsIgnoreCase(node) || getPermission(player.getWorld().getName(), i).endsWith("*") && node.startsWith(getPermission(player.getWorld().getName(), i).replace("*", ""))){
-					return true;
-				}
-			}
+		boolean permission = hasPermissionSilent(player, node);
+
+		if(!permission){
 			player.sendMessage(Misc.getColoredString("not_permission"));
-			return false;
 		}
-		if(!PermissionsHandler.has(player, node)){
-			player.sendMessage(Misc.getColoredString("not_permission"));
-			return false;
-		}
-		return true;
+		return permission;
 	}
 
 	public static boolean hasPermissionSilent(Player player, String node){
@@ -66,15 +65,35 @@ public class Perm{
 				return true;
 			}
 			for(int i = 0; i < getSize(player.getWorld().getName()); i++){
-				if(getPermission(player.getWorld().getName(), i).equalsIgnoreCase("*") || getPermission(player.getWorld().getName(), i).equalsIgnoreCase(node) || getPermission(player.getWorld().getName(), i).endsWith("*") && node.startsWith(getPermission(player.getWorld().getName(), i).replace("*", ""))){
+				if(getPermission(player.getWorld().getName(), i).equals(node)){
 					return true;
 				}
+				if(getPermission(player.getWorld().getName(), i).equals("*")){
+					return true;
+				}
+				for(int y = 0; y < node.length(); y++){
+					if(node.charAt(y) == '.'){
+						if(getPermission(player.getWorld().getName(), i).equals(node.substring(0, y) + ".*")){
+							return true;
+						}
+					}
+				}
 			}
-			return false;
+		}else{
+			if(player.hasPermission(node)){
+				return true;
+			}
+			if(player.hasPermission("*")){
+				return true;
+			}
+			for(int y = 0; y < node.length(); y++){
+				if(node.charAt(y) == '.'){
+					if(player.hasPermission(node.substring(0, y) + ".*")){
+						return true;
+					}
+				}
+			}
 		}
-		if(!PermissionsHandler.has(player, node)){
-			return false;
-		}
-		return true;
+		return false;
 	}
 }

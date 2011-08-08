@@ -9,7 +9,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.vildaberper.DefaultCommands.Class.DCAfkPlayer;
 import com.vildaberper.DefaultCommands.Class.DCPlayer;
-import com.vildaberper.DefaultCommands.Class.DCWorld;
 import com.vildaberper.DefaultCommands.Command.Afk;
 import com.vildaberper.DefaultCommands.Command.Ban;
 import com.vildaberper.DefaultCommands.Command.Bans;
@@ -124,9 +123,6 @@ public class DefaultCommands extends JavaPlugin{
 	public void onEnable(){
 		L.initializeLog();
 		SaveLoad.loadAll();
-		for(DCWorld dcworld : V.worlds){
-			Perm.setupPermissions(dcworld.getName());
-		}
 
 		for(Player player : getServer().getOnlinePlayers()){
 			Misc.setAfkPlayer(player.getEntityId(), new DCAfkPlayer(player.getEntityId(), player.getLocation()));

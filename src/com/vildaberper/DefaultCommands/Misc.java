@@ -71,7 +71,6 @@ public class Misc{
 		setAfk(player.getEntityId(), false);
 	}
 
-	@SuppressWarnings("deprecation")
 	public static void chat(Player player, String message){
 		String send = "";
 		String hp = "";
@@ -100,15 +99,11 @@ public class Misc{
 		.replace("<x>", Double.toString(Math.round(player.getLocation().getX())))
 		.replace("<y>", Double.toString(Math.round(player.getLocation().getY())))
 		.replace("<z>", Double.toString(Math.round(player.getLocation().getZ())));
-		if(Perm.PermissionsHandler != null){
+		if(Perm.getGroupsString(player.getName()) != null){
 			send = send
-			.replace("<prefix>", Perm.PermissionsHandler.getGroupPrefix(player.getWorld().getName(), Perm.PermissionsHandler.getGroup(player.getWorld().getName(), player.getName())))
-			.replace("<suffix>", Perm.PermissionsHandler.getGroupSuffix(player.getWorld().getName(), Perm.PermissionsHandler.getGroup(player.getWorld().getName(), player.getName())))
-			.replace("<group>", Perm.PermissionsHandler.getGroup(player.getWorld().getName(), player.getName()));
+			.replace("<group>", Perm.getGroupsString(player.getName()).toString().substring(1, Perm.getGroupsString(player.getName()).toString().length() - 1));
 		}else{
 			send = send
-			.replace("<prefix>", "")
-			.replace("<suffix>", "")
 			.replace("<group>", "");
 		}
 		send = Util.replaceColor(send);
@@ -735,7 +730,6 @@ public class Misc{
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	public static List<Player> getPlayers(Player p, String string){
 		List<Player> players = new LinkedList<Player>();
 
@@ -766,18 +760,16 @@ public class Misc{
 				}
 			}else if(s.startsWith("g:")){
 				for(World world : V.plugin.getServer().getWorlds()){
-					if(Perm.PermissionsHandler != null && Perm.PermissionsHandler.getGroup(world.getName(), s.substring(2)) != null){
-						for(Player player : world.getPlayers()){
-							if(Perm.PermissionsHandler.inGroup(world.getName(), player.getName(), s.substring(2))){
-								for(int i = 0; i < players.size(); i++){
-									if(players.get(i).equals(player)){
-										players.remove(i);
-										i--;
-									}
+					for(Player player : world.getPlayers()){
+						if(Perm.getGroupsString(player.getName()) != null && Perm.getGroupsString(player.getName()).contains(s.substring(2))){
+							for(int i = 0; i < players.size(); i++){
+								if(players.get(i).equals(player)){
+									players.remove(i);
+									i--;
 								}
-								if(p == null || p.equals(player) || !isHide(player.getName()) || isHide(player.getName()) && Perm.hasPermissionSilent(p, "dc.hide.see")){
-									players.add(player);
-								}
+							}
+							if(p == null || p.equals(player) || !isHide(player.getName()) || isHide(player.getName()) && Perm.hasPermissionSilent(p, "dc.hide.see")){
+								players.add(player);
 							}
 						}
 					}
@@ -865,11 +857,11 @@ public class Misc{
 		if(enabled){
 			s = "enable";
 		}
-		return getColoredString(id).replace("<sender>", getSenderName(sender)).replace("<player>", getPlayerNames(players)).replace("<players>", getPlayerNames(players)).replace("<status>", s);
+		return getColoredString(id).replace("<player>", getSenderName(sender)).replace("<players>", getPlayerNames(players)).replace("<status>", s);
 	}
 
 	public static String getSenderCmdMsg(String id, CommandSender sender, List<Player> players){
-		return getColoredString(id).replace("<sender>", getSenderName(sender)).replace("<player>", getPlayerNames(players)).replace("<players>", getPlayerNames(players)).replace("<status>", "toggle");
+		return getColoredString(id).replace("<player>", getSenderName(sender)).replace("<players>", getPlayerNames(players)).replace("<status>", "toggle");
 	}
 
 	public static String getSenderCmdMsg(String id, CommandSender sender, List<Player> players, List<ItemStack> itemstacks){
@@ -1389,7 +1381,7 @@ public class Misc{
 	public static boolean isMute(String name){
 		return V.mute.contains(name);
 	}
-	
+
 	public static void setHide(String name, boolean enabled){
 		if(!enabled){
 			if(V.plugin.getServer().getPlayer(name) != null){

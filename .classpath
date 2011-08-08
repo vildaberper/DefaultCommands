@@ -4,7 +4,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry kind="lib" path="C:/Users/Vilda Berper/Dropbox/bukkit-0.0.1-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Vilda Berper/Dropbox/craftbukkit-0.0.1-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vilda Berper/Dropbox/Permissions.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Vilda Berper/Dropbox/MyWarp.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Vilda Berper/Dropbox/PermissionsBukkit.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
