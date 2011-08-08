@@ -1389,7 +1389,7 @@ public class Misc{
 	public static boolean isMute(String name){
 		return V.mute.contains(name);
 	}
-
+	
 	public static void setHide(String name, boolean enabled){
 		if(!enabled){
 			if(V.plugin.getServer().getPlayer(name) != null){

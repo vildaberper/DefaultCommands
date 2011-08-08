@@ -109,8 +109,10 @@ public class DCEntityListener extends EntityListener{
 			return;
 		}
 		if(event instanceof EntityDamageByEntityEvent){
-			if(Misc.isInstakill(((EntityDamageByEntityEvent) event).getDamager().getEntityId())){
-				event.setDamage(((org.bukkit.craftbukkit.entity.CraftCreature) event.getEntity()).getHealth());
+			if(((EntityDamageByEntityEvent) event).getDamager() != null){
+				if(Misc.isInstakill(((EntityDamageByEntityEvent) event).getDamager().getEntityId())){
+					event.setDamage(((org.bukkit.craftbukkit.entity.CraftCreature) event.getEntity()).getHealth());
+				}
 			}
 		}
 		if(event.getEntity() instanceof Painting){
