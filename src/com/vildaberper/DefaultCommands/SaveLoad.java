@@ -222,7 +222,9 @@ public class SaveLoad{
 						amount = item.split(" ")[1];
 					}
 					for(ItemStack itemstack : Misc.getItemStacks(item.split(" ")[0], amount)){
-						items.add(itemstack);
+						if(itemstack.getAmount() > 0){
+							items.add(itemstack);
+						}
 					}
 				}
 				V.kits.add(new DCKit(name, items));
@@ -240,7 +242,7 @@ public class SaveLoad{
 			List<String> items = new LinkedList<String>();
 
 			for(ItemStack itemstack : dckit.getItems()){
-				items.add(itemstack.getTypeId() + ":" + itemstack.getDurability() + " " + itemstack.getAmount());
+				items.add(itemstack.getType().toString() + ":" + itemstack.getDurability() + " " + itemstack.getAmount());
 			}
 			k.setProperty(dckit.getName(), items);
 		}

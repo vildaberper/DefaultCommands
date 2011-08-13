@@ -52,6 +52,7 @@ import com.vildaberper.DefaultCommands.Class.DCReply;
 import com.vildaberper.DefaultCommands.Class.DCSelection;
 import com.vildaberper.DefaultCommands.Class.DCString;
 import com.vildaberper.DefaultCommands.Class.DCTask;
+import com.vildaberper.DefaultCommands.Class.DCTeleport;
 import com.vildaberper.DefaultCommands.Class.DCUndo;
 import com.vildaberper.DefaultCommands.Class.DCWarp;
 import com.vildaberper.DefaultCommands.Class.DCWorld;
@@ -69,6 +70,8 @@ public class Misc{
 		setSelection(player.getName(), null, null);
 		setReply(player.getName(), null);
 		setAfk(player.getEntityId(), false);
+		setHover(player.getEntityId(), null);
+		setTeleport(player, null);
 	}
 
 	public static void chat(Player player, String message){
@@ -1421,6 +1424,24 @@ public class Misc{
 		for(DCHover dchover : V.hovers){
 			if(dchover.getId() == id){
 				return dchover;
+			}
+		}
+		return null;
+	}
+
+	public static void setTeleport(Player player, Location location){
+		if(getTeleport(player) != null){
+			V.teleports.remove(getTeleport(player));
+		}
+		if(location != null){
+			V.teleports.add(new DCTeleport(player, location));
+		}
+	}
+
+	public static DCTeleport getTeleport(Player player){
+		for(DCTeleport dcteleport : V.teleports){
+			if(dcteleport.getPlayer().equals(player)){
+				return dcteleport;
 			}
 		}
 		return null;

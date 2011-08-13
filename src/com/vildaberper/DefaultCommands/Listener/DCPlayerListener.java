@@ -15,6 +15,7 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerLoginEvent.Result;
@@ -38,6 +39,20 @@ import com.vildaberper.DefaultCommands.Class.DCPortal;
 import com.vildaberper.DefaultCommands.Runnable.BedCheck;
 
 public class DCPlayerListener extends PlayerListener{
+	@Override
+	public void onPlayerKick(PlayerKickEvent event){
+		if(event.isCancelled()){
+			return;
+		}
+		if(event.getReason().equals("Flying is not enabled on this server")){
+			if(Perm.hasPermissionSilent(event.getPlayer(), "dc.allowflight." + event.getPlayer().getWorld().getName())){
+				event.setCancelled(true);
+			}else{
+				event.setReason(Misc.getColoredString("no_flying"));
+			}
+		}
+	}
+
 	@Override
 	public void onPlayerToggleSneak(PlayerToggleSneakEvent event){
 		if(event.isCancelled()){
@@ -373,6 +388,7 @@ public class DCPlayerListener extends PlayerListener{
 				}
 			}
 		}
+		Misc.setTeleport(event.getPlayer(), event.getFrom());
 	}
 
 	@Override
@@ -433,7 +449,7 @@ public class DCPlayerListener extends PlayerListener{
 	}
 
 	@Override
-	public void onPlayerChat(PlayerChatEvent event){
+	public void onPlayerChat(final PlayerChatEvent event){
 		Misc.afkMove(event.getPlayer());
 		if(event.isCancelled()){
 			return;

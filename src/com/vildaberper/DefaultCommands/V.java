@@ -21,6 +21,7 @@ import com.vildaberper.DefaultCommands.Class.DCReply;
 import com.vildaberper.DefaultCommands.Class.DCSelection;
 import com.vildaberper.DefaultCommands.Class.DCString;
 import com.vildaberper.DefaultCommands.Class.DCTask;
+import com.vildaberper.DefaultCommands.Class.DCTeleport;
 import com.vildaberper.DefaultCommands.Class.DCUndo;
 import com.vildaberper.DefaultCommands.Class.DCWarp;
 import com.vildaberper.DefaultCommands.Class.DCWorld;
@@ -49,6 +50,7 @@ public class V{
 	public static List<DCAfkPlayer> afkplayers = new LinkedList<DCAfkPlayer>();
 	public static List<DCBan> bans = new LinkedList<DCBan>();
 	public static List<DCHover> hovers = new LinkedList<DCHover>();
+	public static List<DCTeleport> teleports = new LinkedList<DCTeleport>();
 
 	public static List<Integer>
 	god = new LinkedList<Integer>(),
@@ -87,7 +89,7 @@ public class V{
 	public static String
 	give = "item amount target",
 	all = "*",
-	chat = "&7<prefix><player><suffix>&2: &f<message>",
+	chat = "&7<player>&2: &f<message>",
 	timezone = "GMT+1",
 	console_name = "CONSOLE";
 

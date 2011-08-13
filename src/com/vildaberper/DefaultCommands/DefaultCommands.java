@@ -67,6 +67,7 @@ import com.vildaberper.DefaultCommands.Command.Spawnmob;
 import com.vildaberper.DefaultCommands.Command.Spherehollow;
 import com.vildaberper.DefaultCommands.Command.Stack;
 import com.vildaberper.DefaultCommands.Command.Teleport;
+import com.vildaberper.DefaultCommands.Command.Teleportback;
 import com.vildaberper.DefaultCommands.Command.Teleporthere;
 import com.vildaberper.DefaultCommands.Command.Teleportposition;
 import com.vildaberper.DefaultCommands.Command.Time;
@@ -160,6 +161,7 @@ public class DefaultCommands extends JavaPlugin{
 		getServer().getPluginManager().registerEvent(Type.PLAYER_CHAT, playerListener, Priority.Normal, this);
 		getServer().getPluginManager().registerEvent(Type.PLAYER_JOIN, playerListener, Priority.Normal, this);
 		getServer().getPluginManager().registerEvent(Type.PLAYER_QUIT, playerListener, Priority.Normal, this);
+		getServer().getPluginManager().registerEvent(Type.PLAYER_KICK, playerListener, Priority.Normal, this);
 		getServer().getPluginManager().registerEvent(Type.PLAYER_LOGIN, playerListener, Priority.High, this);
 		getServer().getPluginManager().registerEvent(Type.PLAYER_BED_ENTER, playerListener, Priority.Low, this);
 		getServer().getPluginManager().registerEvent(Type.PLAYER_INTERACT, playerListener, Priority.High, this);
@@ -334,6 +336,8 @@ public class DefaultCommands extends JavaPlugin{
 			return Kick.kick(sender, command, label, args);
 		}else if(command.getName().equalsIgnoreCase("dctop")){
 			return Top.top(sender, command, label, args);
+		}else if(command.getName().equalsIgnoreCase("dcteleportback")){
+			return Teleportback.teleportback(sender, command, label, args);
 		}
 		return false;
 	}

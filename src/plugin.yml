@@ -224,4 +224,7 @@ commands:
     usage: /<command> <player> [reason]
   dctop:
     description: Top.
-    usage: /<command> <player>
+    usage: /<command> [player]
+  dcteleportback:
+    description: Teleportback.
+    usage: /<command> [player]

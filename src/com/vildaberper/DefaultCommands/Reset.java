@@ -129,6 +129,8 @@ public class Reset{
 		Misc.addAlias("dcbans", "banned");
 		Misc.addAlias("dckick", "kick");
 		Misc.addAlias("dctop", "top");
+		Misc.addAlias("dcteleportback", "teleportback");
+		Misc.addAlias("dcteleportback", "tpb");
 	}
 
 	public static List<DCConfiguration> resetDCConfiguration(String world){
@@ -367,6 +369,10 @@ public class Reset{
 		permissions.add("dc.top.self");
 		permissions.add("dc.top.other");
 		permissions.add("dc.top.all");
+		permissions.add("dc.allowflight.*");
+		permissions.add("dc.teleportback.self");
+		permissions.add("dc.teleportback.other");
+		permissions.add("dc.teleportback.all");
 		config.add(new DCConfiguration("permissions", permissions));
 		return config;
 	}
@@ -391,6 +397,7 @@ public class Reset{
 		V.strings.add(new DCString("whitelist", "&4You are not on the whitelist!"));
 		V.strings.add(new DCString("motd", "&2Welcome to the server, &7<player>&2. Connected players (&7<online>&2/&7<max>&2):<br>&7<players>&2.<br>&2Enjoy your stay!"));
 		V.strings.add(new DCString("item_in_hand", "&4You must hold an item in your hand!"));
+		V.strings.add(new DCString("no_flying", "&4Flying is not enabled on this server!"));
 		V.strings.add(new DCString("invalid_player", "&4Invalid player(s)."));
 		V.strings.add(new DCString("invalid_world", "&4Invalid world."));
 		V.strings.add(new DCString("invalid_page", "&4Invalid page."));
@@ -447,6 +454,7 @@ public class Reset{
 		V.strings.add(new DCString("c_teleportposition", "&7<player>&2 teleported &7<players>&2 to (&7<position>&2)."));
 		V.strings.add(new DCString("c_afk", "&7<player>&2 <status>d afk for &7<players>&2."));
 		V.strings.add(new DCString("c_kick", "&7<player>&2 kicked &7<players>&2, reason: &7<reason>&2."));
+		V.strings.add(new DCString("c_teleportback", "&7<player>&2 teleported &7<players>&2 back."));
 	}
 
 	public static void resetItems(){
