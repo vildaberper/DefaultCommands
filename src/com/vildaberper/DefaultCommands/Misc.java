@@ -39,6 +39,7 @@ import com.vildaberper.DefaultCommands.Class.DCAfkPlayer;
 import com.vildaberper.DefaultCommands.Class.DCArmor;
 import com.vildaberper.DefaultCommands.Class.DCBan;
 import com.vildaberper.DefaultCommands.Class.DCBlock;
+import com.vildaberper.DefaultCommands.Class.DCBorder;
 import com.vildaberper.DefaultCommands.Class.DCCommand;
 import com.vildaberper.DefaultCommands.Class.DCConfiguration;
 import com.vildaberper.DefaultCommands.Class.DCHome;
@@ -95,19 +96,19 @@ public class Misc{
 		}
 		hp += ChatColor.WHITE;
 		send = V.chat
-		.replace("<player>", getName(player.getName()))
-		.replace("<message>", message)
-		.replace("<hp>", hp)
-		.replace("<world>", player.getWorld().getName())
-		.replace("<x>", Double.toString(Math.round(player.getLocation().getX())))
-		.replace("<y>", Double.toString(Math.round(player.getLocation().getY())))
-		.replace("<z>", Double.toString(Math.round(player.getLocation().getZ())));
+				.replace("<player>", getName(player.getName()))
+				.replace("<message>", message)
+				.replace("<hp>", hp)
+				.replace("<world>", player.getWorld().getName())
+				.replace("<x>", Double.toString(Math.round(player.getLocation().getX())))
+				.replace("<y>", Double.toString(Math.round(player.getLocation().getY())))
+				.replace("<z>", Double.toString(Math.round(player.getLocation().getZ())));
 		if(Perm.getGroupsString(player.getName()) != null){
 			send = send
-			.replace("<group>", Perm.getGroupsString(player.getName()).toString().substring(1, Perm.getGroupsString(player.getName()).toString().length() - 1));
+					.replace("<group>", Perm.getGroupsString(player.getName()).toString().substring(1, Perm.getGroupsString(player.getName()).toString().length() - 1));
 		}else{
 			send = send
-			.replace("<group>", "");
+					.replace("<group>", "");
 		}
 		send = Util.replaceColor(send);
 		if(getConfig(player).getBoolean("separate_chat")){
@@ -213,10 +214,10 @@ public class Misc{
 
 	public static String getMotd(String player){
 		return getString("motd")
-		.replace("<player>", player)
-		.replace("<online>", Integer.toString(getPlayerList(V.plugin.getServer().getPlayer(player)).size()))
-		.replace("<max>", Integer.toString(V.plugin.getServer().getMaxPlayers()))
-		.replace("<players>", getPlayerList(V.plugin.getServer().getPlayer(player)).toString().substring(1, getPlayerList(V.plugin.getServer().getPlayer(player)).toString().length() - 1).replace(",", "&2,"));
+				.replace("<player>", player)
+				.replace("<online>", Integer.toString(getPlayerList(V.plugin.getServer().getPlayer(player)).size()))
+				.replace("<max>", Integer.toString(V.plugin.getServer().getMaxPlayers()))
+				.replace("<players>", getPlayerList(V.plugin.getServer().getPlayer(player)).toString().substring(1, getPlayerList(V.plugin.getServer().getPlayer(player)).toString().length() - 1).replace(",", "&2,"));
 	}
 
 	public static String getLatestVersion(){
@@ -362,7 +363,7 @@ public class Misc{
 						playNote(player, Instrument.PIANO, 8);
 					}
 				}
-		);
+				);
 	}
 
 	public static void playNote(final Player player, final Instrument instrument, final int note){
@@ -380,7 +381,7 @@ public class Misc{
 					}
 				},
 				1
-		);
+				);
 	}
 
 	public static DCUndo getUndo(String name){
@@ -517,7 +518,7 @@ public class Misc{
 						getColoredString("join_world")
 						.replace("<player>", player.getDisplayName())
 						.replace("<world>", world)
-				);
+						);
 			}
 		}
 		if(!hide){
@@ -529,7 +530,7 @@ public class Misc{
 
 	public static void broadcastDisconnect(Player player, boolean hide){
 		for(Player p : V.plugin.getServer().getOnlinePlayers()){
-			if(!player.equals(p) && (!isHide(player.getName()) || Perm.hasPermissionSilent(p, "dc.hide.see"))){
+			if(!player.equals(p) && (!hide || hide && !Perm.hasPermissionSilent(p, "dc.hide.see"))){
 				sendMessage(
 						p,
 						Util.replaceColor(
@@ -537,8 +538,8 @@ public class Misc{
 								.replace("<player>", player.getDisplayName())
 								.replace("<world>", player.getWorld().getName())
 								.replace("<ip>", Util.getIp(player))
-						)
-				);
+								)
+						);
 			}
 		}
 		if(!hide){
@@ -547,7 +548,7 @@ public class Misc{
 					.replace("<player>", player.getDisplayName())
 					.replace("<world>", player.getWorld().getName())
 					.replace("<ip>", player.getAddress().toString().substring(1).split(":")[0])
-			));
+					));
 			getConfig(player).setInventory(player.getName(), player.getInventory().getContents());
 			setPlayer(new DCPlayer(player.getName(), Util.getIp(player), Util.getDateTime()));
 			removePlayerFromLists(player);
@@ -563,7 +564,7 @@ public class Misc{
 			message = "connect_message_first_time";
 		}
 		for(Player p : V.plugin.getServer().getOnlinePlayers()){
-			if(!player.equals(p) && (!isHide(player.getName()) || Perm.hasPermission(p, "dc.hide.see"))){
+			if(!player.equals(p) && (!hide || hide && !Perm.hasPermissionSilent(p, "dc.hide.see"))){
 				sendMessage(
 						p,
 						Util.replaceColor(
@@ -571,8 +572,8 @@ public class Misc{
 								.replace("<player>", player.getDisplayName())
 								.replace("<world>", player.getWorld().getName())
 								.replace("<ip>", Util.getIp(player))
-						)
-				);
+								)
+						);
 			}
 		}
 		if(!hide){
@@ -583,7 +584,7 @@ public class Misc{
 					.replace("<player>", player.getDisplayName())
 					.replace("<world>", player.getWorld().getName())
 					.replace("<ip>", Util.getIp(player))
-			);
+					);
 			if(getConfig(player).getInventory(player.getName()) != null){
 				player.getInventory().setContents(Util.convertItemStack(getConfig(player).getInventory(player.getName()).getContents()));
 			}
@@ -690,7 +691,7 @@ public class Misc{
 				|| entity instanceof Squid
 				|| entity instanceof Wolf
 				|| entity instanceof Spider && ((Spider) entity).getTarget() == null
-		){
+				){
 			return true;
 		}
 		return false;
@@ -707,7 +708,7 @@ public class Misc{
 				|| entity instanceof Spider && ((Spider) entity).getTarget() != null
 				|| entity instanceof Zombie
 				|| entity instanceof Giant
-		){
+				){
 			return true;
 		}
 		return false;
@@ -1389,11 +1390,13 @@ public class Misc{
 		if(!enabled){
 			if(V.plugin.getServer().getPlayer(name) != null){
 				appearPlayerFromAll(V.plugin.getServer().getPlayer(name));
+				Misc.broadcastConnect(V.plugin.getServer().getPlayer(name), true);
 			}
 			V.hide.remove(name);
 		}else{
 			if(V.plugin.getServer().getPlayer(name) != null){
 				hidePlayerFromAll(V.plugin.getServer().getPlayer(name));
+				Misc.broadcastDisconnect(V.plugin.getServer().getPlayer(name), true);
 			}
 			V.hide.add(name);
 		}
@@ -1442,6 +1445,24 @@ public class Misc{
 		for(DCTeleport dcteleport : V.teleports){
 			if(dcteleport.getPlayer().equals(player)){
 				return dcteleport;
+			}
+		}
+		return null;
+	}
+
+	public static void setBorder(String name, DCBorder dcborder){
+		while(getBorder(name) != null){
+			V.borders.remove(getBorder(name));
+		}
+		if(dcborder != null){
+			V.borders.add(dcborder);
+		}
+	}
+
+	public static DCBorder getBorder(String name){
+		for(DCBorder dcborder : V.borders){
+			if(dcborder.getName().equals(name)){
+				return dcborder;
 			}
 		}
 		return null;

@@ -30,12 +30,8 @@ public class Hide {
 				for(Player player : Misc.getPlayers(sender, args[0])){
 					if(Misc.isHide(player.getName())){
 						Misc.setHide(player.getName(), false);
-						Misc.appearPlayerFromAll(player);
-						Misc.broadcastConnect((Player) sender, true);
 					}else{
 						Misc.setHide(player.getName(), true);
-						Misc.hidePlayerFromAll(player);
-						Misc.broadcastDisconnect((Player) sender, true);
 					}
 					Misc.setPlayer(new DCPlayer(player.getName(), Util.getIp(player), Util.getDateTime()));
 				}

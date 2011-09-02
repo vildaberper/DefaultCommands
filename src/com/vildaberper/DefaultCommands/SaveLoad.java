@@ -16,6 +16,7 @@ import org.bukkit.util.config.Configuration;
 
 import com.vildaberper.DefaultCommands.Class.DCArmor;
 import com.vildaberper.DefaultCommands.Class.DCBan;
+import com.vildaberper.DefaultCommands.Class.DCBorder;
 import com.vildaberper.DefaultCommands.Class.DCCommand;
 import com.vildaberper.DefaultCommands.Class.DCConfiguration;
 import com.vildaberper.DefaultCommands.Class.DCHome;
@@ -46,6 +47,7 @@ public class SaveLoad{
 		saveWhitelist();
 		saveBans();
 		saveArmor();
+		saveBorders();
 	}
 
 	public static void loadAll(){
@@ -64,6 +66,7 @@ public class SaveLoad{
 		loadWhitelist();
 		loadBans();
 		loadArmor();
+		loadBorders();
 	}
 
 	public static void loadArmor(){
@@ -264,15 +267,15 @@ public class SaveLoad{
 											Integer.parseInt(p.getString(s + ".B1").split(":")[0]),
 											Integer.parseInt(p.getString(s + ".B1").split(":")[1]),
 											Integer.parseInt(p.getString(s + ".B1").split(":")[2])
-									),
-									V.plugin.getServer().getWorld(p.getString(s + ".W")).getBlockAt(
-											Integer.parseInt(p.getString(s + ".B2").split(":")[0]),
-											Integer.parseInt(p.getString(s + ".B2").split(":")[1]),
-											Integer.parseInt(p.getString(s + ".B2").split(":")[2])
-									),
-									p.getString(s + ".T")
-							)
-					);
+											),
+											V.plugin.getServer().getWorld(p.getString(s + ".W")).getBlockAt(
+													Integer.parseInt(p.getString(s + ".B2").split(":")[0]),
+													Integer.parseInt(p.getString(s + ".B2").split(":")[1]),
+													Integer.parseInt(p.getString(s + ".B2").split(":")[2])
+													),
+													p.getString(s + ".T")
+									)
+							);
 				}
 			}
 		}
@@ -361,7 +364,6 @@ public class SaveLoad{
 						bw.close();
 					}catch(Exception e){
 						System.out.println("Failed to save inventory: " + file.getAbsolutePath());
-						e.printStackTrace();
 					}
 				}
 			}
@@ -415,6 +417,7 @@ public class SaveLoad{
 		V.whitelist = dc.getBoolean("whitelist", V.whitelist);
 		V.whitelist_kick = dc.getBoolean("whitelist_kick", V.whitelist_kick);
 		V.selection_tool = dc.getInt("selection_tool", V.selection_tool);
+		V.block_cant_keep_up = dc.getBoolean("block_cant_keep_up", V.block_cant_keep_up);
 		V.sync_time_id = V.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(V.plugin, new TimeSync(), (20 * V.sync_time), (20 * V.sync_time));
 	}
 
@@ -443,6 +446,7 @@ public class SaveLoad{
 		dcc.add(new DCConfiguration("whitelist", V.whitelist));
 		dcc.add(new DCConfiguration("whitelist_kick", V.whitelist_kick));
 		dcc.add(new DCConfiguration("selection_tool", V.selection_tool));
+		dcc.add(new DCConfiguration("block_cant_keep_up", V.block_cant_keep_up));
 		dc.save();
 		for(DCConfiguration dcconf : dcc){
 			dc.load();
@@ -656,17 +660,19 @@ public class SaveLoad{
 		V.homes.clear();
 		if(homes.getKeys(null) != null){
 			for(String key : homes.getKeys(null)){
-				Misc.setHome(
-						key,
-						new Location(
-								V.plugin.getServer().getWorld(homes.getString(key + ".W", "")),
-								homes.getDouble(key + ".X", 0),
-								homes.getDouble(key + ".Y", 0),
-								homes.getDouble(key + ".Z", 0),
-								(float) homes.getDouble(key + ".O", 0),
-								(float) homes.getDouble(key + ".P", 0)
-						)
-				);
+				if(V.plugin.getServer().getWorld(homes.getString(key + ".W", "")) != null){
+					Misc.setHome(
+							key,
+							new Location(
+									V.plugin.getServer().getWorld(homes.getString(key + ".W", "")),
+									homes.getDouble(key + ".X", 0),
+									homes.getDouble(key + ".Y", 0),
+									homes.getDouble(key + ".Z", 0),
+									(float) homes.getDouble(key + ".O", 0),
+									(float) homes.getDouble(key + ".P", 0)
+									)
+							);
+				}
 			}
 		}
 	}
@@ -694,17 +700,19 @@ public class SaveLoad{
 		V.warps.clear();
 		if(warps.getKeys(null) != null){
 			for(String key : warps.getKeys(null)){
-				Misc.setWarp(
-						key,
-						new Location(
-								V.plugin.getServer().getWorld(warps.getString(key + ".W", "")),
-								warps.getDouble(key + ".X", 0),
-								warps.getDouble(key + ".Y", 0),
-								warps.getDouble(key + ".Z", 0),
-								(float) warps.getDouble(key + ".O", 0),
-								(float) warps.getDouble(key + ".P", 0)
-						)
-				);
+				if(V.plugin.getServer().getWorld(warps.getString(key + ".W", "")) != null){
+					Misc.setWarp(
+							key,
+							new Location(
+									V.plugin.getServer().getWorld(warps.getString(key + ".W", "")),
+									warps.getDouble(key + ".X", 0),
+									warps.getDouble(key + ".Y", 0),
+									warps.getDouble(key + ".Z", 0),
+									(float) warps.getDouble(key + ".O", 0),
+									(float) warps.getDouble(key + ".P", 0)
+									)
+							);
+				}
 			}
 		}
 	}
@@ -722,6 +730,41 @@ public class SaveLoad{
 			warps.setProperty(dcwarp.getName() + ".O", dcwarp.getYaw());
 			warps.setProperty(dcwarp.getName() + ".P", dcwarp.getPitch());
 			warps.save();
+		}
+	}
+
+	public static void loadBorders(){
+		Configuration borders = new Configuration(new File(V.plugin.getDataFolder(), "Borders.yml"));
+
+		borders.load();
+		V.borders.clear();
+		if(borders.getKeys(null) != null){
+			for(String key : borders.getKeys(null)){
+				Misc.setBorder(
+						key,
+						new DCBorder(
+								key,
+								borders.getDouble(key + ".X", 0),
+								borders.getDouble(key + ".Z", 0),
+								borders.getDouble(key + ".R", 0),
+								borders.getString(key + ".W", "")
+								)
+						);
+			}
+		}
+	}
+
+	public static void saveBorders(){
+		Configuration borders = new Configuration(new File(V.plugin.getDataFolder(), "Borders.yml"));
+
+		borders.save();
+		for(DCBorder dcborder : V.borders){
+			borders.load();
+			borders.setProperty(dcborder.getName() + ".X", dcborder.getX());
+			borders.setProperty(dcborder.getName() + ".Z", dcborder.getZ());
+			borders.setProperty(dcborder.getName() + ".R", dcborder.getRadius());
+			borders.setProperty(dcborder.getName() + ".W", dcborder.getWorld());
+			borders.save();
 		}
 	}
 }

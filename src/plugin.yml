@@ -228,3 +228,12 @@ commands:
   dcteleportback:
     description: Teleportback.
     usage: /<command> [player]
+  dcsetborder:
+    description: Setborder.
+    usage: /<command> <name> <radius>
+  dcdelborder:
+    description: Delborder.
+    usage: /<command> <name>
+  dcborders:
+    description: Borders.
+    usage: /<command> [page]

@@ -34,6 +34,7 @@ import com.vildaberper.DefaultCommands.Perm;
 import com.vildaberper.DefaultCommands.Util;
 import com.vildaberper.DefaultCommands.V;
 import com.vildaberper.DefaultCommands.Class.DCAfkPlayer;
+import com.vildaberper.DefaultCommands.Class.DCBorder;
 import com.vildaberper.DefaultCommands.Class.DCHover;
 import com.vildaberper.DefaultCommands.Class.DCPortal;
 import com.vildaberper.DefaultCommands.Runnable.BedCheck;
@@ -180,11 +181,11 @@ public class DCPlayerListener extends PlayerListener{
 												}
 											},
 											20
-									);
+											);
 								}
 							}
 						}
-				);
+						);
 			}
 		}
 		if(Misc.isFly(event.getPlayer().getEntityId())){
@@ -197,6 +198,11 @@ public class DCPlayerListener extends PlayerListener{
 						hover.setBlock(null);
 					}
 				}
+			}
+		}
+		for(DCBorder border : V.borders){
+			if(!Perm.hasPermissionSilent(event.getPlayer(), "dc.border." + border.getName()) && !border.isInside(event.getPlayer(), true)){
+				Misc.sendString(event.getPlayer(), "reached_border");
 			}
 		}
 	}
@@ -235,7 +241,7 @@ public class DCPlayerListener extends PlayerListener{
 				!Perm.hasPermissionSilent(event.getPlayer(), "dc.do." + event.getPlayer().getWorld().getName())
 				|| V.nopickups.contains(event.getItem())
 				|| Misc.isNopickup(event.getPlayer().getEntityId())
-		){
+				){
 			event.setCancelled(true);
 			return;
 		}
@@ -273,8 +279,8 @@ public class DCPlayerListener extends PlayerListener{
 								event.getPlayer().getLocation().getDirection().getX() * 2,
 								0.75,
 								event.getPlayer().getLocation().getDirection().getZ() * 2
-						)
-				);
+								)
+						);
 				return;
 			}else if(event.getAction().equals(Action.LEFT_CLICK_AIR) || event.getAction().equals(Action.LEFT_CLICK_BLOCK)){
 				event.getPlayer().setVelocity(
@@ -282,8 +288,8 @@ public class DCPlayerListener extends PlayerListener{
 								event.getPlayer().getLocation().getDirection().getX() * 5,
 								event.getPlayer().getLocation().getDirection().getY() * 3.5 + 1,
 								event.getPlayer().getLocation().getDirection().getZ() * 5
-						)
-				);
+								)
+						);
 				return;
 			}
 		}
@@ -375,7 +381,7 @@ public class DCPlayerListener extends PlayerListener{
 					}
 				},
 				2
-		);
+				);
 		if(V.show_teleport_smoke){
 			for(Player player : event.getFrom().getWorld().getPlayers()){
 				if(Misc.getPlayers(player, V.all).contains(event.getPlayer())){
@@ -440,7 +446,7 @@ public class DCPlayerListener extends PlayerListener{
 						":reload:plugins:help:?:kick:ban:pardon:ban-ip:pardon-ip:op:deop:tp:give:tell:stop:save-all:save-off:save-on:list:say:time:".indexOf(":" + event.getMessage().split(" ")[0].substring(1) + ":") == -1
 						&& (V.plugin.getServer().getPluginManager().getPlugin("Towny") == null || V.plugin.getServer().getPluginManager().getPlugin("Towny").isEnabled() && ":tc:nc:resident:town:plot:nation:towny:townyadmin:".indexOf(":" + event.getMessage().split(" ")[0].substring(1) + ":") == -1)
 						&& (V.plugin.getServer().getPluginManager().getPlugin("HeroChat") == null || V.plugin.getServer().getPluginManager().getPlugin("HeroChat").isEnabled() && ":".indexOf(":ch:qm:" + event.getMessage().split(" ")[0].substring(1) + ":") == -1)
-				){
+						){
 					Misc.sendMessage(event.getPlayer(), Misc.getColoredString("unknown_command"));
 					event.setCancelled(true);
 				}

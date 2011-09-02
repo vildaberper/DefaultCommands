@@ -36,6 +36,7 @@ import com.vildaberper.DefaultCommands.Misc;
 import com.vildaberper.DefaultCommands.Perm;
 import com.vildaberper.DefaultCommands.V;
 
+@SuppressWarnings("deprecation")
 public class DCEntityListener extends EntityListener{
 	@Override
 	public void onEntityDeath(EntityDeathEvent event){

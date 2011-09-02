@@ -9,6 +9,7 @@ public class L{
 
 	public static void initializeLog(){
 		File dir = V.plugin.getDataFolder();
+
 		file = new File(dir, V.plugin.getDescription().getName() + ".log");
 		if(!file.exists()){
 			try{

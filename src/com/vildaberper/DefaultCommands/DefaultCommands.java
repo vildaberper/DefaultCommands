@@ -8,10 +8,12 @@ import org.bukkit.event.Event.Type;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.vildaberper.DefaultCommands.Class.DCAfkPlayer;
+import com.vildaberper.DefaultCommands.Class.DCFilter;
 import com.vildaberper.DefaultCommands.Class.DCPlayer;
 import com.vildaberper.DefaultCommands.Command.Afk;
 import com.vildaberper.DefaultCommands.Command.Ban;
 import com.vildaberper.DefaultCommands.Command.Bans;
+import com.vildaberper.DefaultCommands.Command.Borders;
 import com.vildaberper.DefaultCommands.Command.Clearinventory;
 import com.vildaberper.DefaultCommands.Command.Clearnear;
 import com.vildaberper.DefaultCommands.Command.Create;
@@ -20,6 +22,7 @@ import com.vildaberper.DefaultCommands.Command.Cuboid;
 import com.vildaberper.DefaultCommands.Command.Cuboidhollow;
 import com.vildaberper.DefaultCommands.Command.Cuboidwireframe;
 import com.vildaberper.DefaultCommands.Command.Dc;
+import com.vildaberper.DefaultCommands.Command.Delborder;
 import com.vildaberper.DefaultCommands.Command.Delportal;
 import com.vildaberper.DefaultCommands.Command.Delwarp;
 import com.vildaberper.DefaultCommands.Command.Delworld;
@@ -58,6 +61,7 @@ import com.vildaberper.DefaultCommands.Command.Repair;
 import com.vildaberper.DefaultCommands.Command.Repeat;
 import com.vildaberper.DefaultCommands.Command.Replace;
 import com.vildaberper.DefaultCommands.Command.Reply;
+import com.vildaberper.DefaultCommands.Command.Setborder;
 import com.vildaberper.DefaultCommands.Command.Sethome;
 import com.vildaberper.DefaultCommands.Command.Setportal;
 import com.vildaberper.DefaultCommands.Command.Setspawn;
@@ -129,6 +133,8 @@ public class DefaultCommands extends JavaPlugin{
 			Misc.setAfkPlayer(player.getEntityId(), new DCAfkPlayer(player.getEntityId(), player.getLocation()));
 		}
 
+		getServer().getLogger().setFilter(new DCFilter());
+
 		getCommand("dcgive").setUsage("/<command> " + V.give.replace("item", "<item>[:data]").replace("amount", "[amount]").replace("target", "[player]"));
 
 		// VehicleListener
@@ -161,7 +167,7 @@ public class DefaultCommands extends JavaPlugin{
 		getServer().getPluginManager().registerEvent(Type.PLAYER_CHAT, playerListener, Priority.Normal, this);
 		getServer().getPluginManager().registerEvent(Type.PLAYER_JOIN, playerListener, Priority.Normal, this);
 		getServer().getPluginManager().registerEvent(Type.PLAYER_QUIT, playerListener, Priority.Normal, this);
-		getServer().getPluginManager().registerEvent(Type.PLAYER_KICK, playerListener, Priority.Normal, this);
+		getServer().getPluginManager().registerEvent(Type.PLAYER_KICK, playerListener, Priority.Low, this);
 		getServer().getPluginManager().registerEvent(Type.PLAYER_LOGIN, playerListener, Priority.High, this);
 		getServer().getPluginManager().registerEvent(Type.PLAYER_BED_ENTER, playerListener, Priority.Low, this);
 		getServer().getPluginManager().registerEvent(Type.PLAYER_INTERACT, playerListener, Priority.High, this);
@@ -338,6 +344,12 @@ public class DefaultCommands extends JavaPlugin{
 			return Top.top(sender, command, label, args);
 		}else if(command.getName().equalsIgnoreCase("dcteleportback")){
 			return Teleportback.teleportback(sender, command, label, args);
+		}else if(command.getName().equalsIgnoreCase("dcsetborder")){
+			return Setborder.setborder(sender, command, label, args);
+		}else if(command.getName().equalsIgnoreCase("dcdelborder")){
+			return Delborder.delborder(sender, command, label, args);
+		}else if(command.getName().equalsIgnoreCase("dcborders")){
+			return Borders.borders(sender, command, label, args);
 		}
 		return false;
 	}

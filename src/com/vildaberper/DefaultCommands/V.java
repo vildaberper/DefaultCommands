@@ -9,6 +9,7 @@ import org.bukkit.plugin.Plugin;
 import com.vildaberper.DefaultCommands.Class.DCAfkPlayer;
 import com.vildaberper.DefaultCommands.Class.DCArmor;
 import com.vildaberper.DefaultCommands.Class.DCBan;
+import com.vildaberper.DefaultCommands.Class.DCBorder;
 import com.vildaberper.DefaultCommands.Class.DCCommand;
 import com.vildaberper.DefaultCommands.Class.DCHome;
 import com.vildaberper.DefaultCommands.Class.DCHover;
@@ -51,6 +52,7 @@ public class V{
 	public static List<DCBan> bans = new LinkedList<DCBan>();
 	public static List<DCHover> hovers = new LinkedList<DCHover>();
 	public static List<DCTeleport> teleports = new LinkedList<DCTeleport>();
+	public static List<DCBorder> borders = new LinkedList<DCBorder>();
 
 	public static List<Integer>
 	god = new LinkedList<Integer>(),
@@ -101,5 +103,6 @@ public class V{
 	play_message_sound = true,
 	show_teleport_smoke = true,
 	whitelist = false,
-	whitelist_kick = true;
+	whitelist_kick = true,
+	block_cant_keep_up = false;
 }

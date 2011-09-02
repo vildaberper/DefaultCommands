@@ -131,6 +131,9 @@ public class Reset{
 		Misc.addAlias("dctop", "top");
 		Misc.addAlias("dcteleportback", "teleportback");
 		Misc.addAlias("dcteleportback", "tpb");
+		Misc.addAlias("dcsetborder", "setborder");
+		Misc.addAlias("dcdelborder", "delborder");
+		Misc.addAlias("dcborders", "borders");
 	}
 
 	public static List<DCConfiguration> resetDCConfiguration(String world){
@@ -373,6 +376,10 @@ public class Reset{
 		permissions.add("dc.teleportback.self");
 		permissions.add("dc.teleportback.other");
 		permissions.add("dc.teleportback.all");
+		permissions.add("dc.border.*");
+		permissions.add("dc.setborder");
+		permissions.add("dc.delborder");
+		permissions.add("dc.borders");
 		config.add(new DCConfiguration("permissions", permissions));
 		return config;
 	}
@@ -398,6 +405,7 @@ public class Reset{
 		V.strings.add(new DCString("motd", "&2Welcome to the server, &7<player>&2. Connected players (&7<online>&2/&7<max>&2):<br>&7<players>&2.<br>&2Enjoy your stay!"));
 		V.strings.add(new DCString("item_in_hand", "&4You must hold an item in your hand!"));
 		V.strings.add(new DCString("no_flying", "&4Flying is not enabled on this server!"));
+		V.strings.add(new DCString("reached_border", "&4You have reached the border!"));
 		V.strings.add(new DCString("invalid_player", "&4Invalid player(s)."));
 		V.strings.add(new DCString("invalid_world", "&4Invalid world."));
 		V.strings.add(new DCString("invalid_page", "&4Invalid page."));
@@ -415,6 +423,8 @@ public class Reset{
 		V.strings.add(new DCString("invalid_kit", "&4Invalid kit."));
 		V.strings.add(new DCString("invalid_environment", "&4Invalid environment."));
 		V.strings.add(new DCString("invalid_coordinate", "&4Invalid coordinate."));
+		V.strings.add(new DCString("invalid_radius", "&4Invalid radius."));
+		V.strings.add(new DCString("invalid_border", "&4Invalid border."));
 		V.strings.add(new DCString("c_create", "&7<player>&2 created &7<world>&2, &7<enviroment>&2."));
 		V.strings.add(new DCString("c_fly", "&7<player>&2 <status>d fly for &7<players>&2."));
 		V.strings.add(new DCString("c_god", "&7<player>&2 <status>d god for &7<players>&2."));

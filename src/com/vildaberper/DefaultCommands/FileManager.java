@@ -42,14 +42,12 @@ public class FileManager{
 			URL _url = new URL(url);
 			byte[] buffer = new byte[1024];
 			int numRead;
-			long numWritten = 0;
 
 			out = new BufferedOutputStream(new FileOutputStream(target));
 			conn = _url.openConnection();
 			in = conn.getInputStream();
 			while((numRead = in.read(buffer)) != -1){
 				out.write(buffer, 0, numRead);
-				numWritten += numRead;
 			}
 		}catch(Exception e){
 			e.printStackTrace();
