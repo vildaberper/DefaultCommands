@@ -13,7 +13,7 @@ import com.vildaberper.DefaultCommands.V;
 public class Who{
 	public static boolean who(CommandSender sender, Command command, String label, String[] args){
 		if(sender instanceof Player && !Perm.hasPermission((Player) sender, "dc.who")){
-			return false;
+			return V.return_;
 		}
 		if(args.length == 0 && sender instanceof Player){
 			((Player) sender).chat("/dcwho " + ((Player) sender).getName());

@@ -14,7 +14,7 @@ public class Worlds {
 		int page = 1, max = 0;
 
 		if(sender instanceof Player && !Perm.hasPermission((Player) sender, "dc.worlds")){
-			return false;
+			return V.return_;
 		}
 		if(args.length < 2){
 			if(args.length == 1){
@@ -24,8 +24,8 @@ public class Worlds {
 					return false;
 				}
 			}
-			max = Math.round(V.worlds.size() / V.per_page);
-			if(V.worlds.size() > max * V.per_page){
+			max = Math.round(V.worlds.size() / V.getInt("per_page"));
+			if(V.worlds.size() > max * V.getInt("per_page")){
 				max += 1;
 			}
 			if(page > max){
@@ -33,7 +33,7 @@ public class Worlds {
 				return false;
 			}
 			sender.sendMessage("Page " + page + " of " + max + ":");
-			for(int i = (page - 1) * V.per_page; i < (page - 1) * V.per_page + V.per_page && i < V.worlds.size(); i++){
+			for(int i = (page - 1) * V.getInt("per_page"); i < (page - 1) * V.getInt("per_page") + V.getInt("per_page") && i < V.worlds.size(); i++){
 				sender.sendMessage(V.worlds.get(i).getName() + " (" + Misc.getPlayers(sender, "w:" + V.worlds.get(i).getName()).size() + ") - " + V.worlds.get(i).getEnviroment().toString());
 			}
 			return true;

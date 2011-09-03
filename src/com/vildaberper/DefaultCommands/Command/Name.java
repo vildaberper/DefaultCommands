@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import com.vildaberper.DefaultCommands.L;
 import com.vildaberper.DefaultCommands.Misc;
 import com.vildaberper.DefaultCommands.Perm;
+import com.vildaberper.DefaultCommands.V;
 
 public class Name{
 	public static boolean name(CommandSender sender, Command command, String label, String[] args){
@@ -19,13 +20,13 @@ public class Name{
 		}else if(args.length == 2){
 			if(Misc.getPlayers(sender, args[1]).size() != 0){
 				if(sender instanceof Player && Misc.getPlayers(sender, args[1]).size() != 1 && !Perm.hasPermission((Player) sender, "dc.name.all")){
-					return false;
+					return V.return_;
 				}
 				if(sender instanceof Player && Misc.getPlayers(sender, args[1]).size() == 1){
 					if(Misc.getPlayers(sender, args[1]).get(0) == (Player) sender && !Perm.hasPermission((Player) sender, "dc.name.self")){
-						return false;
+						return V.return_;
 					}else if(Misc.getPlayers(sender, args[1]).get(0) != (Player) sender && !Perm.hasPermission((Player) sender, "dc.name.other")){
-						return false;
+						return V.return_;
 					}
 				}
 				for(Player player : Misc.getPlayers(sender, args[1])){

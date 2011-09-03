@@ -7,13 +7,14 @@ import org.bukkit.entity.Player;
 import com.vildaberper.DefaultCommands.Misc;
 import com.vildaberper.DefaultCommands.Perm;
 import com.vildaberper.DefaultCommands.Util;
+import com.vildaberper.DefaultCommands.V;
 import com.vildaberper.DefaultCommands.Class.DCBorder;
 
 public class Setborder{
 	public static boolean setborder(CommandSender sender, Command command, String label, String[] args){
 		if(sender instanceof Player){
 			if(!Perm.hasPermission((Player) sender, "dc.setborder")){
-				return false;
+				return V.return_;
 			}
 			if(args.length == 2){
 				if(!Util.isValidInt(args[1])){

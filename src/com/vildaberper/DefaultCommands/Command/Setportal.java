@@ -6,12 +6,13 @@ import org.bukkit.entity.Player;
 
 import com.vildaberper.DefaultCommands.Misc;
 import com.vildaberper.DefaultCommands.Perm;
+import com.vildaberper.DefaultCommands.V;
 
 public class Setportal{
 	public static boolean setportal(CommandSender sender, Command command, String label, String[] args){
 		if(sender instanceof Player){
 			if(!Perm.hasPermission((Player) sender, "dc.setportal")){
-				return false;
+				return V.return_;
 			}
 			if(args.length == 2){
 				if(Misc.getSelection(((Player) sender).getName()) != null){

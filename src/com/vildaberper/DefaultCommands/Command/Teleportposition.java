@@ -30,13 +30,13 @@ public class Teleportposition{
 					return false;
 				}
 				if(sender instanceof Player && Misc.getPlayers(sender, args[3]).size() != 1 && !Perm.hasPermission((Player) sender, "dc.teleportposition.all")){
-					return false;
+					return V.return_;
 				}
 				if(sender instanceof Player && Misc.getPlayers(sender, args[3]).size() == 1){
 					if(Misc.getPlayers(sender, args[3]).get(0) == (Player) sender && !Perm.hasPermission((Player) sender, "dc.teleportposition.self")){
-						return false;
+						return V.return_;
 					}else if(Misc.getPlayers(sender, args[3]).get(0) != (Player) sender && !Perm.hasPermission((Player) sender, "dc.teleportposition.other")){
-						return false;
+						return V.return_;
 					}
 				}
 				for(Player player : Misc.getPlayers(sender, args[3])){

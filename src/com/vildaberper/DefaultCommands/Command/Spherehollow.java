@@ -12,12 +12,13 @@ import com.vildaberper.DefaultCommands.Edit;
 import com.vildaberper.DefaultCommands.Misc;
 import com.vildaberper.DefaultCommands.Perm;
 import com.vildaberper.DefaultCommands.Util;
+import com.vildaberper.DefaultCommands.V;
 
 public class Spherehollow{
 	public static boolean spherehollow(CommandSender sender, Command command, String label, String[] args){
 		if(sender instanceof Player){
 			if(!Perm.hasPermission((Player) sender, "dc.sphere")){
-				return false;
+				return V.return_;
 			}
 			if(args.length == 2){
 				if(Misc.getSelection(((Player) sender).getName()) != null){

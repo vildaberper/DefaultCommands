@@ -135,7 +135,7 @@ public class DefaultCommands extends JavaPlugin{
 
 		getServer().getLogger().setFilter(new DCFilter());
 
-		getCommand("dcgive").setUsage("/<command> " + V.give.replace("item", "<item>[:data]").replace("amount", "[amount]").replace("target", "[player]"));
+		getCommand("dcgive").setUsage("/<command> " + V.getString("give").replace("item", "<item>[:data]").replace("amount", "[amount]").replace("target", "[player]"));
 
 		// VehicleListener
 		getServer().getPluginManager().registerEvent(Type.VEHICLE_MOVE, vehicleListener, Priority.High, this);
@@ -180,10 +180,10 @@ public class DefaultCommands extends JavaPlugin{
 		getServer().getPluginManager().registerEvent(Type.PLAYER_COMMAND_PREPROCESS, playerListener, Priority.Lowest, this);
 
 		// Task
-		getServer().getScheduler().scheduleSyncRepeatingTask(this, new InventorySave(), 0, 20 * V.sync_inventory);
-		getServer().getScheduler().scheduleSyncRepeatingTask(this, new ArmorSave(), 0, 20 * V.sync_armor);
+		getServer().getScheduler().scheduleSyncRepeatingTask(this, new InventorySave(), 0, 20 * V.getInt("sync_inventory"));
+		getServer().getScheduler().scheduleSyncRepeatingTask(this, new ArmorSave(), 0, 20 * V.getInt("sync_armor"));
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, new AfkCheck(), 20 * 60, 20 * 60);
-		getServer().getScheduler().scheduleSyncRepeatingTask(this, new ConfigSave(), 0, 20 * 60 * V.save_config);
+		getServer().getScheduler().scheduleSyncRepeatingTask(this, new ConfigSave(), 0, 20 * 60 * V.getInt("save_config"));
 
 		L.log("Enabled " + getDescription().getName() + " " + getDescription().getVersion() + ".");
 		System.out.println(getDescription().getName() + " " + getDescription().getVersion() + " is enabled.");

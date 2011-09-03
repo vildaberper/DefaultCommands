@@ -8,11 +8,12 @@ import com.vildaberper.DefaultCommands.L;
 import com.vildaberper.DefaultCommands.Misc;
 import com.vildaberper.DefaultCommands.Perm;
 import com.vildaberper.DefaultCommands.Util;
+import com.vildaberper.DefaultCommands.V;
 
 public class Create{
 	public static boolean create(CommandSender sender, Command command, String label, String[] args){
 		if(sender instanceof Player && !Perm.hasPermission((Player) sender, "dc.create")){
-			return false;
+			return V.return_;
 		}
 		if(args.length >= 1){
 			String environment = "NORMAL";

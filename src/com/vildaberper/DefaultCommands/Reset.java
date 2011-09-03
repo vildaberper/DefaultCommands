@@ -13,6 +13,34 @@ import com.vildaberper.DefaultCommands.Class.DCKit;
 import com.vildaberper.DefaultCommands.Class.DCString;
 
 public class Reset{
+	public static List<DCConfiguration> resetDefaultCommands(){
+		List<DCConfiguration> config = new LinkedList<DCConfiguration>();
+
+		config.add(new DCConfiguration("per_page", 9));
+		config.add(new DCConfiguration("sync_time", 30));
+		config.add(new DCConfiguration("sync_inventory", 30));
+		config.add(new DCConfiguration("sync_armor", 30));
+		config.add(new DCConfiguration("selection_tool", 280));
+		config.add(new DCConfiguration("afk_time", 5));
+		config.add(new DCConfiguration("afk_kick_time", 10));
+		config.add(new DCConfiguration("save_config", 10));
+		config.add(new DCConfiguration("give", "item amount target"));
+		config.add(new DCConfiguration("all", "*"));
+		config.add(new DCConfiguration("chat", "&7<player>&2: &f<message>"));
+		config.add(new DCConfiguration("timezone", "GMT+1"));
+		config.add(new DCConfiguration("console_name", "CONSOLE"));
+		config.add(new DCConfiguration("better_chat", true));
+		config.add(new DCConfiguration("unknown_command", true));
+		config.add(new DCConfiguration("better_fence", true));
+		config.add(new DCConfiguration("better_pumpkin", true));
+		config.add(new DCConfiguration("play_message_sound", true));
+		config.add(new DCConfiguration("show_teleport_smoke", true));
+		config.add(new DCConfiguration("whitelist", false));
+		config.add(new DCConfiguration("whitelist_kick", true));
+		config.add(new DCConfiguration("block_cant_keep_up", false));
+		return config;
+	}
+
 	public static void resetCommands(){
 		V.commands.clear();
 		Misc.addAlias("dcgod;dcignoremob;dcnopickup;dchide", "invisible");
@@ -348,7 +376,7 @@ public class Reset{
 		permissions.add("dc.kit.other.*");
 		permissions.add("dc.kit.all.*");
 		permissions.add("dc.kits");
-		permissions.add("dc.delworld*");
+		permissions.add("dc.delworld");
 		permissions.add("dc.portals");
 		permissions.add("dc.clearinventory.self");
 		permissions.add("dc.clearinventory.other");

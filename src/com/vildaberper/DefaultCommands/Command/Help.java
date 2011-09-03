@@ -21,7 +21,7 @@ public class Help{
 		int page = 1, max = 0;
 
 		if(sender instanceof Player && !Perm.hasPermission((Player) sender, "dc.help")){
-			return false;
+			return V.return_;
 		}
 		if(args.length < 2){
 			for(Plugin plugin : V.plugin.getServer().getPluginManager().getPlugins()){
@@ -47,8 +47,8 @@ public class Help{
 					return false;
 				}
 			}
-			max = Math.round(commands.size() / V.per_page);
-			if(commands.size() > max * V.per_page){
+			max = Math.round(commands.size() / V.getInt("per_page"));
+			if(commands.size() > max * V.getInt("per_page")){
 				max += 1;
 			}
 			if(page > max){
@@ -56,7 +56,7 @@ public class Help{
 				return false;
 			}
 			sender.sendMessage("Page " + page + " of " + max + ":");
-			for(int i = (page - 1) * V.per_page; i < (page - 1) * V.per_page + V.per_page && i < commands.size(); i++){
+			for(int i = (page - 1) * V.getInt("per_page"); i < (page - 1) * V.getInt("per_page") + V.getInt("per_page") && i < commands.size(); i++){
 				String usage = V.plugin.getServer().getPluginCommand(commands.get(i)).getUsage().replace("<command>", commands.get(i));
 
 				if(usage.length() > 60){

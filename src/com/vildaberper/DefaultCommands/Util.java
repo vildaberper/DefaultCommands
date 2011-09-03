@@ -250,7 +250,7 @@ public class Util{
 	public static String getDateTime(){
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
-		sdf.setTimeZone(TimeZone.getTimeZone(V.timezone));
+		sdf.setTimeZone(TimeZone.getTimeZone(V.getString("timezone")));
 		return sdf.format(new Date());
 	}
 

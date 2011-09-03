@@ -11,6 +11,7 @@ import com.vildaberper.DefaultCommands.Class.DCArmor;
 import com.vildaberper.DefaultCommands.Class.DCBan;
 import com.vildaberper.DefaultCommands.Class.DCBorder;
 import com.vildaberper.DefaultCommands.Class.DCCommand;
+import com.vildaberper.DefaultCommands.Class.DCConfiguration;
 import com.vildaberper.DefaultCommands.Class.DCHome;
 import com.vildaberper.DefaultCommands.Class.DCHover;
 import com.vildaberper.DefaultCommands.Class.DCInventoryPlayer;
@@ -29,6 +30,8 @@ import com.vildaberper.DefaultCommands.Class.DCWorld;
 
 public class V{
 	public static Plugin plugin = null;
+
+	public static List<DCConfiguration> configuration = new LinkedList<DCConfiguration>();
 
 	public static List<DCWarp> warps = new LinkedList<DCWarp>();
 	public static List<DCHome> homes = new LinkedList<DCHome>();
@@ -75,34 +78,48 @@ public class V{
 
 	public static int sync_time_id = 0;
 
-	/*
-	 * Configuration
-	 */
-	public static int
-	per_page = 9,
-	sync_time = 30,
-	sync_inventory = 30,
-	sync_armor = 30,
-	selection_tool = 280,
-	afk_time = 5,
-	afk_kick_time = 10,
-	save_config = 10;
+	public static boolean return_ = true;
 
-	public static String
-	give = "item amount target",
-	all = "*",
-	chat = "&7<player>&2: &f<message>",
-	timezone = "GMT+1",
-	console_name = "CONSOLE";
-
-	public static boolean
-	better_chat = true,
-	unknown_command = true,
-	better_fence = true,
-	better_pumpkin = true,
-	play_message_sound = true,
-	show_teleport_smoke = true,
-	whitelist = false,
-	whitelist_kick = true,
-	block_cant_keep_up = false;
+	public static Object getObject(String configuration){
+		for(DCConfiguration config : V.configuration){
+			if(config.getConfiguration().equals(configuration)){
+				return config.getValue();
+			}
+		}
+		return null;
+	}
+	public static boolean getBoolean(String configuration){
+		return (Boolean) getObject(configuration);
+	}
+	public static int getInt(String configuration){
+		return (Integer) getObject(configuration);
+	}
+	public static double getDouble(String configuration){
+		try{
+			return (Double) getObject(configuration);
+		}catch(Exception e){
+			return Double.parseDouble(Integer.toString(getInt(configuration)));
+		}
+	}
+	public static String getString(String configuration){
+		return (String) getObject(configuration);
+	}
+	@SuppressWarnings("unchecked")
+	public static List<String> getStringList(String configuration){
+		return (List<String>) getObject(configuration);
+	}
+	public static DCConfiguration getConfiguration(String configuration){
+		for(DCConfiguration config : V.configuration){
+			if(config.getConfiguration().equals(configuration)){
+				return config;
+			}
+		}
+		return null;
+	}
+	public static void setConfiguration(String configuration, Object value){
+		while(getConfiguration(configuration) != null){
+			V.configuration.remove(getConfiguration(configuration));
+		}
+		V.configuration.add(new DCConfiguration(configuration, value));
+	}
 }

@@ -27,7 +27,7 @@ public class Dc{
 	@SuppressWarnings("unchecked")
 	public static boolean dc(CommandSender sender, Command command, String label, String[] args){
 		if(sender instanceof Player && !Perm.hasPermission((Player) sender, "dc.dc")){
-			return false;
+			return V.return_;
 		}
 		if(args.length == 0){
 			sender.sendMessage("load/save/reload/reset/get/check/convert/update/updatedev");

@@ -23,7 +23,7 @@ public class Weather{
 				final boolean weatherchange = Misc.getConfig(args[2]).getBoolean("weather_change");
 
 				if(sender instanceof Player && !Perm.hasPermission((Player) sender, "dc.weather." + V.plugin.getServer().getWorld(args[2]).getName())){
-					return false;
+					return V.return_;
 				}
 				if(Util.isValidInt(args[1]) && Integer.parseInt(args[1]) > 0){
 					Misc.setConfig(args[2], "weather_change", true);

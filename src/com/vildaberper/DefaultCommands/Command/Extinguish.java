@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import com.vildaberper.DefaultCommands.Misc;
 import com.vildaberper.DefaultCommands.Perm;
 import com.vildaberper.DefaultCommands.Util;
+import com.vildaberper.DefaultCommands.V;
 
 public class Extinguish{
 	public static boolean extinguish(CommandSender sender, Command command, String label, String[] args){
@@ -18,7 +19,7 @@ public class Extinguish{
 				return true;
 			}else if(args.length == 1){
 				if(!Perm.hasPermission((Player) sender, "dc.extinguish")){
-					return false;
+					return V.return_;
 				}
 				if(Util.isValidInt(args[0]) && Integer.parseInt(args[0]) >= 0){
 					Block block = ((Player) sender).getLocation().getBlock();

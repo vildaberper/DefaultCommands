@@ -10,7 +10,7 @@ public class DCFilter implements Filter{
 	@Override
 	public boolean isLoggable(LogRecord arg0){
 		if(arg0.getMessage() != null){
-			if(V.block_cant_keep_up && arg0.getMessage().equals("Can't keep up! Did the system time change, or is the server overloaded?")){
+			if(V.getBoolean("block_cant_keep_up") && arg0.getMessage().equals("Can't keep up! Did the system time change, or is the server overloaded?")){
 				return false;
 			}
 			if(arg0.getMessage().endsWith(" was kicked for floating too long!")){

@@ -14,7 +14,7 @@ public class Borders {
 		int page = 1, max = 0;
 
 		if(sender instanceof Player && !Perm.hasPermission((Player) sender, "dc.borders")){
-			return false;
+			return V.return_;
 		}
 		if(args.length < 2){
 			if(args.length == 1){
@@ -24,8 +24,8 @@ public class Borders {
 					return false;
 				}
 			}
-			max = Math.round(V.borders.size() / V.per_page);
-			if(V.borders.size() > max * V.per_page){
+			max = Math.round(V.borders.size() / V.getInt("per_page"));
+			if(V.borders.size() > max * V.getInt("per_page")){
 				max += 1;
 			}
 			if(page > max){
@@ -33,7 +33,7 @@ public class Borders {
 				return false;
 			}
 			sender.sendMessage("Page " + page + " of " + max + ":");
-			for(int i = (page - 1) * V.per_page; i < (page - 1) * V.per_page + V.per_page && i < V.borders.size(); i++){
+			for(int i = (page - 1) * V.getInt("per_page"); i < (page - 1) * V.getInt("per_page") + V.getInt("per_page") && i < V.borders.size(); i++){
 				sender.sendMessage(V.borders.get(i).getName() + " - " + V.borders.get(i).getWorld() + " " + Math.round(V.borders.get(i).getX()) + " " + Math.round(V.borders.get(i).getZ()) + " - " + V.borders.get(i).getRadius());
 			}
 			return true;

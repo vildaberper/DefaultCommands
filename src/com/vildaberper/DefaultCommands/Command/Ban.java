@@ -12,7 +12,7 @@ import com.vildaberper.DefaultCommands.V;
 public class Ban{
 	public static boolean ban(CommandSender sender, Command command, String label, String[] args){
 		if(sender instanceof Player && !Perm.hasPermission((Player) sender, "dc.ban")){
-			return false;
+			return V.return_;
 		}
 		if(args.length >= 1){
 			if(Misc.getBan(args[0]) == null){

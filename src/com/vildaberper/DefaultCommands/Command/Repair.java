@@ -9,13 +9,14 @@ import com.vildaberper.DefaultCommands.L;
 import com.vildaberper.DefaultCommands.Misc;
 import com.vildaberper.DefaultCommands.Perm;
 import com.vildaberper.DefaultCommands.Util;
+import com.vildaberper.DefaultCommands.V;
 
 public class Repair{
 	public static boolean repair(CommandSender sender, Command command, String label, String[] args){
 		if(sender instanceof Player){
 			if(args.length == 0){
 				if(!Perm.hasPermission((Player) sender, "dc.repair")){
-					return false;
+					return V.return_;
 				}
 				if(((Player) sender).getItemInHand() != null && !((Player) sender).getItemInHand().getType().equals(Material.AIR)){
 					((Player) sender).getItemInHand().setDurability((short) 0);

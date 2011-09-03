@@ -12,7 +12,7 @@ public class Lightning{
 		if(sender instanceof Player){
 			if(args.length == 0){
 				if(!Perm.hasPermission((Player) sender, "dc.lightning")){
-					return false;
+					return V.return_;
 				}
 				((Player) sender).getWorld().strikeLightning(((Player) sender).getTargetBlock(null, V.targetmax).getLocation());
 				return true;

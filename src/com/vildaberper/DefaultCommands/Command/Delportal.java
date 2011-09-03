@@ -6,11 +6,12 @@ import org.bukkit.entity.Player;
 
 import com.vildaberper.DefaultCommands.Misc;
 import com.vildaberper.DefaultCommands.Perm;
+import com.vildaberper.DefaultCommands.V;
 
 public class Delportal{
 	public static boolean delportal(CommandSender sender, Command command, String label, String[] args){
 		if(sender instanceof Player && !Perm.hasPermission((Player) sender, "dc.delportal")){
-			return false;
+			return V.return_;
 		}
 		if(args.length == 1){
 			if(Misc.getPortal(args[0]) != null){

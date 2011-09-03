@@ -6,12 +6,13 @@ import org.bukkit.entity.Player;
 
 import com.vildaberper.DefaultCommands.Misc;
 import com.vildaberper.DefaultCommands.Perm;
+import com.vildaberper.DefaultCommands.V;
 
 public class Disconnect{
 	public static boolean disconnect(CommandSender sender, Command command, String label, String[] args){
 		if(args.length == 0 && sender instanceof Player){
 			if(!Perm.hasPermission((Player) sender, "dc.disconnect")){
-				return false;
+				return V.return_;
 			}
 			((Player) sender).kickPlayer(Misc.getString("c_disconnect_message").replace("<player>", ((Player) sender).getName()));
 			return true;

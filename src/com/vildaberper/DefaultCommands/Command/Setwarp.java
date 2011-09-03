@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import com.vildaberper.DefaultCommands.L;
 import com.vildaberper.DefaultCommands.Misc;
 import com.vildaberper.DefaultCommands.Perm;
+import com.vildaberper.DefaultCommands.V;
 
 public class Setwarp{
 	public static boolean setwarp(CommandSender sender, Command command, String label, String[] args){
@@ -15,7 +16,7 @@ public class Setwarp{
 		}
 		if(args.length == 1){
 			if(!Perm.hasPermission((Player) sender, "dc.setwarp")){
-				return false;
+				return V.return_;
 			}
 			Misc.setWarp(args[0], ((Player) sender).getLocation());
 			L.log(Misc.getColoredString("c_setwarp").replace("<player>", Misc.getSenderName(sender)).replace("<warp>", args[0]));

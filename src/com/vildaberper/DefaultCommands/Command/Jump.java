@@ -15,7 +15,7 @@ public class Jump{
 		if(sender instanceof Player){
 			if(args.length == 0){
 				if(!Perm.hasPermission((Player) sender, "dc.jump." + ((Player) sender).getWorld().getName())){
-					return false;
+					return V.return_;
 				}
 				if(Misc.isFreeze(((Player) sender).getName())){
 					Misc.sendString(sender, "frozen");

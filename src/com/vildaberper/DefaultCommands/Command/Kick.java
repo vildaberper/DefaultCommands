@@ -8,6 +8,7 @@ import com.vildaberper.DefaultCommands.L;
 import com.vildaberper.DefaultCommands.Misc;
 import com.vildaberper.DefaultCommands.Perm;
 import com.vildaberper.DefaultCommands.Util;
+import com.vildaberper.DefaultCommands.V;
 
 public class Kick{
 	public static boolean kick(CommandSender sender, Command command, String label, String[] args){
@@ -22,13 +23,13 @@ public class Kick{
 					}
 				}
 				if(sender instanceof Player && Misc.getPlayers(sender, args[0]).size() != 1 && !Perm.hasPermission((Player) sender, "dc.kick.all")){
-					return false;
+					return V.return_;
 				}
 				if(sender instanceof Player && Misc.getPlayers(sender, args[0]).size() == 1){
 					if(Misc.getPlayers(sender, args[0]).get(0) == (Player) sender && !Perm.hasPermission((Player) sender, "dc.kick.self")){
-						return false;
+						return V.return_;
 					}else if(Misc.getPlayers(sender, args[0]).get(0) != (Player) sender && !Perm.hasPermission((Player) sender, "dc.kick.other")){
-						return false;
+						return V.return_;
 					}
 				}
 				for(Player player : Misc.getPlayers(sender, args[0])){

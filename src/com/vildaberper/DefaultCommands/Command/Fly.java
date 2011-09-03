@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import com.vildaberper.DefaultCommands.L;
 import com.vildaberper.DefaultCommands.Misc;
 import com.vildaberper.DefaultCommands.Perm;
+import com.vildaberper.DefaultCommands.V;
 
 public class Fly{
 	public static boolean fly(CommandSender sender, Command command, String label, String[] args){
@@ -16,13 +17,13 @@ public class Fly{
 		}else if(args.length == 1){
 			if(Misc.getPlayers(sender, args[0]).size() != 0){
 				if(sender instanceof Player && Misc.getPlayers(sender, args[0]).size() != 1 && !Perm.hasPermission((Player) sender, "dc.fly.all")){
-					return false;
+					return V.return_;
 				}
 				if(sender instanceof Player && Misc.getPlayers(sender, args[0]).size() == 1){
 					if(Misc.getPlayers(sender, args[0]).get(0) == (Player) sender && !Perm.hasPermission((Player) sender, "dc.fly.self")){
-						return false;
+						return V.return_;
 					}else if(Misc.getPlayers(sender, args[0]).get(0) != (Player) sender && !Perm.hasPermission((Player) sender, "dc.fly.other")){
-						return false;
+						return V.return_;
 					}
 				}
 				for(Player player : Misc.getPlayers(sender, args[0])){

@@ -120,21 +120,21 @@ public class DCBlockListener extends BlockListener{
 							},
 							3,
 							3
-					)
-			);
+							)
+					);
 		}
 	}
 
 	@Override
 	public void onBlockCanBuild(BlockCanBuildEvent event){
-		if(event.getMaterial().equals(Material.FENCE) && V.better_fence){
+		if(event.getMaterial().equals(Material.FENCE) && V.getBoolean("better_fence")){
 			for(Entity entity : event.getBlock().getWorld().getEntities()){
 				if(event.getBlock().equals(entity.getLocation().getBlock()) || event.getBlock().equals(entity.getLocation().getBlock().getRelative(BlockFace.UP))){
 					return;
 				}
 			}
 			event.setBuildable(true);
-		}else if(event.getMaterial().equals(Material.PUMPKIN) && V.better_pumpkin){
+		}else if(event.getMaterial().equals(Material.PUMPKIN) && V.getBoolean("better_pumpkin")){
 			for(Entity entity : event.getBlock().getWorld().getEntities()){
 				if(event.getBlock().equals(entity.getLocation().getBlock()) || event.getBlock().equals(entity.getLocation().getBlock().getRelative(BlockFace.UP))){
 					return;

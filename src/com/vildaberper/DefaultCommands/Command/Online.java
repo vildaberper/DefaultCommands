@@ -12,15 +12,15 @@ public class Online{
 	public static boolean online(CommandSender sender, Command command, String label, String[] args){
 		if(args.length == 0){
 			if(sender instanceof Player && !Perm.hasPermission((Player) sender, "dc.online")){
-				return false;
+				return V.return_;
 			}
 			Misc.sendMessage(
 					sender,
 					Misc.getColoredString("online")
-					.replace("<online>", Integer.toString(Misc.getPlayers(sender, V.all).size()))
+					.replace("<online>", Integer.toString(Misc.getPlayers(sender, V.getString("all")).size()))
 					.replace("<max>", Integer.toString(V.plugin.getServer().getMaxPlayers()))
 					.replace("<players>", Misc.getPlayerList(sender).toString().substring(1, Misc.getPlayerList(sender).toString().length() - 1)).replace(",", "&2,")
-			);
+					);
 			return true;
 		}
 		return false;

@@ -19,17 +19,17 @@ public class Message{
 					message += " " + args[i];
 				}
 				if(sender instanceof Player && Misc.getPlayers(sender, args[0]).size() != 1 && !Perm.hasPermission((Player) sender, "dc.message.all")){
-					return false;
+					return V.return_;
 				}
 				if(sender instanceof Player && Misc.getPlayers(sender, args[0]).size() == 1){
 					if(Misc.getPlayers(sender, args[0]).get(0) == (Player) sender && !Perm.hasPermission((Player) sender, "dc.message.self")){
-						return false;
+						return V.return_;
 					}else if(Misc.getPlayers(sender, args[0]).get(0) != (Player) sender && !Perm.hasPermission((Player) sender, "dc.message.other")){
-						return false;
+						return V.return_;
 					}
 				}
 				for(Player player : Misc.getPlayers(sender, args[0])){
-					if(V.play_message_sound){
+					if(V.getBoolean("play_message_sound")){
 						Misc.playMessageSound(player);
 					}
 					Misc.sendMessage(player, Misc.getString("message_recieved").replace("<player>", Misc.getSenderName(sender)).replace("<message>", message));

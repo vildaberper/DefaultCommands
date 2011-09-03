@@ -14,7 +14,7 @@ public class Kits{
 		int page = 1, max = 0;
 
 		if(sender instanceof Player && !Perm.hasPermission((Player) sender, "dc.kits")){
-			return false;
+			return V.return_;
 		}
 		if(args.length < 2){
 			if(args.length == 1){
@@ -24,8 +24,8 @@ public class Kits{
 					return false;
 				}
 			}
-			max = Math.round(V.kits.size() / V.per_page);
-			if(V.kits.size() > max * V.per_page){
+			max = Math.round(V.kits.size() / V.getInt("per_page"));
+			if(V.kits.size() > max * V.getInt("per_page")){
 				max += 1;
 			}
 			if(page > max){
@@ -33,7 +33,7 @@ public class Kits{
 				return false;
 			}
 			sender.sendMessage("Page " + page + " of " + max + ":");
-			for(int i = (page - 1) * V.per_page; i < (page - 1) * V.per_page + V.per_page && i < V.kits.size(); i++){
+			for(int i = (page - 1) * V.getInt("per_page"); i < (page - 1) * V.getInt("per_page") + V.getInt("per_page") && i < V.kits.size(); i++){
 				sender.sendMessage(V.kits.get(i).getName());
 			}
 			return true;

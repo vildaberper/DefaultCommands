@@ -95,7 +95,7 @@ public class Misc{
 			hp = ChatColor.RED + hp;
 		}
 		hp += ChatColor.WHITE;
-		send = V.chat
+		send = V.getString("chat")
 				.replace("<player>", getName(player.getName()))
 				.replace("<message>", message)
 				.replace("<hp>", hp)
@@ -738,7 +738,7 @@ public class Misc{
 		List<Player> players = new LinkedList<Player>();
 
 		for(String s : string.split(",")){
-			if(s.equals(V.all)){
+			if(s.equals(V.getString("all"))){
 				for(Player player : V.plugin.getServer().getOnlinePlayers()){
 					for(int i = 0; i < players.size(); i++){
 						if(players.get(i).equals(player)){
@@ -803,7 +803,7 @@ public class Misc{
 	public static List<String> getPlayerList(Player player){
 		List<String> names = new LinkedList<String>();
 
-		for(Player p : getPlayers(player, V.all)){
+		for(Player p : getPlayers(player, V.getString("all"))){
 			if(isAfk(p.getEntityId())){
 				names.add("&8" + p.getName());
 			}else{
@@ -824,7 +824,7 @@ public class Misc{
 		List<Material> materials = new LinkedList<Material>();
 
 		for(String s : string.split(" ")){
-			if(s.equals(V.all)){
+			if(s.equals(V.getString("all"))){
 				materials.clear();
 				for(Material m : Material.values()){
 					materials.add(m);
@@ -842,7 +842,7 @@ public class Misc{
 		if(sender instanceof Player){
 			return ((Player) sender).getName();
 		}
-		return V.console_name;
+		return V.getString("console_name");
 	}
 
 	public static String getPlayerNames(List<Player> players){
@@ -909,9 +909,9 @@ public class Misc{
 	}
 
 	public static String getGive(String[] args, String get){
-		if(V.give.split(" ").length == args.length){
+		if(V.getString("give").split(" ").length == args.length){
 			for(int i = 0; i < args.length; i++){
-				if(V.give.split(" ")[i].equals(get)){
+				if(V.getString("give").split(" ")[i].equals(get)){
 					return args[i];
 				}
 			}

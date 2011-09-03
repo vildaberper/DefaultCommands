@@ -153,7 +153,7 @@ public class DCPlayerListener extends PlayerListener{
 		if(Misc.isAfk(event.getPlayer().getEntityId()) && (Util.getDistanceIgnoreY(event.getFrom(), event.getTo()) >= V.afk_move_min || Misc.getAfkPlayer(event.getPlayer().getEntityId()).getLocation().getYaw() != event.getPlayer().getLocation().getYaw() || Misc.getAfkPlayer(event.getPlayer().getEntityId()).getLocation().getPitch() != event.getPlayer().getLocation().getPitch())){
 			Misc.afkMove(event.getPlayer());
 		}
-		if(!event.getPlayer().isInsideVehicle() && event.getFrom().getBlock() != event.getTo().getBlock()){
+		if(!event.getPlayer().isInsideVehicle() && !event.getFrom().getBlock().equals(event.getTo().getBlock())){
 			final DCPortal dcportal = Misc.getPortal(event.getTo().getBlock().getLocation());
 
 			if(dcportal != null && dcportal.getTarget(event.getPlayer()) != null){
@@ -200,9 +200,11 @@ public class DCPlayerListener extends PlayerListener{
 				}
 			}
 		}
-		for(DCBorder border : V.borders){
-			if(!Perm.hasPermissionSilent(event.getPlayer(), "dc.border." + border.getName()) && !border.isInside(event.getPlayer(), true)){
-				Misc.sendString(event.getPlayer(), "reached_border");
+		if(!event.getFrom().getBlock().equals(event.getTo().getBlock())){
+			for(DCBorder border : V.borders){
+				if(border.getWorld().equals(event.getPlayer().getWorld().getName()) && !Perm.hasPermissionSilent(event.getPlayer(), "dc.border." + border.getName()) && !border.isInside(event.getPlayer(), true)){
+					Misc.sendString(event.getPlayer(), "reached_border");
+				}
 			}
 		}
 	}
@@ -299,7 +301,7 @@ public class DCPlayerListener extends PlayerListener{
 				return;
 			}
 		}
-		if(event.getPlayer().getItemInHand().getTypeId() == V.selection_tool && Perm.hasPermissionSilent(event.getPlayer(), "dc.select")){
+		if(event.getPlayer().getItemInHand().getTypeId() == V.getInt("selection_tool") && Perm.hasPermissionSilent(event.getPlayer(), "dc.select")){
 			if(event.getAction().equals(Action.RIGHT_CLICK_BLOCK)){
 				event.setCancelled(true);
 				Misc.setSelection(event.getPlayer().getName(), null, event.getClickedBlock());
@@ -322,7 +324,7 @@ public class DCPlayerListener extends PlayerListener{
 
 	@Override
 	public void onPlayerLogin(PlayerLoginEvent event){
-		if(V.whitelist && V.whitelist_kick && !Misc.isWhitelist(event.getPlayer().getName())){
+		if(V.getBoolean("whitelist") && V.getBoolean("whitelist_kick") && !Misc.isWhitelist(event.getPlayer().getName())){
 			event.disallow(Result.KICK_WHITELIST, Misc.getColoredString("whitelist"));
 		}
 		if(Misc.getBan(event.getPlayer().getName()) != null){
@@ -346,7 +348,7 @@ public class DCPlayerListener extends PlayerListener{
 		if(Perm.hasPermissionSilent(event.getPlayer(), "dc.motd")){
 			event.getPlayer().chat("/dcmotd");
 		}
-		if(V.whitelist && !Misc.isWhitelist(event.getPlayer().getName())){
+		if(V.getBoolean("whitelist") && !Misc.isWhitelist(event.getPlayer().getName())){
 			Misc.sendString(event.getPlayer(), "whitelist");
 		}
 	}
@@ -382,14 +384,14 @@ public class DCPlayerListener extends PlayerListener{
 				},
 				2
 				);
-		if(V.show_teleport_smoke){
+		if(V.getBoolean("show_teleport_smoke")){
 			for(Player player : event.getFrom().getWorld().getPlayers()){
-				if(Misc.getPlayers(player, V.all).contains(event.getPlayer())){
+				if(Misc.getPlayers(player, V.getString("all")).contains(event.getPlayer())){
 					player.playEffect(event.getFrom(), Effect.SMOKE, 4);
 				}
 			}
 			for(Player player : event.getTo().getWorld().getPlayers()){
-				if(Misc.getPlayers(player, V.all).contains(event.getPlayer())){
+				if(Misc.getPlayers(player, V.getString("all")).contains(event.getPlayer())){
 					player.playEffect(event.getTo(), Effect.SMOKE, 4);
 				}
 			}
@@ -441,7 +443,7 @@ public class DCPlayerListener extends PlayerListener{
 					Misc.setLastCommand(event.getPlayer().getName(), event.getMessage().substring(1));
 				}
 			}
-			if(V.unknown_command && V.plugin.getServer().getPluginCommand(event.getMessage().split(" ")[0].substring(1)) == null){
+			if(V.getBoolean("unknown_command") && V.plugin.getServer().getPluginCommand(event.getMessage().split(" ")[0].substring(1)) == null){
 				if(
 						":reload:plugins:help:?:kick:ban:pardon:ban-ip:pardon-ip:op:deop:tp:give:tell:stop:save-all:save-off:save-on:list:say:time:".indexOf(":" + event.getMessage().split(" ")[0].substring(1) + ":") == -1
 						&& (V.plugin.getServer().getPluginManager().getPlugin("Towny") == null || V.plugin.getServer().getPluginManager().getPlugin("Towny").isEnabled() && ":tc:nc:resident:town:plot:nation:towny:townyadmin:".indexOf(":" + event.getMessage().split(" ")[0].substring(1) + ":") == -1)
@@ -468,7 +470,7 @@ public class DCPlayerListener extends PlayerListener{
 			event.setCancelled(true);
 			return;
 		}
-		if(V.better_chat){
+		if(V.getBoolean("better_chat")){
 			event.setCancelled(true);
 			Misc.chat(event.getPlayer(), event.getMessage());
 		}

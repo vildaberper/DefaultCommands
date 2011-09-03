@@ -14,7 +14,7 @@ public class Portals{
 		int page = 1, max = 0;
 
 		if(sender instanceof Player && !Perm.hasPermission((Player) sender, "dc.portals")){
-			return false;
+			return V.return_;
 		}
 		if(args.length < 2){
 			if(args.length == 1){
@@ -24,8 +24,8 @@ public class Portals{
 					return false;
 				}
 			}
-			max = Math.round(V.portals.size() / V.per_page);
-			if(V.portals.size() > max * V.per_page){
+			max = Math.round(V.portals.size() / V.getInt("per_page"));
+			if(V.portals.size() > max * V.getInt("per_page")){
 				max += 1;
 			}
 			if(page > max){
@@ -33,7 +33,7 @@ public class Portals{
 				return false;
 			}
 			sender.sendMessage("Page " + page + " of " + max + ":");
-			for(int i = (page - 1) * V.per_page; i < (page - 1) * V.per_page + V.per_page && i < V.portals.size(); i++){
+			for(int i = (page - 1) * V.getInt("per_page"); i < (page - 1) * V.getInt("per_page") + V.getInt("per_page") && i < V.portals.size(); i++){
 				sender.sendMessage(V.portals.get(i).getName() + " - " + V.portals.get(i).getWorld() + " " + Math.round(V.portals.get(i).getBlock1().getX()) + " " + Math.round(V.portals.get(i).getBlock1().getY()) + " " + Math.round(V.portals.get(i).getBlock1().getZ()) + " - " + V.portals.get(i).getTarget());
 			}
 			return true;

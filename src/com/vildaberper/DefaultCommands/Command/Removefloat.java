@@ -24,7 +24,7 @@ public class Removefloat{
 
 		if(sender instanceof Player){
 			if(!Perm.hasPermission((Player) sender, "dc.removefloat")){
-				return false;
+				return V.return_;
 			}
 			if(args.length == 1 && args[0].equalsIgnoreCase("stop")){
 				Reset.resetRemovefloat();

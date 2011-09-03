@@ -6,13 +6,14 @@ import org.bukkit.entity.Player;
 
 import com.vildaberper.DefaultCommands.Misc;
 import com.vildaberper.DefaultCommands.Perm;
+import com.vildaberper.DefaultCommands.V;
 
 public class Whitelist{
 	public static boolean whitelist(CommandSender sender, Command command, String label, String[] args){
 		if(args.length == 2){
 			if(args[0].equalsIgnoreCase("add")){
 				if(sender instanceof Player && !Perm.hasPermission((Player) sender, "dc.whitelist.add")){
-					return false;
+					return V.return_;
 				}
 				if(Misc.isWhitelist(args[1])){
 					sender.sendMessage(args[1] + " is already on the whitelist!");

@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 
 import com.vildaberper.DefaultCommands.Misc;
 import com.vildaberper.DefaultCommands.Perm;
+import com.vildaberper.DefaultCommands.V;
 import com.vildaberper.DefaultCommands.Class.DCInventoryPlayer;
 
 public class Inventory{
@@ -24,7 +25,7 @@ public class Inventory{
 				return true;
 			}else if(args.length == 2){
 				if(!Perm.hasPermission((Player) sender, "dc.inventory")){
-					return false;
+					return V.return_;
 				}
 				if(Misc.getPlayers((Player) sender, args[0]).size() == 1 && Misc.getPlayers(sender, args[0]).get(0).getWorld().getName().equals(args[1])){
 					DCInventoryPlayer dcip = new DCInventoryPlayer(Misc.getPlayers((Player) sender, args[0]).get(0).getName(), ((CraftPlayer) Misc.getPlayers((Player) sender, args[0]).get(0)).getHandle());

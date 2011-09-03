@@ -19,13 +19,13 @@ public class AfkCheck implements Runnable{
 						&& player.getLocation().getYaw() == Misc.getAfkPlayer(player.getEntityId()).getLocation().getYaw()
 						&& player.getLocation().getPitch() == Misc.getAfkPlayer(player.getEntityId()).getLocation().getPitch()
 						&& Perm.hasPermissionSilent(player, "dc.afk.self")
-				){
-					if(Misc.getAfkPlayer(player.getEntityId()).getTime() >= V.afk_time){
+						){
+					if(Misc.getAfkPlayer(player.getEntityId()).getTime() >= V.getInt("afk_time")){
 						Misc.setAfk(player.getEntityId(), true);
 						L.log(Misc.getSenderCmdMsg("c_afk", player, Misc.getPlayers(player, player.getName()), Misc.isAfk(Misc.getPlayers(player, player.getName()).get(0).getEntityId())));
 						Misc.sendMessage(player, Misc.getSenderCmdMsg("c_afk", player, Misc.getPlayers(player, player.getName()), Misc.isAfk(Misc.getPlayers(player, player.getName()).get(0).getEntityId())));
 					}
-					if(Misc.getAfkPlayer(player.getEntityId()).getTime() >= V.afk_kick_time){
+					if(Misc.getAfkPlayer(player.getEntityId()).getTime() >= V.getInt("afk_kick_time")){
 						player.kickPlayer(Misc.getColoredString("afk_kick"));
 					}
 				}else{
@@ -33,7 +33,7 @@ public class AfkCheck implements Runnable{
 				}
 			}
 			Misc.getAfkPlayer(player.getEntityId()).setLocation(player.getLocation());
-			if(Misc.getAfkPlayer(player.getEntityId()).getTime() >= V.afk_kick_time){
+			if(Misc.getAfkPlayer(player.getEntityId()).getTime() >= V.getInt("afk_kick_time")){
 				player.kickPlayer(Misc.getColoredString("afk_kick"));
 			}
 		}

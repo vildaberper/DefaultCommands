@@ -85,6 +85,7 @@ public class SaveLoad{
 
 								dcarmor.add(new DCArmor(file.getName().replace(".data", ""), Misc.getItemStackFromString(br.readLine())));
 								br.close();
+								fr.close();
 							}
 						}catch(Exception e){
 							System.out.println("Failed to load armor: " + file.getAbsolutePath());
@@ -106,6 +107,7 @@ public class SaveLoad{
 
 						armor.add(new DCArmor(file.getName().replace(".data", ""), Misc.getItemStackFromString(br.readLine())));
 						br.close();
+						fr.close();
 					}
 				}catch(Exception e){
 					System.out.println("Failed to load armor: " + file.getAbsolutePath());
@@ -138,6 +140,7 @@ public class SaveLoad{
 						bw.flush();
 						bw.write(Misc.getStringFromItemStack(dcarmor.getArmor()));
 						bw.close();
+						fw.close();
 					}catch(Exception e){
 						System.out.println("Failed to save armor: " + file.getAbsolutePath());
 						e.printStackTrace();
@@ -161,6 +164,7 @@ public class SaveLoad{
 				bw.flush();
 				bw.write(Misc.getStringFromItemStack(dcarmor.getArmor()));
 				bw.close();
+				fw.close();
 			}catch(Exception e){
 				System.out.println("Failed to save armor: " + file.getAbsolutePath());
 				e.printStackTrace();
@@ -309,6 +313,7 @@ public class SaveLoad{
 
 								dcinventory.add(new DCInventoryPlayer(file.getName().replace(".data", ""), Misc.getItemStackFromString(br.readLine())));
 								br.close();
+								fr.close();
 							}
 						}catch(Exception e){
 							System.out.println("Failed to load inventory: " + file.getAbsolutePath());
@@ -330,6 +335,7 @@ public class SaveLoad{
 
 						inventory.add(new DCInventoryPlayer(file.getName().replace(".data", ""), Misc.getItemStackFromString(br.readLine())));
 						br.close();
+						fr.close();
 					}
 				}catch(Exception e){
 					System.out.println("Failed to load inventory: " + file.getAbsolutePath());
@@ -362,6 +368,7 @@ public class SaveLoad{
 						bw.flush();
 						bw.write(Misc.getStringFromItemStack(Util.convertItemStack(dcinventory.getContents())));
 						bw.close();
+						fw.close();
 					}catch(Exception e){
 						System.out.println("Failed to save inventory: " + file.getAbsolutePath());
 					}
@@ -384,6 +391,7 @@ public class SaveLoad{
 				bw.flush();
 				bw.write(Misc.getStringFromItemStack(Util.convertItemStack(dcinventory.getContents())));
 				bw.close();
+				fw.close();
 			}catch(Exception e){
 				System.out.println("Failed to save inventory: " + file.getAbsolutePath());
 				e.printStackTrace();
@@ -393,62 +401,24 @@ public class SaveLoad{
 
 	public static void loadDefaultCommands(){
 		Configuration dc = new Configuration(new File(V.plugin.getDataFolder(), "DefaultCommands.yml"));
+		V.configuration = Reset.resetDefaultCommands();
+		List<DCConfiguration> config = Reset.resetDefaultCommands();
 
 		V.plugin.getServer().getScheduler().cancelTask(V.sync_time_id);
 		dc.load();
-		V.per_page = dc.getInt("per_page", V.per_page);
-		V.give = dc.getString("give", V.give);
-		V.chat = dc.getString("chat", V.chat);
-		V.all = dc.getString("all", V.all);
-		V.better_chat = dc.getBoolean("better_chat", V.better_chat);
-		V.timezone = dc.getString("timezone", V.timezone);
-		V.console_name = dc.getString("console_name", V.console_name);
-		V.sync_time = dc.getInt("sync_time", V.sync_time);
-		V.afk_time = dc.getInt("afk_time", V.afk_time);
-		V.afk_kick_time = dc.getInt("afk_kick_time", V.afk_kick_time);
-		V.sync_inventory = dc.getInt("sync_inventory", V.sync_inventory);
-		V.sync_armor = dc.getInt("sync_armor", V.sync_armor);
-		V.save_config = dc.getInt("save_config", V.save_config);
-		V.unknown_command = dc.getBoolean("unknown_command", V.unknown_command);
-		V.better_fence = dc.getBoolean("better_fence", V.better_fence);
-		V.better_pumpkin = dc.getBoolean("better_pumpkin", V.better_pumpkin);
-		V.play_message_sound = dc.getBoolean("play_message_sound", V.play_message_sound);
-		V.show_teleport_smoke = dc.getBoolean("show_teleport_smoke", V.show_teleport_smoke);
-		V.whitelist = dc.getBoolean("whitelist", V.whitelist);
-		V.whitelist_kick = dc.getBoolean("whitelist_kick", V.whitelist_kick);
-		V.selection_tool = dc.getInt("selection_tool", V.selection_tool);
-		V.block_cant_keep_up = dc.getBoolean("block_cant_keep_up", V.block_cant_keep_up);
-		V.sync_time_id = V.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(V.plugin, new TimeSync(), (20 * V.sync_time), (20 * V.sync_time));
+		for(DCConfiguration dcconfiguration : config){
+			if(dc.getProperty(dcconfiguration.getConfiguration()) != null){
+				V.setConfiguration(dcconfiguration.getConfiguration(), dc.getProperty(dcconfiguration.getConfiguration()));
+			}
+		}
+		V.sync_time_id = V.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(V.plugin, new TimeSync(), (20 * V.getInt("sync_time")), (20 * V.getInt("sync_time")));
 	}
 
 	public static void saveDefaultCommands(){
 		Configuration dc = new Configuration(new File(V.plugin.getDataFolder(), "DefaultCommands.yml"));
-		List<DCConfiguration> dcc = new LinkedList<DCConfiguration>();
 
-		dcc.add(new DCConfiguration("per_page", V.per_page));
-		dcc.add(new DCConfiguration("give", V.give));
-		dcc.add(new DCConfiguration("chat", V.chat));
-		dcc.add(new DCConfiguration("all", V.all));
-		dcc.add(new DCConfiguration("timezone", V.timezone));
-		dcc.add(new DCConfiguration("console_name", V.console_name));
-		dcc.add(new DCConfiguration("sync_time", V.sync_time));
-		dcc.add(new DCConfiguration("afk_time", V.afk_time));
-		dcc.add(new DCConfiguration("afk_kick_time", V.afk_kick_time));
-		dcc.add(new DCConfiguration("sync_inventory", V.sync_inventory));
-		dcc.add(new DCConfiguration("sync_armor", V.sync_armor));
-		dcc.add(new DCConfiguration("save_config", V.save_config));
-		dcc.add(new DCConfiguration("unknown_command", V.unknown_command));
-		dcc.add(new DCConfiguration("better_chat", V.better_chat));
-		dcc.add(new DCConfiguration("better_fence", V.better_fence));
-		dcc.add(new DCConfiguration("better_pumpkin", V.better_pumpkin));
-		dcc.add(new DCConfiguration("play_message_sound", V.play_message_sound));
-		dcc.add(new DCConfiguration("show_teleport_smoke", V.show_teleport_smoke));
-		dcc.add(new DCConfiguration("whitelist", V.whitelist));
-		dcc.add(new DCConfiguration("whitelist_kick", V.whitelist_kick));
-		dcc.add(new DCConfiguration("selection_tool", V.selection_tool));
-		dcc.add(new DCConfiguration("block_cant_keep_up", V.block_cant_keep_up));
 		dc.save();
-		for(DCConfiguration dcconf : dcc){
+		for(DCConfiguration dcconf : V.configuration){
 			dc.load();
 			dc.setProperty(dcconf.getConfiguration(), dcconf.getValue());
 			dc.save();

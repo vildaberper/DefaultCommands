@@ -9,6 +9,7 @@ import com.vildaberper.DefaultCommands.L;
 import com.vildaberper.DefaultCommands.Misc;
 import com.vildaberper.DefaultCommands.Perm;
 import com.vildaberper.DefaultCommands.Util;
+import com.vildaberper.DefaultCommands.V;
 
 public class Health{
 	public static boolean health(final CommandSender sender, Command command, String label, String[] args){
@@ -21,13 +22,13 @@ public class Health{
 		}else if(args.length == 2){
 			if(Misc.getPlayers(sender, args[0]).size() != 0){
 				if(sender instanceof Player && Misc.getPlayers(sender, args[0]).size() != 1 && !Perm.hasPermission((Player) sender, "dc.health.all")){
-					return false;
+					return V.return_;
 				}
 				if(sender instanceof Player && Misc.getPlayers(sender, args[0]).size() == 1){
 					if(Misc.getPlayers(sender, args[0]).get(0) == (Player) sender && !Perm.hasPermission((Player) sender, "dc.health.self")){
-						return false;
+						return V.return_;
 					}else if(Misc.getPlayers(sender, args[0]).get(0) != (Player) sender && !Perm.hasPermission((Player) sender, "dc.health.other")){
-						return false;
+						return V.return_;
 					}
 				}
 				if(Util.isValidInt(args[1]) && Integer.parseInt(args[1]) >= 0 && Integer.parseInt(args[1]) <= 20){

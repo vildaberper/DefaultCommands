@@ -19,7 +19,7 @@ public class Time{
 			if(V.plugin.getServer().getWorld(args[1]) != null){
 				if(Util.isValidInt(args[0]) && Integer.parseInt(args[0]) >= 0 && Integer.parseInt(args[0]) <= 24000){
 					if(sender instanceof Player && !Perm.hasPermission((Player) sender, "dc.time." + V.plugin.getServer().getWorld(args[1]).getName())){
-						return false;
+						return V.return_;
 					}
 					Misc.setTime(V.plugin.getServer().getWorld(args[1]).getName(), Long.parseLong(args[0]));
 					L.log(Misc.getColoredString("c_time").replace("<player>", Misc.getSenderName(sender)).replace("<world>", V.plugin.getServer().getWorld(args[1]).getName()).replace("<time>", args[0]));
