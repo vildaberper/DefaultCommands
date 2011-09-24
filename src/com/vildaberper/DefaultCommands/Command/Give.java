@@ -1,6 +1,7 @@
 package com.vildaberper.DefaultCommands.Command;
 
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -11,8 +12,8 @@ import com.vildaberper.DefaultCommands.Perm;
 import com.vildaberper.DefaultCommands.Util;
 import com.vildaberper.DefaultCommands.V;
 
-public class Give{
-	public static boolean give(CommandSender sender, Command command, String label, String[] args){
+public class Give implements CommandExecutor{
+	public boolean onCommand(CommandSender sender, Command command, String label, String[] args){
 		if(args.length == 1 && sender instanceof Player && V.getString("give").equals("item amount target")){
 			((Player) sender).chat("/dcgive " + args[0] + " 1 " + ((Player) sender).getName());
 			return true;

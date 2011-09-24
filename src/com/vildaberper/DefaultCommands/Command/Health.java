@@ -1,6 +1,7 @@
 package com.vildaberper.DefaultCommands.Command;
 
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Player;
@@ -11,8 +12,8 @@ import com.vildaberper.DefaultCommands.Perm;
 import com.vildaberper.DefaultCommands.Util;
 import com.vildaberper.DefaultCommands.V;
 
-public class Health{
-	public static boolean health(final CommandSender sender, Command command, String label, String[] args){
+public class Health implements CommandExecutor{
+	public boolean onCommand(final CommandSender sender, Command command, String label, String[] args){
 		if(args.length == 0 && sender instanceof Player){
 			((Player) sender).chat("/dchealth " + ((Player) sender).getName() + " 20");
 			return true;

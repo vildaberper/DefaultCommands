@@ -19,6 +19,7 @@ import com.vildaberper.DefaultCommands.Misc;
 import com.vildaberper.DefaultCommands.Perm;
 import com.vildaberper.DefaultCommands.Util;
 import com.vildaberper.DefaultCommands.V;
+import com.vildaberper.DefaultCommands.Class.DCHover;
 import com.vildaberper.DefaultCommands.Class.DCInteger;
 
 public class DCBlockListener extends BlockListener{
@@ -122,6 +123,15 @@ public class DCBlockListener extends BlockListener{
 							3
 							)
 					);
+		}
+		DCHover hover = Misc.getHover(event.getPlayer().getEntityId());
+
+		if(hover != null){
+			if(hover.getBlock() != null){
+				if(event.getBlock().equals(hover.getBlock())){
+					Misc.setHover(event.getPlayer().getEntityId(), null);
+				}
+			}
 		}
 	}
 

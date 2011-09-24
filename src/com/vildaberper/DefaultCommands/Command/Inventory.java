@@ -1,6 +1,7 @@
 package com.vildaberper.DefaultCommands.Command;
 
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Player;
@@ -10,8 +11,8 @@ import com.vildaberper.DefaultCommands.Perm;
 import com.vildaberper.DefaultCommands.V;
 import com.vildaberper.DefaultCommands.Class.DCInventoryPlayer;
 
-public class Inventory{
-	public static boolean inventory(CommandSender sender, Command command, String label, String[] args){
+public class Inventory implements CommandExecutor{
+	public boolean onCommand(CommandSender sender, Command command, String label, String[] args){
 		if(sender instanceof Player){
 			if(args.length == 0){
 				((Player) sender).chat("/dcinventory " + ((Player) sender).getName() + " " + ((Player) sender).getWorld().getName());

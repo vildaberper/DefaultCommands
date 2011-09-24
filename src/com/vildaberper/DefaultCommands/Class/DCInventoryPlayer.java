@@ -48,7 +48,7 @@ public class DCInventoryPlayer extends InventoryPlayer implements IInventory{
 	}
 
 	@Override
-	public boolean a_(EntityHuman arg0){
+	public boolean a(EntityHuman arg0){
 		update();
 		return true;
 	}

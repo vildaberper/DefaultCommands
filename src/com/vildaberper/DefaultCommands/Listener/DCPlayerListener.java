@@ -61,9 +61,7 @@ public class DCPlayerListener extends PlayerListener{
 		}
 		if(Misc.isFly(event.getPlayer().getEntityId())){
 			if(event.getPlayer().isSneaking()){
-				DCHover hover = Misc.getHover(event.getPlayer().getEntityId());
-
-				if(hover.getBlock() == null){
+				if(Misc.getHover(event.getPlayer().getEntityId()) == null){
 					if(event.getPlayer().getLocation().getBlock().getRelative(BlockFace.DOWN).getType().equals(Material.AIR)){
 						Location location = event.getPlayer().getLocation().getBlock().getLocation();
 
@@ -73,14 +71,10 @@ public class DCPlayerListener extends PlayerListener{
 						location.setPitch(event.getPlayer().getLocation().getPitch());
 						event.getPlayer().setVelocity(new Vector(0, 0, 0));
 						event.getPlayer().teleport(location);
-						event.getPlayer().getLocation().getBlock().getRelative(BlockFace.DOWN).setType(Material.GLASS);
-						hover.setBlock(event.getPlayer().getLocation().getBlock().getRelative(BlockFace.DOWN));
+						Misc.setHover(event.getPlayer().getEntityId(), event.getPlayer().getLocation().getBlock().getRelative(BlockFace.DOWN));
 					}
 				}else{
-					if(hover.getBlock().getType().equals(Material.GLASS)){
-						hover.getBlock().setType(Material.AIR);
-						hover.setBlock(null);
-					}
+					Misc.setHover(event.getPlayer().getEntityId(), null);
 				}
 			}
 		}
@@ -191,11 +185,10 @@ public class DCPlayerListener extends PlayerListener{
 		if(Misc.isFly(event.getPlayer().getEntityId())){
 			DCHover hover = Misc.getHover(event.getPlayer().getEntityId());
 
-			if(hover.getBlock() != null){
-				if(!event.getPlayer().getLocation().getBlock().getRelative(BlockFace.DOWN).equals(hover.getBlock())){
-					if(hover.getBlock().getType().equals(Material.GLASS)){
-						hover.getBlock().setType(Material.AIR);
-						hover.setBlock(null);
+			if(hover != null){
+				if(hover.getBlock() != null){
+					if(!event.getPlayer().getLocation().getBlock().getRelative(BlockFace.DOWN).equals(hover.getBlock())){
+						Misc.setHover(event.getPlayer().getEntityId(), null);
 					}
 				}
 			}
@@ -318,6 +311,7 @@ public class DCPlayerListener extends PlayerListener{
 	public void onPlayerQuit(PlayerQuitEvent event){
 		event.setQuitMessage(null);
 		Misc.setInventory(event.getPlayer().getName(), event.getPlayer().getInventory().getContents(), event.getPlayer().getWorld().getName());
+		Misc.setArmor(event.getPlayer().getName(), event.getPlayer().getInventory().getArmorContents(), event.getPlayer().getWorld().getName());
 		Misc.setAfkPlayer(event.getPlayer().getEntityId(), null);
 		Misc.broadcastDisconnect(event.getPlayer(), false);
 	}
@@ -445,7 +439,7 @@ public class DCPlayerListener extends PlayerListener{
 			}
 			if(V.getBoolean("unknown_command") && V.plugin.getServer().getPluginCommand(event.getMessage().split(" ")[0].substring(1)) == null){
 				if(
-						":reload:plugins:help:?:kick:ban:pardon:ban-ip:pardon-ip:op:deop:tp:give:tell:stop:save-all:save-off:save-on:list:say:time:".indexOf(":" + event.getMessage().split(" ")[0].substring(1) + ":") == -1
+						":reload:plugins:help:?:kick:ban:pardon:ban-ip:pardon-ip:op:deop:tp:give:tell:stop:save-all:save-off:save-on:list:say:time:gamemode:".indexOf(":" + event.getMessage().split(" ")[0].substring(1) + ":") == -1
 						&& (V.plugin.getServer().getPluginManager().getPlugin("Towny") == null || V.plugin.getServer().getPluginManager().getPlugin("Towny").isEnabled() && ":tc:nc:resident:town:plot:nation:towny:townyadmin:".indexOf(":" + event.getMessage().split(" ")[0].substring(1) + ":") == -1)
 						&& (V.plugin.getServer().getPluginManager().getPlugin("HeroChat") == null || V.plugin.getServer().getPluginManager().getPlugin("HeroChat").isEnabled() && ":".indexOf(":ch:qm:" + event.getMessage().split(" ")[0].substring(1) + ":") == -1)
 						){

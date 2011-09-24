@@ -1,6 +1,7 @@
 package com.vildaberper.DefaultCommands.Command;
 
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -9,8 +10,8 @@ import com.vildaberper.DefaultCommands.Perm;
 import com.vildaberper.DefaultCommands.Util;
 import com.vildaberper.DefaultCommands.V;
 
-public class Kits{
-	public static boolean kits(CommandSender sender, Command command, String label, String[] args){
+public class Kits implements CommandExecutor{
+	public boolean onCommand(CommandSender sender, Command command, String label, String[] args){
 		int page = 1, max = 0;
 
 		if(sender instanceof Player && !Perm.hasPermission((Player) sender, "dc.kits")){

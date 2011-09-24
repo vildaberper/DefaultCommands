@@ -5,6 +5,29 @@ website: http://www.tfbs.tk/
 author: vildaberper
 database: false
 description: Default commands for bukkit.
+permissions:
+  dc.*:
+    description: Gives all permissions for DefaultCommands
+    children:
+      dc.create:
+        description: Create
+      dc.join:
+        description: Join
+        children:
+          dc.join.self:
+            description: Join self
+          dc.join.self.world:
+            description: Join self world
+          dc.join.other:
+            description: Join other
+          dc.join.other.world:
+            description: Join other world
+          dc.join.all:
+            description: Join all
+          dc.join.all.world:
+            description: Join all world
+      dc.worlds:
+        description: Worlds
 commands:
   dccreate:
     description: Create.

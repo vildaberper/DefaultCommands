@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -23,9 +24,9 @@ import com.vildaberper.DefaultCommands.Class.DCString;
 import com.vildaberper.DefaultCommands.Class.DCWarp;
 import com.vildaberper.DefaultCommands.Class.DCWorld;
 
-public class Dc{
+public class Dc implements CommandExecutor{
 	@SuppressWarnings("unchecked")
-	public static boolean dc(CommandSender sender, Command command, String label, String[] args){
+	public boolean onCommand(CommandSender sender, Command command, String label, String[] args){
 		if(sender instanceof Player && !Perm.hasPermission((Player) sender, "dc.dc")){
 			return V.return_;
 		}
@@ -170,8 +171,8 @@ public class Dc{
 												warps.get(name).z,
 												warps.get(name).yaw,
 												warps.get(name).pitch
-										)
-								);
+												)
+										);
 							}
 							if(count == 1){
 								s = "";

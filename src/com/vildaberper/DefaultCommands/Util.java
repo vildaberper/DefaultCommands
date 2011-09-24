@@ -16,6 +16,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.craftbukkit.entity.CraftChicken;
 import org.bukkit.craftbukkit.entity.CraftCow;
 import org.bukkit.craftbukkit.entity.CraftCreeper;
+import org.bukkit.craftbukkit.entity.CraftEnderman;
 import org.bukkit.craftbukkit.entity.CraftGhast;
 import org.bukkit.craftbukkit.entity.CraftItem;
 import org.bukkit.craftbukkit.entity.CraftMonster;
@@ -75,7 +76,8 @@ public class Util{
 					|| entities.get(i) instanceof CraftSquid
 					|| entities.get(i) instanceof CraftWolf
 					|| entities.get(i) instanceof CraftZombie
-			)){
+					|| entities.get(i) instanceof CraftEnderman
+					)){
 				entities.remove(i);
 				i--;
 			}
@@ -269,57 +271,57 @@ public class Util{
 
 	public static String replaceColor(String string){
 		return string
-		.replace("&4", ChatColor.DARK_RED.toString())
-		.replace("&c", ChatColor.RED.toString())
-		.replace("&6", ChatColor.GOLD.toString())
-		.replace("&e", ChatColor.YELLOW.toString())
-		.replace("&2", ChatColor.DARK_GREEN.toString())
-		.replace("&a", ChatColor.GREEN.toString())
-		.replace("&b", ChatColor.AQUA.toString())
-		.replace("&3", ChatColor.DARK_AQUA.toString())
-		.replace("&1", ChatColor.DARK_BLUE.toString())
-		.replace("&9", ChatColor.BLUE.toString())
-		.replace("&d", ChatColor.LIGHT_PURPLE.toString())
-		.replace("&5", ChatColor.DARK_PURPLE.toString())
-		.replace("&f", ChatColor.WHITE.toString())
-		.replace("&7", ChatColor.GRAY.toString())
-		.replace("&8", ChatColor.DARK_GRAY.toString())
-		.replace("&0", ChatColor.BLACK.toString());
+				.replace("&4", ChatColor.DARK_RED.toString())
+				.replace("&c", ChatColor.RED.toString())
+				.replace("&6", ChatColor.GOLD.toString())
+				.replace("&e", ChatColor.YELLOW.toString())
+				.replace("&2", ChatColor.DARK_GREEN.toString())
+				.replace("&a", ChatColor.GREEN.toString())
+				.replace("&b", ChatColor.AQUA.toString())
+				.replace("&3", ChatColor.DARK_AQUA.toString())
+				.replace("&1", ChatColor.DARK_BLUE.toString())
+				.replace("&9", ChatColor.BLUE.toString())
+				.replace("&d", ChatColor.LIGHT_PURPLE.toString())
+				.replace("&5", ChatColor.DARK_PURPLE.toString())
+				.replace("&f", ChatColor.WHITE.toString())
+				.replace("&7", ChatColor.GRAY.toString())
+				.replace("&8", ChatColor.DARK_GRAY.toString())
+				.replace("&0", ChatColor.BLACK.toString());
 	}
 
 	public static String removeColor(String string){
 		return string
-		.replace(ChatColor.DARK_RED.toString(), "")
-		.replace(ChatColor.RED.toString(), "")
-		.replace(ChatColor.GOLD.toString(), "")
-		.replace(ChatColor.YELLOW.toString(), "")
-		.replace(ChatColor.DARK_GREEN.toString(), "")
-		.replace(ChatColor.GREEN.toString(), "")
-		.replace(ChatColor.AQUA.toString(), "")
-		.replace(ChatColor.DARK_AQUA.toString(), "")
-		.replace(ChatColor.DARK_BLUE.toString(), "")
-		.replace(ChatColor.BLUE.toString(), "")
-		.replace(ChatColor.LIGHT_PURPLE.toString(), "")
-		.replace(ChatColor.DARK_PURPLE.toString(), "")
-		.replace(ChatColor.WHITE.toString(), "")
-		.replace(ChatColor.GRAY.toString(), "")
-		.replace(ChatColor.DARK_GRAY.toString(), "")
-		.replace(ChatColor.BLACK.toString(), "")
-		.replace("&4", "")
-		.replace("&c", "")
-		.replace("&6", "")
-		.replace("&e", "")
-		.replace("&2", "")
-		.replace("&a", "")
-		.replace("&b", "")
-		.replace("&3", "")
-		.replace("&1", "")
-		.replace("&9", "")
-		.replace("&d", "")
-		.replace("&5", "")
-		.replace("&f", "")
-		.replace("&7", "")
-		.replace("&8", "")
-		.replace("&0", "");
+				.replace(ChatColor.DARK_RED.toString(), "")
+				.replace(ChatColor.RED.toString(), "")
+				.replace(ChatColor.GOLD.toString(), "")
+				.replace(ChatColor.YELLOW.toString(), "")
+				.replace(ChatColor.DARK_GREEN.toString(), "")
+				.replace(ChatColor.GREEN.toString(), "")
+				.replace(ChatColor.AQUA.toString(), "")
+				.replace(ChatColor.DARK_AQUA.toString(), "")
+				.replace(ChatColor.DARK_BLUE.toString(), "")
+				.replace(ChatColor.BLUE.toString(), "")
+				.replace(ChatColor.LIGHT_PURPLE.toString(), "")
+				.replace(ChatColor.DARK_PURPLE.toString(), "")
+				.replace(ChatColor.WHITE.toString(), "")
+				.replace(ChatColor.GRAY.toString(), "")
+				.replace(ChatColor.DARK_GRAY.toString(), "")
+				.replace(ChatColor.BLACK.toString(), "")
+				.replace("&4", "")
+				.replace("&c", "")
+				.replace("&6", "")
+				.replace("&e", "")
+				.replace("&2", "")
+				.replace("&a", "")
+				.replace("&b", "")
+				.replace("&3", "")
+				.replace("&1", "")
+				.replace("&9", "")
+				.replace("&d", "")
+				.replace("&5", "")
+				.replace("&f", "")
+				.replace("&7", "")
+				.replace("&8", "")
+				.replace("&0", "");
 	}
 }

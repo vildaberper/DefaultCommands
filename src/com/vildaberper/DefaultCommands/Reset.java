@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.bukkit.Location;
+import org.bukkit.entity.CreatureType;
 import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
 
@@ -18,12 +19,9 @@ public class Reset{
 
 		config.add(new DCConfiguration("per_page", 9));
 		config.add(new DCConfiguration("sync_time", 30));
-		config.add(new DCConfiguration("sync_inventory", 30));
-		config.add(new DCConfiguration("sync_armor", 30));
 		config.add(new DCConfiguration("selection_tool", 280));
 		config.add(new DCConfiguration("afk_time", 5));
 		config.add(new DCConfiguration("afk_kick_time", 10));
-		config.add(new DCConfiguration("save_config", 10));
 		config.add(new DCConfiguration("give", "item amount target"));
 		config.add(new DCConfiguration("all", "*"));
 		config.add(new DCConfiguration("chat", "&7<player>&2: &f<message>"));
@@ -96,6 +94,7 @@ public class Reset{
 		Misc.addAlias("dcdisconnect", "bye");
 		Misc.addAlias("dcrepeat", "repeat");
 		Misc.addAlias("dcrepeat", "rep");
+		Misc.addAlias("dcrepeat", "//");
 		Misc.addAlias("dconline", "online");
 		Misc.addAlias("dconline", "list");
 		Misc.addAlias("dconline", "players");
@@ -219,6 +218,7 @@ public class Reset{
 		config.add(new DCConfiguration("friendly_slime", false));
 		config.add(new DCConfiguration("friendly_spider", false));
 		config.add(new DCConfiguration("friendly_zombie", false));
+		config.add(new DCConfiguration("friendly_enderman", false));
 		/*
 		 * Fire
 		 */
@@ -232,6 +232,7 @@ public class Reset{
 		config.add(new DCConfiguration("block_tnt_explosion_block_damage", false));
 		config.add(new DCConfiguration("block_creeper_explosion_block_damage", false));
 		config.add(new DCConfiguration("block_fireball_explosion_block_damage", false));
+		config.add(new DCConfiguration("block_enderman_pickup", false));
 		/*
 		 * Player damage
 		 */
@@ -250,21 +251,9 @@ public class Reset{
 		/*
 		 * Spawn
 		 */
-		config.add(new DCConfiguration("block_chicken_spawn", false));
-		config.add(new DCConfiguration("block_cow_spawn", false));
-		config.add(new DCConfiguration("block_creeper_spawn", false));
-		config.add(new DCConfiguration("block_ghast_spawn", false));
-		config.add(new DCConfiguration("block_giant_spawn", false));
-		config.add(new DCConfiguration("block_monster_spawn", false));
-		config.add(new DCConfiguration("block_pig_spawn", false));
-		config.add(new DCConfiguration("block_pigzombie_spawn", false));
-		config.add(new DCConfiguration("block_sheep_spawn", false));
-		config.add(new DCConfiguration("block_skeleton_spawn", false));
-		config.add(new DCConfiguration("block_slime_spawn", false));
-		config.add(new DCConfiguration("block_spider_spawn", false));
-		config.add(new DCConfiguration("block_squid_spawn", false));
-		config.add(new DCConfiguration("block_wolf_spawn", false));
-		config.add(new DCConfiguration("block_zombie_spawn", false));
+		for(CreatureType c : CreatureType.values()){
+			config.add(new DCConfiguration("block_" + c.getName().toLowerCase() + "_spawn", false));
+		}
 		/*
 		 * Permissions
 		 */
@@ -425,7 +414,7 @@ public class Reset{
 		V.strings.add(new DCString("not_console", "&4You cannot do that as console."));
 		V.strings.add(new DCString("frozen", "&4You cannot do that while you are frozen."));
 		V.strings.add(new DCString("online", "&2Connected players (&7<online>&2/&7<max>&2):<br><players>&2."));
-		V.strings.add(new DCString("who_online", "&7<player>&2:<br>&2Online now from &7<ip>&2.<br>&2Location: &7<world> <x> <y> <z><br>&2Hp: &7[<hp>&7]<br>&2Group: &7<group>"));
+		V.strings.add(new DCString("who_online", "&7<player>&2:<br>&2Online now from &7<ip>&2.<br>&2Location: &7<world> <x> <y> <z><br>&2Hp: &7[<hp>&7]<br>&2Group: &7<group><br>&2Experience: &7<experience>"));
 		V.strings.add(new DCString("who_offline", "&7<player>&2:<br>&2Last seen &7<date> <time>&2 from &7<ip>&2."));
 		V.strings.add(new DCString("message_sent", "&2To &7<players>&2: &7<message>"));
 		V.strings.add(new DCString("message_recieved", "&2From &7<player>&2: &7<message>"));

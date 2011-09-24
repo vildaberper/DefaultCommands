@@ -1,6 +1,7 @@
 package com.vildaberper.DefaultCommands.Command;
 
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -11,8 +12,8 @@ import com.vildaberper.DefaultCommands.Util;
 import com.vildaberper.DefaultCommands.V;
 import com.vildaberper.DefaultCommands.Class.DCPlayer;
 
-public class Hide {
-	public static boolean hide(CommandSender sender, Command command, String label, String[] args){
+public class Hide implements CommandExecutor{
+	public boolean onCommand(CommandSender sender, Command command, String label, String[] args){
 		if(args.length == 0 && sender instanceof Player){
 			((Player) sender).chat("/dchide " + ((Player) sender).getName());
 			return true;

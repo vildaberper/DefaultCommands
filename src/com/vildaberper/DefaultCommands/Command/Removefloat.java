@@ -7,17 +7,18 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.vildaberper.DefaultCommands.Misc;
 import com.vildaberper.DefaultCommands.Perm;
-import com.vildaberper.DefaultCommands.V;
 import com.vildaberper.DefaultCommands.Reset;
+import com.vildaberper.DefaultCommands.V;
 import com.vildaberper.DefaultCommands.Class.DCTask;
 
-public class Removefloat{
-	public static boolean removefloat(CommandSender sender, Command command, String label, String[] args){
+public class Removefloat implements CommandExecutor{
+	public boolean onCommand(CommandSender sender, Command command, String label, String[] args){
 		final double id = Math.random() * Math.random();
 		final List<Block> unchecked = new LinkedList<Block>();
 		final List<Material> replace = new LinkedList<Material>(), exclude = new LinkedList<Material>();
@@ -95,11 +96,11 @@ public class Removefloat{
 									},
 									0L,
 									1L
-							),
-							((Player) sender).getName(),
-							((Player) sender).getWorld()
-					)
-			);
+									),
+									((Player) sender).getName(),
+									((Player) sender).getWorld()
+							)
+					);
 			sender.sendMessage("Removefloat started.");
 			return true;
 		}else{

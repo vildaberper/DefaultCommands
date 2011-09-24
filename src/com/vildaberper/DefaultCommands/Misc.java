@@ -19,6 +19,7 @@ import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Chicken;
 import org.bukkit.entity.Cow;
 import org.bukkit.entity.Creeper;
+import org.bukkit.entity.Enderman;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Ghast;
 import org.bukkit.entity.Giant;
@@ -355,6 +356,7 @@ public class Misc{
 		V.plugin.getServer().getScheduler().scheduleAsyncDelayedTask(
 				V.plugin,
 				new Runnable(){
+					@Override
 					public void run(){
 						playNote(player, Instrument.PIANO, 5);
 						Util.sleep(100);
@@ -375,6 +377,7 @@ public class Misc{
 		V.plugin.getServer().getScheduler().scheduleSyncDelayedTask(
 				V.plugin,
 				new Runnable(){
+					@Override
 					public void run(){
 						player.playNote(block.getLocation(), instrument.getType(), (byte) note);
 						player.sendBlockChange(block.getLocation(), material, data);
@@ -708,6 +711,7 @@ public class Misc{
 				|| entity instanceof Spider && ((Spider) entity).getTarget() != null
 				|| entity instanceof Zombie
 				|| entity instanceof Giant
+				|| entity instanceof Enderman
 				){
 			return true;
 		}
@@ -1298,10 +1302,8 @@ public class Misc{
 
 	public static void setFly(int id, boolean enabled){
 		V.fly.remove((Object) id);
-		V.hovers.remove(getHover(id));
 		if(enabled){
 			V.fly.add(id);
-			V.hovers.add(new DCHover(id));
 		}
 	}
 
@@ -1419,7 +1421,16 @@ public class Misc{
 
 	public static void setHover(int id, Block block){
 		if(getHover(id) != null){
-			getHover(id).setBlock(block);
+			if(getHover(id).getBlock().getType().equals(Material.GLASS)){
+				getHover(id).getBlock().setType(Material.AIR);
+			}
+			V.hovers.remove(getHover(id));
+		}
+		if(block != null){
+			if(block.getType().equals(Material.AIR)){
+				block.setType(Material.GLASS);
+			}
+			V.hovers.add(new DCHover(id, block));
 		}
 	}
 

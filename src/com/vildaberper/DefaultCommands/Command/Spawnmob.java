@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -14,8 +15,8 @@ import com.vildaberper.DefaultCommands.Perm;
 import com.vildaberper.DefaultCommands.Util;
 import com.vildaberper.DefaultCommands.V;
 
-public class Spawnmob{
-	public static boolean spawnmob(CommandSender sender, Command command, String label, String[] args){
+public class Spawnmob implements CommandExecutor{
+	public boolean onCommand(CommandSender sender, Command command, String label, String[] args){
 		List<LivingEntity> entities = new LinkedList<LivingEntity>();
 
 		if(sender instanceof Player && args.length > 0){
@@ -39,14 +40,14 @@ public class Spawnmob{
 					if(Util.getCreatureType(args[i]) == null){
 						return false;
 					}
-					if(!Perm.hasPermission(((Player) sender), "dc.spawnmob." + args[0].toLowerCase())){
+					if(!Perm.hasPermission((Player) sender, "dc.spawnmob." + args[0].toLowerCase())){
 						return false;
 					}
 				}
 				for(int i = 0; i < Integer.parseInt(args[0]); i++){
 					entities.clear();
 					for(int u = 1; u < args.length; u++){
-						boolean blockspawn = Misc.getConfig(((Player) sender)).getBoolean("block_" + Util.getCreatureType(args[u]).getName().toLowerCase() + "_spawn");
+						boolean blockspawn = Misc.getConfig((Player) sender).getBoolean("block_" + Util.getCreatureType(args[u]).getName().toLowerCase() + "_spawn");
 
 						Misc.setConfig(((Player) sender).getWorld().getName(), "block_" + Util.getCreatureType(args[u]).getName().toLowerCase() + "_spawn", false);
 						entities.add(((Player) sender).getWorld().spawnCreature(Util.getSafeLocationAt(((Player) sender).getTargetBlock(null, V.targetmax)), Util.getCreatureType(args[u])));

@@ -1,6 +1,7 @@
 package com.vildaberper.DefaultCommands.Command;
 
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -8,8 +9,8 @@ import com.vildaberper.DefaultCommands.Misc;
 import com.vildaberper.DefaultCommands.Perm;
 import com.vildaberper.DefaultCommands.V;
 
-public class Undo{
-	public static boolean undo(CommandSender sender, Command command, String label, String[] args){
+public class Undo implements CommandExecutor{
+	public boolean onCommand(CommandSender sender, Command command, String label, String[] args){
 		if(sender instanceof Player){
 			if(!Perm.hasPermission((Player) sender, "dc.undo")){
 				return V.return_;

@@ -1,6 +1,7 @@
 package com.vildaberper.DefaultCommands.Command;
 
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -11,8 +12,8 @@ import com.vildaberper.DefaultCommands.Perm;
 import com.vildaberper.DefaultCommands.Util;
 import com.vildaberper.DefaultCommands.V;
 
-public class Clearnear{
-	public static boolean clearnear(CommandSender sender, Command command, String label, String[] args){
+public class Clearnear implements CommandExecutor{
+	public boolean onCommand(CommandSender sender, Command command, String label, String[] args){
 		if(args.length == 1 && sender instanceof Player){
 			if(!Perm.hasPermission((Player) sender, "dc.clearnear." + ((Player) sender).getWorld().getName())){
 				return V.return_;

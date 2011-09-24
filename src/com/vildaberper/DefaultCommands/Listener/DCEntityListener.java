@@ -1,11 +1,10 @@
 package com.vildaberper.DefaultCommands.Listener;
 
-import org.bukkit.DyeColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
-import org.bukkit.entity.CreatureType;
 import org.bukkit.entity.Creeper;
+import org.bukkit.entity.Enderman;
 import org.bukkit.entity.Fireball;
 import org.bukkit.entity.Ghast;
 import org.bukkit.entity.Giant;
@@ -22,6 +21,7 @@ import org.bukkit.entity.Spider;
 import org.bukkit.entity.TNTPrimed;
 import org.bukkit.entity.Zombie;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.EndermanPickupEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageByProjectileEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -38,6 +38,16 @@ import com.vildaberper.DefaultCommands.V;
 
 @SuppressWarnings("deprecation")
 public class DCEntityListener extends EntityListener{
+	@Override
+	public void onEndermanPickup(EndermanPickupEvent event){
+		if(event.isCancelled()){
+			return;
+		}
+		if(Misc.getConfig(event.getEntity()).getBoolean("block_enderman_pickup")){
+			event.setCancelled(true);
+		}
+	}
+
 	@Override
 	public void onEntityDeath(EntityDeathEvent event){
 		if(event.getEntity() instanceof Pig && ((Pig) event.getEntity()).hasSaddle() && Misc.getConfig(event.getEntity()).getBoolean("saddled_pig_drop_saddle")){
@@ -70,6 +80,8 @@ public class DCEntityListener extends EntityListener{
 		}else if(event.getEntity() instanceof Spider && Misc.getConfig(event.getEntity()).getBoolean("friendly_spider")){
 			event.setCancelled(true);
 		}else if(event.getEntity() instanceof Zombie && Misc.getConfig(event.getEntity()).getBoolean("friendly_zombie")){
+			event.setCancelled(true);
+		}else if(event.getEntity() instanceof Enderman && Misc.getConfig(event.getEntity()).getBoolean("friendly_enderman")){
 			event.setCancelled(true);
 		}
 	}
@@ -256,69 +268,8 @@ public class DCEntityListener extends EntityListener{
 		if(event.isCancelled()){
 			return;
 		}
-		if(event.getCreatureType().equals(CreatureType.CHICKEN)){
-			if(Misc.getConfig(event.getEntity()).getBoolean("block_chicken_spawn")){
-				event.setCancelled(true);
-			}
-		}else if(event.getCreatureType().equals(CreatureType.COW)){
-			if(Misc.getConfig(event.getEntity()).getBoolean("block_cow_spawn")){
-				event.setCancelled(true);
-			}
-		}else if(event.getCreatureType().equals(CreatureType.CREEPER)){
-			if(Misc.getConfig(event.getEntity()).getBoolean("block_creeper_spawn")){
-				event.setCancelled(true);
-			}
-		}else if(event.getCreatureType().equals(CreatureType.GHAST)){
-			if(Misc.getConfig(event.getEntity()).getBoolean("block_ghast_spawn")){
-				event.setCancelled(true);
-			}
-		}else if(event.getCreatureType().equals(CreatureType.GIANT)){
-			if(Misc.getConfig(event.getEntity()).getBoolean("block_giant_spawn")){
-				event.setCancelled(true);
-			}
-		}else if(event.getCreatureType().equals(CreatureType.MONSTER)){
-			if(Misc.getConfig(event.getEntity()).getBoolean("block_monster_spawn")){
-				event.setCancelled(true);
-			}
-		}else if(event.getCreatureType().equals(CreatureType.PIG)){
-			if(Misc.getConfig(event.getEntity()).getBoolean("block_pig_spawn")){
-				event.setCancelled(true);
-			}
-		}else if(event.getCreatureType().equals(CreatureType.PIG_ZOMBIE)){
-			if(Misc.getConfig(event.getEntity()).getBoolean("block_pigzombie_spawn")){
-				event.setCancelled(true);
-			}
-		}else if(event.getCreatureType().equals(CreatureType.SHEEP)){
-			if(Misc.getConfig(event.getEntity()).getBoolean("block_sheep_spawn")){
-				event.setCancelled(true);
-			}
-			if(Misc.getConfig(event.getEntity()).getBoolean("magic_sheep")){
-				((Sheep) event.getEntity()).setColor(DyeColor.values()[(int) Math.round((Math.random() * 15))]);
-			}
-		}else if(event.getCreatureType().equals(CreatureType.SKELETON)){
-			if(Misc.getConfig(event.getEntity()).getBoolean("block_skeleton_spawn")){
-				event.setCancelled(true);
-			}
-		}else if(event.getCreatureType().equals(CreatureType.SLIME)){
-			if(Misc.getConfig(event.getEntity()).getBoolean("block_slime_spawn")){
-				event.setCancelled(true);
-			}
-		}else if(event.getCreatureType().equals(CreatureType.SPIDER)){
-			if(Misc.getConfig(event.getEntity()).getBoolean("block_spider_spawn")){
-				event.setCancelled(true);
-			}
-		}else if(event.getCreatureType().equals(CreatureType.SQUID)){
-			if(Misc.getConfig(event.getEntity()).getBoolean("block_squid_spawn")){
-				event.setCancelled(true);
-			}
-		}else if(event.getCreatureType().equals(CreatureType.WOLF)){
-			if(Misc.getConfig(event.getEntity()).getBoolean("block_wolf_spawn")){
-				event.setCancelled(true);
-			}
-		}else if(event.getCreatureType().equals(CreatureType.ZOMBIE)){
-			if(Misc.getConfig(event.getEntity()).getBoolean("block_zombie_spawn")){
-				event.setCancelled(true);
-			}
+		if(Misc.getConfig(event.getEntity()).getBoolean("block_" + event.getCreatureType().getName().toLowerCase() + "_spawn")){
+			event.setCancelled(true);
 		}
 	}
 }

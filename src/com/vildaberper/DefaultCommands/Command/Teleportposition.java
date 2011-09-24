@@ -2,6 +2,7 @@ package com.vildaberper.DefaultCommands.Command;
 
 import org.bukkit.Location;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -11,8 +12,8 @@ import com.vildaberper.DefaultCommands.Perm;
 import com.vildaberper.DefaultCommands.Util;
 import com.vildaberper.DefaultCommands.V;
 
-public class Teleportposition{
-	public static boolean teleportposition(CommandSender sender, Command command, String label, String[] args){
+public class Teleportposition implements CommandExecutor{
+	public boolean onCommand(CommandSender sender, Command command, String label, String[] args){
 		if(args.length == 3 && sender instanceof Player){
 			((Player) sender).chat("/dcteleportposition " + args[0] + " " + args[1] + " " + args[2] + " " + ((Player) sender).getName() + " " + ((Player) sender).getWorld().getName());
 			return true;
@@ -46,8 +47,8 @@ public class Teleportposition{
 									Double.parseDouble(args[0]),
 									Double.parseDouble(args[1]),
 									Double.parseDouble(args[2])
-							)
-					);
+									)
+							);
 				}
 				Misc.sendMessage(sender, Misc.getString("c_teleportposition").replace("<players>", Misc.getPlayerNames(Misc.getPlayers(sender, args[0]))).replace("<player>", Misc.getSenderName(sender)).replace("<position>", args[0] + " " + args[1] + " " + args[2] + " " + V.plugin.getServer().getWorld(args[4]).getName()));
 				L.log(Misc.getString("c_teleportposition").replace("<players>", Misc.getPlayerNames(Misc.getPlayers(sender, args[0]))).replace("<player>", Misc.getSenderName(sender)).replace("<position>", args[0] + " " + args[1] + " " + args[2] + " " + V.plugin.getServer().getWorld(args[4]).getName()));

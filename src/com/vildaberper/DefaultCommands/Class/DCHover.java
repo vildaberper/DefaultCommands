@@ -7,8 +7,9 @@ public class DCHover{
 	private int id, x, y, z;
 	private World world;
 
-	public DCHover(int id){
+	public DCHover(int id, Block block){
 		this.id = id;
+		setBlock(block);
 	}
 
 	public void setId(int id){
@@ -44,23 +45,24 @@ public class DCHover{
 
 	public void setBlock(Block block){
 		if(block != null){
-			this.x = block.getX();
-			this.y = block.getY();
-			this.z = block.getZ();
-			this.world = block.getWorld();
+			x = block.getX();
+			y = block.getY();
+			z = block.getZ();
+			world = block.getWorld();
 		}else{
-			this.world = null;
+			world = null;
+
 		}
 	}
 
 	public Block getBlock(){
-		if(this.world != null){
+		if(world != null){
 			return world.getBlockAt(x, y, z);
 		}
 		return null;
 	}
 
 	public boolean isHover(){
-		return this.world != null;
+		return world != null;
 	}
 }

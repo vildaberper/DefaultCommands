@@ -17,10 +17,10 @@ public class DCBorder{
 
 	public DCBorder(String name, Location location, double radius){
 		this.name = name;
-		this.x = location.getX();
-		this.z = location.getZ();
+		x = location.getX();
+		z = location.getZ();
 		this.radius = radius;
-		this.world = location.getWorld().getName();
+		world = location.getWorld().getName();
 	}
 
 	public String getName() {
@@ -55,20 +55,20 @@ public class DCBorder{
 	}
 
 	public boolean isInside(Entity entity, boolean teleportback){
-		if(entity.getLocation().getWorld().getName().equals(this.world)){
+		if(entity.getLocation().getWorld().getName().equals(world)){
 			double nx = entity.getLocation().getX(), nz = entity.getLocation().getZ();
 
-			if(entity.getLocation().getX() >= this.x + this.radius){
-				nx = this.x + this.radius - 1;
+			if(entity.getLocation().getX() >= x + radius){
+				nx = x + radius - 1;
 			}
-			if(entity.getLocation().getX() <= this.x - this.radius){
-				nx = this.x - this.radius + 1;
+			if(entity.getLocation().getX() <= x - radius){
+				nx = x - radius + 1;
 			}
-			if(entity.getLocation().getZ() >= this.z + this.radius){
-				nz = this.z + this.radius - 1;
+			if(entity.getLocation().getZ() >= z + radius){
+				nz = z + radius - 1;
 			}
-			if(entity.getLocation().getZ() <= this.z - this.radius){
-				nz = this.z - this.radius + 1;
+			if(entity.getLocation().getZ() <= z - radius){
+				nz = z - radius + 1;
 			}
 			if((nx != entity.getLocation().getX() || nz != entity.getLocation().getZ()) && teleportback){
 				Location location = entity.getLocation();

@@ -1,6 +1,7 @@
 package com.vildaberper.DefaultCommands.Command;
 
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -9,8 +10,8 @@ import com.vildaberper.DefaultCommands.Misc;
 import com.vildaberper.DefaultCommands.Perm;
 import com.vildaberper.DefaultCommands.V;
 
-public class Fly{
-	public static boolean fly(CommandSender sender, Command command, String label, String[] args){
+public class Fly implements CommandExecutor{
+	public boolean onCommand(CommandSender sender, Command command, String label, String[] args){
 		if(args.length == 0 && sender instanceof Player){
 			((Player) sender).chat("/dcfly " + ((Player) sender).getName());
 			return true;

@@ -411,7 +411,7 @@ public class SaveLoad{
 				V.setConfiguration(dcconfiguration.getConfiguration(), dc.getProperty(dcconfiguration.getConfiguration()));
 			}
 		}
-		V.sync_time_id = V.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(V.plugin, new TimeSync(), (20 * V.getInt("sync_time")), (20 * V.getInt("sync_time")));
+		V.sync_time_id = V.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(V.plugin, new TimeSync(), 20 * V.getInt("sync_time"), 20 * V.getInt("sync_time"));
 	}
 
 	public static void saveDefaultCommands(){
@@ -472,13 +472,13 @@ public class SaveLoad{
 		}
 		for(DCWorld dcworld : V.worlds){
 			if(dcworld.getBoolean("magic_sheep")){
-				dcworld.setRunnablesheep(V.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(V.plugin, dcworld.new RunnableSheep(), 0, (long) (20 * dcworld.getInt("magic_sheep_interval"))));
+				dcworld.setRunnablesheep(V.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(V.plugin, dcworld.new RunnableSheep(), 0, (20 * dcworld.getInt("magic_sheep_interval"))));
 			}
 			if(dcworld.getBoolean("hungry_cows")){
-				dcworld.setRunnablepoop(V.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(V.plugin, dcworld.new RunnablePoop(), 0, (long) (20 * dcworld.getInt("hungry_cows_interval"))));
+				dcworld.setRunnablepoop(V.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(V.plugin, dcworld.new RunnablePoop(), 0, (20 * dcworld.getInt("hungry_cows_interval"))));
 			}
 			if(dcworld.getBoolean("auto_heal")){
-				dcworld.setRunnableheal(V.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(V.plugin, dcworld.new RunnableHeal(), 0, (long) (20 * dcworld.getInt("auto_heal_interval"))));
+				dcworld.setRunnableheal(V.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(V.plugin, dcworld.new RunnableHeal(), 0, (20 * dcworld.getInt("auto_heal_interval"))));
 			}
 		}
 	}

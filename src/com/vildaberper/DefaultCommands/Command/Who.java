@@ -2,6 +2,7 @@ package com.vildaberper.DefaultCommands.Command;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -10,8 +11,8 @@ import com.vildaberper.DefaultCommands.Perm;
 import com.vildaberper.DefaultCommands.Util;
 import com.vildaberper.DefaultCommands.V;
 
-public class Who{
-	public static boolean who(CommandSender sender, Command command, String label, String[] args){
+public class Who implements CommandExecutor{
+	public boolean onCommand(CommandSender sender, Command command, String label, String[] args){
 		if(sender instanceof Player && !Perm.hasPermission((Player) sender, "dc.who")){
 			return V.return_;
 		}
@@ -44,42 +45,43 @@ public class Who{
 						hp = ChatColor.RED + hp;
 					}
 					send = Misc.getColoredString("who_online")
-					.replace("<player>", name)
-					.replace("<hp>", hp)
-					.replace("<ip>", Misc.getPlayer(args[0]).getIp())
-					.replace("<world>", V.plugin.getServer().getPlayer(args[0]).getWorld().getName())
-					.replace("<x>", Double.toString(Math.round(V.plugin.getServer().getPlayer(args[0]).getLocation().getX())))
-					.replace("<y>", Double.toString(Math.round(V.plugin.getServer().getPlayer(args[0]).getLocation().getY())))
-					.replace("<z>", Double.toString(Math.round(V.plugin.getServer().getPlayer(args[0]).getLocation().getZ())));
+							.replace("<player>", name)
+							.replace("<hp>", hp)
+							.replace("<ip>", Misc.getPlayer(args[0]).getIp())
+							.replace("<experience>", Integer.toString(V.plugin.getServer().getPlayer(args[0]).getExperience()))
+							.replace("<world>", V.plugin.getServer().getPlayer(args[0]).getWorld().getName())
+							.replace("<x>", Double.toString(Math.round(V.plugin.getServer().getPlayer(args[0]).getLocation().getX())))
+							.replace("<y>", Double.toString(Math.round(V.plugin.getServer().getPlayer(args[0]).getLocation().getY())))
+							.replace("<z>", Double.toString(Math.round(V.plugin.getServer().getPlayer(args[0]).getLocation().getZ())));
 					if(Perm.getGroupsString(name) != null){
 						send = send
-						.replace("<group>", Perm.getGroupsString(name).toString().substring(1, Perm.getGroupsString(name).toString().length() - 1));
+								.replace("<group>", Perm.getGroupsString(name).toString().substring(1, Perm.getGroupsString(name).toString().length() - 1));
 					}else{
 						send = send
-						.replace("<group>", "");
+								.replace("<group>", "");
 					}
 					Misc. sendMessage(
 							sender,
 							Util.replaceColor(send)
-					);
+							);
 					return true;
 				}else{
 					send = Misc.getColoredString("who_offline")
-					.replace("<player>", name)
-					.replace("<ip>", Misc.getPlayer(args[0]).getIp())
-					.replace("<date>", Misc.getPlayer(args[0]).getDate())
-					.replace("<time>", Misc.getPlayer(args[0]).getTime());
+							.replace("<player>", name)
+							.replace("<ip>", Misc.getPlayer(args[0]).getIp())
+							.replace("<date>", Misc.getPlayer(args[0]).getDate())
+							.replace("<time>", Misc.getPlayer(args[0]).getTime());
 					if(Perm.getGroupsString(name) != null){
 						send = send
-						.replace("<group>", Perm.getGroupsString(name).toString().substring(1, Perm.getGroupsString(name).toString().length() - 1));
+								.replace("<group>", Perm.getGroupsString(name).toString().substring(1, Perm.getGroupsString(name).toString().length() - 1));
 					}else{
 						send = send
-						.replace("<group>", "");
+								.replace("<group>", "");
 					}
 					Misc. sendMessage(
 							sender,
 							Util.replaceColor(send)
-					);
+							);
 					return true;
 				}
 			}else{

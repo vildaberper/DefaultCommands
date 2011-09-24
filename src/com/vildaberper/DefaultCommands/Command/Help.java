@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -14,9 +15,9 @@ import com.vildaberper.DefaultCommands.Perm;
 import com.vildaberper.DefaultCommands.Util;
 import com.vildaberper.DefaultCommands.V;
 
-public class Help{
+public class Help implements CommandExecutor{
 	@SuppressWarnings("unchecked")
-	public static boolean help(CommandSender sender, Command command, String label, String[] args){
+	public boolean onCommand(CommandSender sender, Command command, String label, String[] args){
 		List<String> commands = new LinkedList<String>();
 		int page = 1, max = 0;
 

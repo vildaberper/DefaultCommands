@@ -6,6 +6,7 @@ import java.util.List;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -16,8 +17,8 @@ import com.vildaberper.DefaultCommands.Util;
 import com.vildaberper.DefaultCommands.V;
 import com.vildaberper.DefaultCommands.Class.DCIdData;
 
-public class Replace{
-	public static boolean replace(CommandSender sender, Command command, String label, String[] args){
+public class Replace implements CommandExecutor{
+	public boolean onCommand(CommandSender sender, Command command, String label, String[] args){
 		if(sender instanceof Player){
 			if(!Perm.hasPermission((Player) sender, "dc.replace")){
 				return V.return_;

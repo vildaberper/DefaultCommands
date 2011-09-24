@@ -195,7 +195,7 @@ public class DCWorld{
 		public void run(){
 			for(Entity entity : V.plugin.getServer().getWorld(name).getEntities()){
 				if(entity instanceof Sheep && !((Sheep) entity).isSheared() && Math.random() <= getDouble("magic_sheep_rate")){
-					((Sheep) entity).setColor(DyeColor.values()[(int) Math.round((Math.random() * 15))]);
+					((Sheep) entity).setColor(DyeColor.values()[(int) Math.round(Math.random() * 15)]);
 				}
 			}
 		}
